@@ -13,7 +13,7 @@
 class Disk: public SM{
 public:
   virtual bool notch_engaged(){return true;}
-  virtual Instruction step(Instruction inp);
+  virtual Instruction step(Instruction inp, bool debug = false);
 };
 
 class Rotor: public SM{
@@ -25,13 +25,11 @@ public:
   // Constructors
   Rotor(char* mapping_config);
   
-  // Copy Constructor
-  
   // Methods
   void set_offset(int offset);
   void rotate();
   bool notch_engaged();
-  virtual Instruction step(Instruction inp);
+  virtual Instruction step(Instruction inp, bool debug = false);
 
   //Debugging Methods
   void print_attributes();
@@ -50,7 +48,7 @@ public:
 
   // Methods
   //virtual void set_state(int new_state);
-  virtual Instruction step(Instruction inp);
+  virtual Instruction step(Instruction inp, bool debug = false);
 };
 
 
@@ -62,7 +60,7 @@ public:
   // Constructors
   Reflector(char* mapping_config);  
   // Methods
-  virtual Instruction step(Instruction inp);
+  virtual Instruction step(Instruction inp, bool debug = false);
 };
 
 

@@ -5,7 +5,12 @@
 #include "../include/errors.h"
 #include "../include/sm.h"
 
-Instruction Disk::step(Instruction inp){
+Instruction Disk::step(Instruction inp, bool debug){
+  int output = inp.value;
+  int message = ROTATE_NOW;
+  
+  if (debug)
+    std::cout << convert_int(output) << "-d->" << convert_int(output) << "    :" << message << '\n';
   return Instruction(inp.value,ROTATE_NOW);
 }
 
@@ -38,34 +43,36 @@ void Rotor:: rotate(){
   offset = (offset+1)%26;
 }
 
-Instruction Rotor:: step(Instruction inp){
+Instruction Rotor:: step(Instruction inp, bool debug){
   inverse = !inverse;
   int offset_inp, msg = NO_MSG, output;
-  if (inp.message == ROTATE_NOW)
+  if (inp.message == ROTATE_NOW){
+    if (debug)
+      std::cout << "rotating\n ";
     rotate();
+    
+  }
   if (notch_engaged() && !inverse)
     msg = ROTATE_NOW;
   
   offset_inp =(inp.value + offset)%26;
   
   if (!inverse){
-    //    std:: cout <<" not inverse ";
     output = mapping[offset_inp];
     output = output - offset;
     if (output<0)
       output+= 26;
-    
-    std:: cout << (char)(inp.value +97) << "-off->" << (char)(offset_inp + 97) << "-->" <<(char)( output+97) << "\n";
+    if (debug)
+      std:: cout << (char)(inp.value +97) << "-off->" << (char)(offset_inp + 97) << "-->" <<(char)( output+97) << "\n";
     return (Instruction(output,msg));
   }
   
-  //output = inverse_mapping[offset_inp];
   output = inverse_mapping[offset_inp];
   output = output - offset;
   if (output<0)
     output+=26;
-    
-  std:: cout << (char)(inp.value +97) << "-off->" << (char)(offset_inp+97) << "-inv->" <<(char)(output+97) << "\n";
+  if (debug)
+    std:: cout << (char)(inp.value +97) << "-off->" << (char)(offset_inp+97) << "-inv->" <<(char)(output+97) << "       " << msg <<"\n";
   return (Instruction(output,msg));
 }
 
@@ -89,13 +96,13 @@ Cascade:: Cascade(std::vector<SM*> sm_ptrs){
 }
 
 
-Instruction Cascade:: step(Instruction inp){
+Instruction Cascade:: step(Instruction inp, bool debug){
   Instruction current_output = inp;
   
   SM* current_sm_ptr;
   for (unsigned i = 0; i<sm_ptrs.size(); i++){
     current_sm_ptr = sm_ptrs[i];
-    current_output = current_sm_ptr->step(current_output);
+    current_output = current_sm_ptr->step(current_output,debug);
   }
   return current_output;
 }
@@ -113,8 +120,9 @@ Reflector::Reflector(char* mapping_config){
 }
 
 
-Instruction Reflector::step(Instruction inp){
-  std:: cout << (char)(inp.value +97) << "-ref->" <<(char)( mapping[inp.value]+97) << "\n";
+Instruction Reflector::step(Instruction inp, bool debug){
+  if (debug)
+    std:: cout << (char)(inp.value +97) << "-ref->" <<(char)( mapping[inp.value]+97) << "\n";
   return Instruction(mapping[inp.value], NO_MSG);
 }
 

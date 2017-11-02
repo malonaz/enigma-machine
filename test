@@ -1,6 +1,10 @@
 #!/bin/bash
 clear
-make clean
+#make clean
 make
-clear
+#clear
+
+#gdb --args enigma inputs/rotors/III.rot inputs/rotors/II.rot inputs/rotors/I.rot inputs/reflectors/II.rf
+
+
 ./enigma inputs/rotors/III.rot inputs/rotors/II.rot inputs/rotors/I.rot inputs/reflectors/II.rf
