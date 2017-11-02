@@ -5,8 +5,13 @@
 #include "../include/errors.h"
 #include "../include/sm.h"
 
+Instruction Disk::step(Instruction inp){
+  return Instruction(inp.value,ROTATE_NOW);
+}
 
-Rotor::Rotor(char* mapping_config){
+
+Rotor::Rotor(char* mapping_config)
+  :offset(0){
   std::ifstream rotor_input(mapping_config);
   inverse = true;
   int map_to;
@@ -25,29 +30,49 @@ Rotor::Rotor(char* mapping_config){
 }
 
 
-void Rotor:: set_state(int new_state){
-  state = new_state;
+void Rotor:: set_offset(int offset){
+  this->offset = offset;
 }
 
-int Rotor:: step(int inp){
-  int offset_inp;
+void Rotor:: rotate(){
+  offset = (offset+1)%26;
+}
+
+Instruction Rotor:: step(Instruction inp){
   inverse = !inverse;
+  int offset_inp, msg = NO_MSG, output;
+  if (inp.message == ROTATE_NOW)
+    rotate();
+  if (notch_engaged() && !inverse)
+    msg = ROTATE_NOW;
+  
+  offset_inp =(inp.value + offset)%26;
   
   if (!inverse){
-    rotate();
-    offset_inp  = (inp + state)%26;
-    std:: cout << (char)(inp +97) << "-->" <<(char)( mapping[offset_inp]+97) << "\n";
-
-    return (mapping[offset_inp]);
+    //    std:: cout <<" not inverse ";
+    output = mapping[offset_inp];
+    output = output - offset;
+    if (output<0)
+      output+= 26;
+    
+    std:: cout << (char)(inp.value +97) << "-off->" << (char)(offset_inp + 97) << "-->" <<(char)( output+97) << "\n";
+    return (Instruction(output,msg));
   }
-  offset_inp = (inp + state)%26;
-  std:: cout << (char)(inp +97) << "-inv->" <<(char)(inverse_mapping[offset_inp]+97) << "\n";
-  return (inverse_mapping[offset_inp]);
+  
+  //output = inverse_mapping[offset_inp];
+  output = inverse_mapping[offset_inp];
+  output = output - offset;
+  if (output<0)
+    output+=26;
+    
+  std:: cout << (char)(inp.value +97) << "-off->" << (char)(offset_inp+97) << "-inv->" <<(char)(output+97) << "\n";
+  return (Instruction(output,msg));
 }
+
 
 bool Rotor:: notch_engaged(){
   for (unsigned i = 0; i < notches.size(); i++){
-    if (state == notches[i])
+    if (offset == notches[i])
       return true;
   }
   return false;
@@ -63,12 +88,16 @@ Cascade:: Cascade(std::vector<SM*> sm_ptrs){
   this->sm_ptrs = sm_ptrs;
 }
 
-int Cascade:: step(int inp){
-  int input = inp;
+
+Instruction Cascade:: step(Instruction inp){
+  Instruction current_output = inp;
+  
+  SM* current_sm_ptr;
   for (unsigned i = 0; i<sm_ptrs.size(); i++){
-    input = sm_ptrs[i]->step(input);
+    current_sm_ptr = sm_ptrs[i];
+    current_output = current_sm_ptr->step(current_output);
   }
-  return input;
+  return current_output;
 }
 
 Reflector::Reflector(char* mapping_config){
@@ -78,18 +107,16 @@ Reflector::Reflector(char* mapping_config){
   for (int i = 0; i<13; i++){
     reflector_input >> x >> y;
     mapping[x] = y;
+    mapping[y] = x;
   }
   reflector_input.close();    
 }
 
 
-int Reflector::step(int inp){
-  std:: cout << (char)(inp +97) << "-ref->" <<(char)( mapping[inp]+97) << "\n";
-  return mapping[inp];
+Instruction Reflector::step(Instruction inp){
+  std:: cout << (char)(inp.value +97) << "-ref->" <<(char)( mapping[inp.value]+97) << "\n";
+  return Instruction(mapping[inp.value], NO_MSG);
 }
-
-
-
 
 
 
@@ -115,6 +142,6 @@ void Rotor:: print_attributes(){
 
 
 
-void Rotor:: print_state(){
-  std:: cout << "State: " << state << '\n';
+void Rotor:: print_offset(){
+  std:: cout << "Offset: " << offset << '\n';
 }

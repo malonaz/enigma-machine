@@ -8,13 +8,18 @@ char convert_int(int c){
   return c+97;
 }
 
-
 void SM::test(){
-  char input;
+  char c;
+  int value;
     while(true){
-      set_state(25);
       std::cout << "Enter a letter: ";
-      std::cin >> input;
-      std::cout << input << " is mapped to " << convert_int(step(convert_char(input))) << std::endl;
+      std::cin >> c;
+      value = convert_char(c);
+      std::cout << c << " is mapped to " << convert_int(step(Instruction(value,NO_MSG)).value) << std::endl;
     }
+}
+
+Instruction SM:: step(Instruction inp){
+  Instruction instruction(inp);
+  return instruction;
 }

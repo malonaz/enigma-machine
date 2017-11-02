@@ -4,9 +4,21 @@
 #include <vector>
 #include "sm.h"
 
+// States definitions
+#define NOTCH_ENGAGED 002
+
+// Msg definitions
+#define ROTATE_NOW 003
+
+class Disk: public SM{
+public:
+  virtual bool notch_engaged(){return true;}
+  virtual Instruction step(Instruction inp);
+};
 
 class Rotor: public SM{
 private:
+  int offset;
   std::vector<int> mapping, inverse_mapping, notches;
   bool inverse;
 public:
@@ -16,16 +28,15 @@ public:
   // Copy Constructor
   
   // Methods
-  void set_state(int new_state);
-  void rotate(){state = (state+1)%26;}
+  void set_offset(int offset);
+  void rotate();
   bool notch_engaged();
-  virtual int step(int inp);
+  virtual Instruction step(Instruction inp);
 
   //Debugging Methods
   void print_attributes();
-  void print_state();
+  void print_offset();
 };
-
 
 
 class Cascade: public SM{
@@ -39,10 +50,8 @@ public:
 
   // Methods
   //virtual void set_state(int new_state);
-  virtual int step(int inp);
+  virtual Instruction step(Instruction inp);
 };
-
-
 
 
 class Reflector: public SM{
@@ -53,7 +62,7 @@ public:
   // Constructors
   Reflector(char* mapping_config);  
   // Methods
-  virtual int step(int inp);
+  virtual Instruction step(Instruction inp);
 };
 
 
