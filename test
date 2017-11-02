@@ -1,0 +1,6 @@
+#!/bin/bash
+clear
+make clean
+make
+clear
+./enigma inputs/rotors/III.rot inputs/rotors/II.rot inputs/rotors/I.rot inputs/reflectors/II.rf
