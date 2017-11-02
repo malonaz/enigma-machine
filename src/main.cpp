@@ -1,33 +1,24 @@
 #include <iostream>
 #include <fstream>
 #include "../include/rotors.h"
+#include<vector>
 
 using namespace std;
 
-int convert_char(char c){
-  return c-97;
-}
-
-char convert_int(int c){
-  return c+97;
-}
-
-void test_sm(SM &sm){
-  char input;
-  while(true){
-    sm.set_state(25);
-    cout << "Enter a letter: ";
-    cin >> input;
-    cout << input << " is mapped to " << convert_int(sm.step(convert_char(input))) << endl;
-  }
-}
-
 int main(int argc, char **argv){
   Rotor rotor1(argv[1]);
+  Rotor rotor2(argv[2]);
+  Rotor rotor3(argv[3]);
   rotor1.set_state(25);
-  Rotor rotor2(argv[1]);
   rotor2.set_state(25);
-  Cascade cascade(rotor1,rotor2);
-  test_sm(cascade);
+  rotor3.set_state(25);
+  Reflector reflector(argv[4]);
+
+  SM* sm_ptrs[] = {&rotor1,&rotor2,&rotor3,&reflector,&rotor3,&rotor2,&rotor1};
+  
+  Cascade cascade(sm_ptrs,7);
+  cascade.test();
+
+  
   return 0;
 }

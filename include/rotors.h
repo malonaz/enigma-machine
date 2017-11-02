@@ -7,11 +7,14 @@
 
 class Rotor: public SM{
 private:
-  std::vector<int> mapping, notches;
+  std::vector<int> mapping, inverse_mapping, notches;
+  bool inverse;
 public:
   // Constructors
   Rotor(char* mapping_config);
-
+  
+  // Copy Constructor
+  
   // Methods
   void set_state(int new_state);
   void rotate(){state = (state+1)%26;}
@@ -24,18 +27,35 @@ public:
 };
 
 
+
 class Cascade: public SM{
-public:
-  SM sm1;
-  SM sm2;
+protected:
+  std::vector<SM*> sm_ptrs;
   
 public:
   // Constructor
-  Cascade(SM &sm1, SM &sm2);
+  Cascade(SM** sm_ptrs,int num_ptrs);
+  Cascade(std::vector<SM*> sm_ptrs);
 
+  // Methods
+  //virtual void set_state(int new_state);
+  virtual int step(int inp);
+};
+
+
+
+
+class Reflector: public SM{
+private:
+  std::vector<int> mapping;
+  
+public:
+  // Constructors
+  Reflector(char* mapping_config);  
   // Methods
   virtual int step(int inp);
 };
+
 
 
 #endif
