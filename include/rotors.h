@@ -44,7 +44,7 @@ protected:
 public:
   // Constructor
   Cascade(SM** sm_ptrs,int num_ptrs);
-  Cascade(std::vector<SM*> sm_ptrs);
+  Cascade(){};
 
   // Methods
   //virtual void set_state(int new_state);
@@ -71,6 +71,11 @@ private:
 public:
   // Constructors
   Plugboard(char* mapping_config);
+
+  // Static
+  static int check_arg(char* arg);
+  
+  
   // Methods
   virtual Instruction step(Instruction inp, bool debug = false);
 };

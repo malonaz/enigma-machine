@@ -2,6 +2,7 @@
 #ifndef SM_H
 #define SM_H
 
+#include "../include/errors.h"
 
 // SM states definition
 #define IDLE 000
@@ -31,6 +32,9 @@ public:
   // Constructor
   SM():state(IDLE){}
 
+  // Destructor
+  virtual ~SM(){};
+  
   // Methods
   void test(bool debug = false);
   void run(bool debug = false);

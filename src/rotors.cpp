@@ -33,7 +33,6 @@ Rotor::Rotor(char* mapping_config)
   rotor_input.close();
 }
 
-
 void Rotor:: set_offset(int offset){
   this->offset = offset;
 }
@@ -90,11 +89,6 @@ Cascade:: Cascade(SM** sm_ptrs,int num_ptrs){
   }
 }
 
-Cascade:: Cascade(std::vector<SM*> sm_ptrs){
-  this->sm_ptrs = sm_ptrs;
-}
-
-
 Instruction Cascade:: step(Instruction inp, bool debug){
   Instruction current_output = inp;
   
@@ -134,10 +128,9 @@ Plugboard::Plugboard(char* mapping_config){
 
 Instruction Plugboard:: step(Instruction inp, bool debug){
   if (debug)
-    std::cout << convert_int(inp.value) << "-p->"; //<< convert_int(mapping[inp.value]) << "-->";
+    std::cout << convert_int(inp.value) << "-p->";
   return Instruction(inp.value,NO_MSG);
 }
-
 
 Instruction Reflector::step(Instruction inp, bool debug){
   if (debug)
