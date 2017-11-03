@@ -2,6 +2,8 @@
 #include "../include/rotors.h"
 #include <fstream>
 #include <iostream>
+#include <set>
+#include <cctype>
 #include "../include/errors.h"
 #include "../include/sm.h"
 
@@ -131,6 +133,30 @@ Instruction Plugboard:: step(Instruction inp, bool debug){
     std::cout << convert_int(inp.value) << "-p->";
   return Instruction(inp.value,NO_MSG);
 }
+
+int Plugboard::check_arg(char* arg){
+  std::ifstream input(arg);
+  std::cout << "starting check\n";
+  if(!input.is_open())
+    return ERROR_OPENING_CONFIGURATION_FILE;
+  
+  std::set<int> digits;
+  int digit;
+  while(input>>digit){
+    if (digit<0 || digit >25)
+      return INVALID_INDEX;
+    if (digits.find(digit) != digits.end())
+      return IMPOSSIBLE_PLUGBOARD_CONFIGURATION;
+    digits.insert(digit);
+  }
+  if (!input.eof()) // what if it's last char.. 
+    return NON_NUMERIC_CHARACTER;
+
+  if (digits.size()%2 != 0)
+    return INCORRECT_NUMBER_OF_PLUGBOARD_PARAMETERS;
+  return NO_ERROR;
+}
+
 
 Instruction Reflector::step(Instruction inp, bool debug){
   if (debug)

@@ -9,11 +9,15 @@ using namespace std;
 int main(int argc, char **argv){
   cout << "\n\nWelcome \n\n";
   cout << "we have loaded "<<argc << " arguments!" <<endl;
-  
-  EnigmaMachine enigma(argc, argv);
-  
-  enigma.test();
 
+  std::cout <<"Error code: " << Plugboard:: check_arg(argv[1]) << std::endl;
+  //Plugboard::check_arg(argv[1]);
+  EnigmaMachine enigma(argc-1, ++argv);
+
+
+  
+  //enigma.test();
+  
   return 0;
 }
 
