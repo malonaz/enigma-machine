@@ -2,3 +2,6 @@
    if x rotates and is now on position 22. does y rotate
    simulteanously? or does y rotate when x rotates
    from position 22?
+
+
+2) implement static method in each method, to check respective inputs...

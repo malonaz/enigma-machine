@@ -75,5 +75,4 @@ public:
   virtual Instruction step(Instruction inp, bool debug = false);
 };
 
-  
 #endif

@@ -36,14 +36,14 @@ void SM::test(bool debug){
   char input;
   int output;
   Instruction instr(0,NO_MSG);
-  while(true){
-    std::cout << "$$$$$$ ";
-    std::cin>>input;
+  while(std::cin >> input){
     instr.value = convert_char(input);
     output = step(instr,debug).value;
-    std::cout << input << " maps to "  << convert_int(output) << '\n';
+    if (debug)
+      std::cout << input << " maps to ";
+    std::cout << convert_int(output);
+    std::cout << '\n';
   }
-  
 }
 
 

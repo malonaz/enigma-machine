@@ -147,6 +147,10 @@ Instruction Reflector::step(Instruction inp, bool debug){
 
 
 
+
+
+
+
 /////////////////DEBUGGING METHODS///////////////////////////////
 void Rotor:: print_attributes(){
   

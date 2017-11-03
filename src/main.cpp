@@ -17,8 +17,7 @@ int main(int argc, char **argv){
   SM* sm_ptrs[] = {&plugboard,&entryDisk,&rotor1,&rotor2,&rotor3,&reflector,&rotor3,&rotor2,&rotor1};
   
   Cascade cascade(sm_ptrs,9);
-
-  cascade.test();
- 
+  cascade.test(); 
   return 0;
 }
+
