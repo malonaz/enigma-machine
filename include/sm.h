@@ -32,8 +32,10 @@ public:
   SM():state(IDLE){}
 
   // Methods
-  void test();
+  void test(bool debug = false);
+  void run(bool debug = false);
   virtual Instruction step(Instruction inp,bool debug = false);
+  
   
 };
 

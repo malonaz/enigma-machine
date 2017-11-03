@@ -7,11 +7,10 @@
 
 Instruction Disk::step(Instruction inp, bool debug){
   int output = inp.value;
-  int message = ROTATE_NOW;
-  
+  Instruction instr(output,ROTATE_NOW);
   if (debug)
-    std::cout << convert_int(output) << "-d->" << convert_int(output) << "    :" << message << '\n';
-  return Instruction(inp.value,ROTATE_NOW);
+    std::cout << convert_int(output) << "-d->" << convert_int(output) << "\n";
+  return instr;
 }
 
 
@@ -48,7 +47,7 @@ Instruction Rotor:: step(Instruction inp, bool debug){
   int offset_inp, msg = NO_MSG, output;
   if (inp.message == ROTATE_NOW){
     if (debug)
-      std::cout << "rotating\n ";
+      std::cout << "rotating-->";
     rotate();
     
   }
@@ -119,6 +118,26 @@ Reflector::Reflector(char* mapping_config){
   reflector_input.close();    
 }
 
+Plugboard::Plugboard(char* mapping_config){
+  std::ifstream plugboard_input(mapping_config);
+  mapping.resize(26);
+  for (int i = 0; i<26;i++)
+    mapping[i] = i;
+  int x,y;
+  while(plugboard_input.eof()){
+    std::cin >> x >> y;
+    mapping[x] = y;
+    mapping[y] = x;
+  }
+  plugboard_input.close();
+}
+
+Instruction Plugboard:: step(Instruction inp, bool debug){
+  if (debug)
+    std::cout << convert_int(inp.value) << "-p->"; //<< convert_int(mapping[inp.value]) << "-->";
+  return Instruction(inp.value,NO_MSG);
+}
+
 
 Instruction Reflector::step(Instruction inp, bool debug){
   if (debug)
@@ -136,7 +155,7 @@ void Rotor:: print_attributes(){
     std::cout << (char)(mapping[i]+97) << ' ';
   }
   std:: cout << "\nInverse Mapping: ";
-  for (unsigned i = 0; i < inverse_mapping.size(); i++){
+  for (unsigned i = 0; i < inverse_mapping.size(); i++){ 
     std::cout << (char)(inverse_mapping[i]+97) << ' ';
   }
   

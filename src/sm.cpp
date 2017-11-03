@@ -13,9 +13,9 @@ char convert_int(int c){
 }
 
 
-void SM::test(){
+void SM::run(bool debug){
   std::string str;
-  std::cout << "Welcome\nEnter a string: ";
+  std::cout << "\nEnter a string:\n";
   std::getline(std::cin,str);
   int val;
   char c;
@@ -24,11 +24,26 @@ void SM::test(){
       std::cout << ' ';
     }else{
       val = convert_char(std::tolower(str[i]));
-      c = convert_int(step(Instruction(val,NO_MSG)).value);
+      c = convert_int(step(Instruction(val,NO_MSG),debug).value);
       std:: cout << c;
     }
   }
   std::cout << std::endl;
+}
+
+void SM::test(bool debug){
+  std::cout << "Enter a char, then press enter\n";
+  char input;
+  int output;
+  Instruction instr(0,NO_MSG);
+  while(true){
+    std::cout << "$$$$$$ ";
+    std::cin>>input;
+    instr.value = convert_char(input);
+    output = step(instr,debug).value;
+    std::cout << input << " maps to "  << convert_int(output) << '\n';
+  }
+  
 }
 
 

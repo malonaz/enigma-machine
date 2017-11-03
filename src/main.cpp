@@ -6,19 +6,19 @@
 using namespace std;
 
 int main(int argc, char **argv){
-
+  cout << "\n\nWelcome \n\n";
+  cout << "we have loaded "<<argc << " arguments!" <<endl;
   Disk entryDisk;
   Rotor rotor1(argv[1]);
   Rotor rotor2(argv[2]);
   Rotor rotor3(argv[3]);
   Reflector reflector(argv[4]);
-  SM* sm_ptrs[] = {&entryDisk,&rotor1,&rotor2,&rotor3,&reflector,&rotor3,&rotor2,&rotor1};
+  Plugboard plugboard(argv[5]);
+  SM* sm_ptrs[] = {&plugboard,&entryDisk,&rotor1,&rotor2,&rotor3,&reflector,&rotor3,&rotor2,&rotor1};
   
-  Cascade cascade(sm_ptrs,8);
-  rotor1.print_attributes();
+  Cascade cascade(sm_ptrs,9);
+
   cascade.test();
-  rotor1.print_offset();
-  rotor2.print_offset();
-  rotor3.print_offset();
+ 
   return 0;
 }

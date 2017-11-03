@@ -64,5 +64,16 @@ public:
 };
 
 
+class Plugboard: public SM{
+private:
+  std::vector<int> mapping;
 
+public:
+  // Constructors
+  Plugboard(char* mapping_config);
+  // Methods
+  virtual Instruction step(Instruction inp, bool debug = false);
+};
+
+  
 #endif
