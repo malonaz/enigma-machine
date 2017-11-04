@@ -31,6 +31,9 @@ public:
   bool notch_engaged();
   virtual Instruction step(Instruction inp, bool debug = false);
 
+  // Static methods
+  static int check_arg(char* arg);
+  
   //Debugging Methods
   void print_attributes();
   void print_offset();
@@ -61,6 +64,9 @@ public:
   Reflector(char* mapping_config);  
   // Methods
   virtual Instruction step(Instruction inp, bool debug = false);
+  // Static Methods
+  static int check_arg(char *arg);
+  
 };
 
 
@@ -74,7 +80,6 @@ public:
 
   // Static
   static int check_arg(char* arg);
-  
   
   // Methods
   virtual Instruction step(Instruction inp, bool debug = false);

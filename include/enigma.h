@@ -27,6 +27,9 @@ public:
   // Destructor
    ~EnigmaMachine();
 
+  // Methods
+  int change_rotor_pos(char* config);
+  
   // Static Methods
   static int check_args(int argc, char** argv);
 

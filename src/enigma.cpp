@@ -1,5 +1,5 @@
 #include "../include/enigma.h"
-
+#include <fstream>
 EnigmaMachine:: EnigmaMachine(int argc, char** argv)
   :num_rotors(argc-MIN_ARGS){
   
@@ -33,12 +33,41 @@ int EnigmaMachine:: check_args(int argc, char** argv){
   error_code = Plugboard::check_arg(*argv++);
   if (error_code)
     return error_code;
+
+  error_code = Reflector::check_arg(*argv++);
+  if (error_code)
+    return error_code;
+
+  for (int i = 2; i !=argc-1; i++){
+    error_code = Rotor::check_arg(*argv++);
+    if (error_code)
+      return error_code;
+  }
   
-    
   // check file openings?
   return NO_ERROR;
 }
 
+int EnigmaMachine::change_rotor_pos(char *config){
+  std::ifstream input(config);
+  if (!input.is_open())
+    return ERROR_OPENING_CONFIGURATION_FILE;
+
+  int digit, count = 0;
+  while(input >> digit){
+    if (digit <0 || digit>25)
+      return INVALID_INDEX;
+    rotors[count]->set_offset(digit);
+    count++;
+  }
+  if (!input.eof())
+    return NON_NUMERIC_CHARACTER;
+  
+  if (count != num_rotors)
+    return NO_ROTOR_STARTING_POSITION;
+
+  return NO_ERROR;
+}
 
 EnigmaMachine:: ~EnigmaMachine(){
   

@@ -35,6 +35,37 @@ Rotor::Rotor(char* mapping_config)
   rotor_input.close();
 }
 
+int Rotor::check_arg(char* arg){
+  std::ifstream input(arg);
+  std::cout << "starting Rotor check\n";
+  if(!input.is_open())
+    return ERROR_OPENING_CONFIGURATION_FILE;
+  
+  std::set<int> digits;
+  int digit;
+  int count = 0;
+  while(input>>digit){
+    if (digit<0 || digit >25)
+      return INVALID_INDEX;
+    if (count < 26){
+      if (digits.find(digit) != digits.end())
+	return INVALID_ROTOR_MAPPING;
+      digits.insert(digit);
+      count++;
+    }
+  }
+  if (!input.eof()) // what if it's last char.. 
+    return NON_NUMERIC_CHARACTER; // or 'a'
+
+  if (digits.size() != 26){
+    return  INVALID_ROTOR_MAPPING;
+  }
+    
+  return NO_ERROR;  
+}
+
+
+
 void Rotor:: set_offset(int offset){
   this->offset = offset;
 }
@@ -114,6 +145,32 @@ Reflector::Reflector(char* mapping_config){
   reflector_input.close();    
 }
 
+int Reflector:: check_arg(char * arg){
+  std::ifstream input(arg);
+  std::cout << "starting Reflector check\n";
+  if(!input.is_open())
+    return ERROR_OPENING_CONFIGURATION_FILE;
+  
+  std::set<int> digits;
+  int digit;
+  while(input>>digit){
+    if (digit<0 || digit >25)
+      return INVALID_INDEX;
+    if (digits.find(digit) != digits.end())
+      return INVALID_REFLECTOR_MAPPING;
+    digits.insert(digit);
+  }
+  if (!input.eof()) // what if it's last char.. 
+    return NON_NUMERIC_CHARACTER; // or 'a'
+
+  if (digits.size() != 26){
+    return  INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS;
+  }
+    
+  return NO_ERROR;  
+}
+
+
 Plugboard::Plugboard(char* mapping_config){
   std::ifstream plugboard_input(mapping_config);
   mapping.resize(26);
@@ -136,7 +193,7 @@ Instruction Plugboard:: step(Instruction inp, bool debug){
 
 int Plugboard::check_arg(char* arg){
   std::ifstream input(arg);
-  std::cout << "starting check\n";
+  std::cout << "starting Plugboard check\n";
   if(!input.is_open())
     return ERROR_OPENING_CONFIGURATION_FILE;
   
@@ -149,6 +206,7 @@ int Plugboard::check_arg(char* arg){
       return IMPOSSIBLE_PLUGBOARD_CONFIGURATION;
     digits.insert(digit);
   }
+  
   if (!input.eof()) // what if it's last char.. 
     return NON_NUMERIC_CHARACTER;
 
