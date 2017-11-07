@@ -5,11 +5,11 @@
 
 
 int convert_char(char c){
-  return c-97;
+  return c-65;
 }
 
 char convert_int(int c){
-  return c+97;
+  return c+65;
 }
 
 

@@ -16,7 +16,8 @@ int main(int argc, char **argv){
   if(enigma.change_rotor_pos(*(argv+argc-1)))
     std::cout<< "rotor pos: "<< enigma.change_rotor_pos(*(argv+argc-1)) << "\n";
   
-  enigma.test();
+  if (!enigma.testLab())
+    return INVALID_INPUT_CHARACTER;
   
   return 0;
 }

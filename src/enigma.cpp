@@ -1,5 +1,6 @@
 #include "../include/enigma.h"
 #include <fstream>
+
 EnigmaMachine:: EnigmaMachine(int argc, char** argv)
   :num_rotors(argc-MIN_ARGS){
   
@@ -82,3 +83,23 @@ EnigmaMachine:: ~EnigmaMachine(){
 }
 
 
+bool EnigmaMachine::testLab(bool debug){
+  if (debug)
+    std::cout << "Enter a char, then press enter\n";
+  char input;
+  int output;
+  Instruction instr(0,NO_MSG);
+  while(std::cin >> input){
+    if (input <'A' || input > 'Z'){
+      return false;
+    }
+    
+    instr.value = convert_char(input);
+    output = step(instr,debug).value;
+    if (debug)
+      std::cout << input << " maps to ";
+    std::cout << convert_int(output);
+    std::cout << '\n';
+  }
+  return true;
+}
