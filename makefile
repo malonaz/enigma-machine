@@ -8,7 +8,7 @@ ROTOR_POS:= rotors/null.pos
 enigma: main.o rotors.o sm.o enigma.o errors.o
 	g++ -Wall -g -o enigma main.o rotors.o sm.o enigma.o errors.o
 
-main.o: main.cpp rotors.h enigma.h
+main.o: main.cpp rotors.h enigma.h errors.h
 	g++ -Wall -g -c main.cpp 
 
 rotors.o: rotors.cpp rotors.h sm.h errors.h

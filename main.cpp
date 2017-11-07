@@ -3,7 +3,7 @@
 #include<vector>
 #include "rotors.h"
 #include "enigma.h"
-
+#include "errors.h"
 
 using namespace std;
 
@@ -15,7 +15,7 @@ int main(int argc, char **argv){
   flag =   EnigmaMachine::check_args(argc-1,argv + 1);
 
   if (flag){
-    //cerr << flag;
+    print_error(flag);
     return flag;
   }
       
@@ -23,10 +23,10 @@ int main(int argc, char **argv){
 
   flag =enigma.change_rotor_pos(*(argv+argc-1)); 
   if(flag){
-    //cerr << flag;
+    print_error(flag);
     return flag;
   }
-    //    std::cout<< "rotor pos: "<< enigma.change_rotor_pos(*(argv+argc-1)) << "\n";
+
   
   if (!enigma.testLab())
     return INVALID_INPUT_CHARACTER;

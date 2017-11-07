@@ -30,25 +30,25 @@ EnigmaMachine:: EnigmaMachine(int argc, char** argv)
 
 int EnigmaMachine:: check_args(int argc, char** argv){
   if (argc < MIN_ENIGMA_ARGS){
-    print_error(INSUFFICIENT_NUMBER_OF_PARAMETERS);
+
     return INSUFFICIENT_NUMBER_OF_PARAMETERS;
   }
 
   int error_code;
   error_code = Plugboard::check_arg(*argv++);
   if (error_code){
-    print_error(error_code);
+
     return error_code;
   }
   error_code = Reflector::check_arg(*argv++);
   if (error_code){
-     print_error(error_code);
+
     return error_code;
   }
   for (int i = 2; i !=argc-1; i++){
     error_code = Rotor::check_arg(*argv++);
     if (error_code){
-       print_error(error_code);
+
       return error_code;
     }
   }
@@ -67,7 +67,7 @@ int EnigmaMachine::change_rotor_pos(char *config){
   int digit, count = 0;
   while(input >> digit){
     if (digit <0 || digit>25){
-      print_error(INVALID_INDEX);
+
       return INVALID_INDEX;
     }
     if (count < num_rotors)
@@ -75,11 +75,11 @@ int EnigmaMachine::change_rotor_pos(char *config){
     count++;
   }
   if (!input.eof()){
-    print_error(NON_NUMERIC_CHARACTER);
+
     return NON_NUMERIC_CHARACTER;
   }
   if (count != num_rotors){
-    print_error(NO_ROTOR_STARTING_POSITION);
+ 
     return NO_ROTOR_STARTING_POSITION;
   }
   return NO_ERROR;
