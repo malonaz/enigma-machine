@@ -8,6 +8,8 @@
 using namespace std;
 
 int main(int argc, char **argv){
+  for (int i =0; i<argc; i++)
+    cout << *(argv+1) << endl;
   // cout << "\n\nWelcome \n\n";
   // cout << "we have loaded "<<argc << " arguments!" <<endl;
   int flag;
