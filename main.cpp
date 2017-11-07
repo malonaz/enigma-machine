@@ -1,29 +1,29 @@
 #include <iostream>
 #include <fstream>
 #include<vector>
+#include <string>
 #include "rotors.h"
 #include "enigma.h"
 #include "errors.h"
+
 
 using namespace std;
 
 int main(int argc, char **argv){
   ifstream input;
-  char c;
+  string str;
   for (int i = 1; i< argc; i++){
     std::cout << *(argv + i) << ": ";
     input.open(*(argv+i));
-    while (input >> c){
-      cout << c << " ";
-    }
+    getline(input, str);
+    cout << str << '\n';
     input.close();
     cout << '\n';
   }
   cout << "input: ";
-  while (cin >> c){
-    cout << c << " ";
-  }
-  cout << '\n';
+  getline(cin,str);
+  cout << str << '\n';
+  
   return 0;
   // cout << "DEBUG STARTS HERE" << endl;
   //for (int i =0; i<argc; i++)
