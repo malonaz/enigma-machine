@@ -204,7 +204,8 @@ Plugboard::Plugboard(char* mapping_config){
 Instruction Plugboard:: step(Instruction inp, bool debug){
   if (debug)
     std::cout << convert_int(inp.value) << "-p->";
-  return Instruction(inp.value,NO_MSG);
+  
+  return Instruction(mapping[inp.value],NO_MSG);
 }
 
 int Plugboard::check_arg(char* arg){
