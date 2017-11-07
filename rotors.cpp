@@ -38,26 +38,34 @@ Rotor::Rotor(char* mapping_config)
 int Rotor::check_arg(char* arg){
   std::ifstream input(arg);
   //std::cout << "starting Rotor check\n";
-  if(!input.is_open())
+  if(!input.is_open()){
+    print_error(ERROR_OPENING_CONFIGURATION_FILE);
     return ERROR_OPENING_CONFIGURATION_FILE;
-  
+  }
   std::set<int> digits;
   int digit;
   int count = 0;
   while(input>>digit){
-    if (digit<0 || digit >25)
+    if (digit<0 || digit >25){
+      print_error(INVALID_INDEX);
       return INVALID_INDEX;
+    }
     if (count < 26){
-      if (digits.find(digit) != digits.end())
+      if (digits.find(digit) != digits.end()){
+	print_error(INVALID_ROTOR_MAPPING);
 	return INVALID_ROTOR_MAPPING;
+      }
       digits.insert(digit);
       count++;
     }
   }
-  if (!input.eof()) // what if it's last char.. 
+  if (!input.eof()){ // what if it's last char..
+    print_error(NON_NUMERIC_CHARACTER);
     return NON_NUMERIC_CHARACTER; // or 'a'
+  }
 
   if (digits.size() != 26){
+    print_error(INVALID_ROTOR_MAPPING);
     return  INVALID_ROTOR_MAPPING;
   }
     
@@ -148,22 +156,30 @@ Reflector::Reflector(char* mapping_config){
 int Reflector:: check_arg(char * arg){
   std::ifstream input(arg);
   //std::cout << "starting Reflector check\n";
-  if(!input.is_open())
+  if(!input.is_open()){
+    print_error(ERROR_OPENING_CONFIGURATION_FILE);
     return ERROR_OPENING_CONFIGURATION_FILE;
-  
+  }
   std::set<int> digits;
   int digit;
   while(input>>digit){
-    if (digit<0 || digit >25)
+    if (digit<0 || digit >25){
+      print_error(INVALID_INDEX);
       return INVALID_INDEX;
-    if (digits.find(digit) != digits.end())
+    }
+    if (digits.find(digit) != digits.end()){
+      print_error(INVALID_REFLECTOR_MAPPING);
       return INVALID_REFLECTOR_MAPPING;
+    }
     digits.insert(digit);
   }
-  if (!input.eof()) // what if it's last char.. 
+  if (!input.eof()){ // what if it's last char.. 
+    print_error(NON_NUMERIC_CHARACTER);
     return NON_NUMERIC_CHARACTER; // or 'a'
+  }
 
   if (digits.size() != 26){
+    print_error(INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS);
     return  INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS;
   }
     
@@ -194,24 +210,32 @@ Instruction Plugboard:: step(Instruction inp, bool debug){
 int Plugboard::check_arg(char* arg){
   std::ifstream input(arg);
   //std::cout << "starting Plugboard check\n";
-  if(!input.is_open())
+  if(!input.is_open()){
+    print_error(ERROR_OPENING_CONFIGURATION_FILE);
     return ERROR_OPENING_CONFIGURATION_FILE;
-  
+  }
   std::set<int> digits;
   int digit;
   while(input>>digit){
-    if (digit<0 || digit >25)
+    if (digit<0 || digit >25){
+      print_error(INVALID_INDEX);
       return INVALID_INDEX;
-    if (digits.find(digit) != digits.end())
+    }
+    if (digits.find(digit) != digits.end()){
+      print_error(IMPOSSIBLE_PLUGBOARD_CONFIGURATION);
       return IMPOSSIBLE_PLUGBOARD_CONFIGURATION;
+    }
     digits.insert(digit);
   }
   
-  if (!input.eof()) // what if it's last char.. 
+  if (!input.eof()){ // what if it's last char.. 
+    print_error(NON_NUMERIC_CHARACTER);
     return NON_NUMERIC_CHARACTER;
-
-  if (digits.size()%2 != 0)
+  }
+  if (digits.size()%2 != 0){
+    print_error(INCORRECT_NUMBER_OF_PLUGBOARD_PARAMETERS);
     return INCORRECT_NUMBER_OF_PLUGBOARD_PARAMETERS;
+  }
   return NO_ERROR;
 }
 
