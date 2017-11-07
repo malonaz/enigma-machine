@@ -12,7 +12,7 @@ int main(int argc, char **argv){
   // cout << "we have loaded "<<argc << " arguments!" <<endl;
   int flag;
   // std::cout <<"Error code: " << EnigmaMachine:: check_args(argc-1,argv + 1) << std::endl;
-  flag =   EnigmaMachine::check_args(argc-1,argv + 1);
+  flag = EnigmaMachine::check_args(argc-1,argv + 1);
 
   if (flag){
     print_error(flag);

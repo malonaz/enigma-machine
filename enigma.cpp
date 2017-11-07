@@ -60,7 +60,7 @@ int EnigmaMachine:: check_args(int argc, char** argv){
 int EnigmaMachine::change_rotor_pos(char *config){
   std::ifstream input(config);
   if (!input.is_open()){
-     print_error(ERROR_OPENING_CONFIGURATION_FILE);
+     
     return ERROR_OPENING_CONFIGURATION_FILE;
   }
 

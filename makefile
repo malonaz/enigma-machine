@@ -2,7 +2,7 @@ PROG:= enigma
 CXX := g++
 CXXFLAGS := -Wall -g
 
-ROTOR_POS:= rotors/null.pos
+ROTOR_POS:= rotors/test.pos
 
 
 enigma: main.o rotors.o sm.o enigma.o errors.o
