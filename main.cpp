@@ -9,7 +9,7 @@ using namespace std;
 
 int main(int argc, char **argv){
   ifstream input;
-  int c;
+  char c;
   for (int i = 1; i< argc; i++){
     std::cout << *(argv + i) << ": ";
     input.open(*(argv+i));
