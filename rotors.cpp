@@ -199,6 +199,9 @@ Plugboard::Plugboard(char* mapping_config){
     mapping[y] = x;
   }
   plugboard_input.close();
+  std::cout << "Plugboard Mapping: ";
+  for (int i = 0; i <26;i++)
+    std::cout << mapping[i] << " ";
 }
 
 Instruction Plugboard:: step(Instruction inp, bool debug){
