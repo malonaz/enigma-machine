@@ -5,23 +5,23 @@ CXXFLAGS := -Wall -g
 ROTOR_POS:= inputs/rotors/null.pos
 
 
-enigma: src/main.o src/rotors.o src/sm.o src/enigma.o
-	g++ -Wall -g -o enigma src/main.o src/rotors.o src/sm.o src/enigma.o
+enigma: main.o rotors.o sm.o enigma.o
+	g++ -Wall -g -o enigma main.o rotors.o sm.o enigma.o
 
-src/main.o: src/main.cpp include/rotors.h include/enigma.h
-	g++ -Wall -g -c src/main.cpp -o src/main.o
+main.o: main.cpp rotors.h enigma.h
+	g++ -Wall -g -c main.cpp -o main.o
 
-src/rotors.o: src/rotors.cpp include/rotors.h include/sm.h 
-	g++ -Wall -g -c src/rotors.cpp -o src/rotors.o 
+rotors.o: rotors.cpp rotors.h sm.h 
+	g++ -Wall -g -c rotors.cpp -o rotors.o 
 
-src/sm.o: src/sm.cpp include/sm.h include/errors.h
-	g++ -Wall -g -c src/sm.cpp -o src/sm.o
+sm.o: sm.cpp sm.h errors.h
+	g++ -Wall -g -c sm.cpp -o sm.o
 
-src/enigma.o: src/enigma.cpp include/enigma.h include/rotors.h 
-	g++ -Wall -g -c src/enigma.cpp -o src/enigma.o
+enigma.o: enigma.cpp enigma.h rotors.h 
+	g++ -Wall -g -c enigma.cpp -o enigma.o
 
 clean:
-	rm -f enigma src/*.o
+	rm -f enigma *.o
 
 test:
 	make
