@@ -24,10 +24,12 @@ int main(int argc, char **argv){
       
   EnigmaMachine enigma(argc-1, argv + 1);
 
-  flag =enigma.change_rotor_pos(*(argv+argc-1)); 
-  if(flag){
-    print_error(flag);
-    return flag;
+  if (argc-1 != MIN_ENIGMA_ARGS){
+    flag =enigma.change_rotor_pos(*(argv+argc-1)); 
+    if(flag){
+      print_error(flag);
+      return flag;
+    }
   }
 
   

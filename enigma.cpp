@@ -30,7 +30,6 @@ EnigmaMachine:: EnigmaMachine(int argc, char** argv)
 
 int EnigmaMachine:: check_args(int argc, char** argv){
   if (argc < MIN_ENIGMA_ARGS){
-
     return INSUFFICIENT_NUMBER_OF_PARAMETERS;
   }
 
