@@ -14,7 +14,7 @@ int main(int argc, char **argv){
   EnigmaMachine enigma(argc-1, argv + 1);
 
   if(enigma.change_rotor_pos(*(argv+argc-1)))
-    return enigma.change_rotor_pos(*(argv+argc-1));
+    std::cout<< "rotor pos: "<< enigma.change_rotor_pos(*(argv+argc-1)) << "\n";
   
   enigma.test();
   

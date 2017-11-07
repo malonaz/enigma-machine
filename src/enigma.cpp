@@ -57,7 +57,8 @@ int EnigmaMachine::change_rotor_pos(char *config){
   while(input >> digit){
     if (digit <0 || digit>25)
       return INVALID_INDEX;
-    rotors[count]->set_offset(digit);
+    if (count < num_rotors)
+      rotors[count]->set_offset(digit);
     count++;
   }
   if (!input.eof())
