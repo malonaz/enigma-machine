@@ -193,15 +193,12 @@ Plugboard::Plugboard(char* mapping_config){
   for (int i = 0; i<26;i++)
     mapping[i] = i;
   int x,y;
-  while(plugboard_input.eof()){
-    std::cin >> x >> y;
+  while(!plugboard_input.eof()){
+    plugboard_input >> x >> y;
     mapping[x] = y;
     mapping[y] = x;
   }
   plugboard_input.close();
-  std::cout << "Plugboard Mapping: ";
-  for (int i = 0; i <26;i++)
-    std::cout << mapping[i] << " ";
 }
 
 Instruction Plugboard:: step(Instruction inp, bool debug){
