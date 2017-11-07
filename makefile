@@ -23,10 +23,10 @@ enigma.o: enigma.cpp enigma.h rotors.h
 clean:
 	rm -f enigma *.o
 
-test:
-	make
-	./enigma inputs/plugboards/I.pb inputs/reflectors/II.rf inputs/rotors/I.rot inputs/rotors/II.rot inputs/rotors/III.rot $(ROTOR_POS)
+#test:
+#	make
+#	./enigma inputs/plugboards/I.pb inputs/reflectors/II.rf inputs/rotors/I.rot inputs/rotors/II.rot inputs/rotors/III.rot $(ROTOR_POS)
 
-debug:
-	gdb --args enigma inputs/plugboards/I.pb inputs/reflectors/II.rf inputs/rotors/I.rot inputs/rotors/II.rot inputs/rotors/III.rot inputs/rotors/II.pos
+#debug:
+#	gdb --args enigma inputs/plugboards/I.pb inputs/reflectors/II.rf inputs/rotors/I.rot inputs/rotors/II.rot inputs/rotors/III.rot inputs/rotors/II.pos
 
