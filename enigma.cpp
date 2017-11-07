@@ -44,7 +44,7 @@ int EnigmaMachine:: check_args(int argc, char** argv){
 
     return error_code;
   }
-  for (int i = 2; i !=argc-1; i++){
+  for (int i = MIN_ENIGMA_ARGS; i < argc-1; i++){
     error_code = Rotor::check_arg(*argv++);
     if (error_code){
 

@@ -8,9 +8,9 @@
 using namespace std;
 
 int main(int argc, char **argv){
-  cout << "DEBUG STARTS HERE" << endl;
-  for (int i =0; i<argc; i++)
-    cout << *(argv+i) << endl;
+  // cout << "DEBUG STARTS HERE" << endl;
+  //for (int i =0; i<argc; i++)
+  //  cout << *(argv+i) << endl;
   // cout << "\n\nWelcome \n\n";
   // cout << "we have loaded "<<argc << " arguments!" <<endl;
   int flag;
@@ -24,14 +24,13 @@ int main(int argc, char **argv){
       
   EnigmaMachine enigma(argc-1, argv + 1);
 
-  if (argc-1 != MIN_ENIGMA_ARGS){
+  if (argc-1 >  MIN_ENIGMA_ARGS){
     flag =enigma.change_rotor_pos(*(argv+argc-1)); 
     if(flag){
       print_error(flag);
       return flag;
     }
   }
-
   
   if (!enigma.testLab())
     return INVALID_INPUT_CHARACTER;

@@ -30,6 +30,13 @@ test:
 	make
 	./enigma plugboards/I.pb reflectors/II.rf rotors/I.rot rotors/II.rot rotors/III.rot $(ROTOR_POS)
 
+test2:
+	make
+	./enigma plugboards/I.pb reflectors/II.rf 
+
+
+
+
 debug:
 	gdb --args enigma plugboards/I.pb reflectors/II.rf rotors/I.rot rotors/II.rot rotors/III.rot rotors/II.pos
 
