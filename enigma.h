@@ -6,8 +6,8 @@
 #include "rotors.h"
 
 
-// min argc = 1 pb + 1 ref + 1 rot_pos = 3
-#define MIN_ARGS 3
+// min argc = 1 pb + 1 ref = 2
+#define MIN_ENIGMA_ARGS 2
 
 
 class EnigmaMachine: public Cascade{

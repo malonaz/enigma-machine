@@ -2,8 +2,9 @@
 #include <fstream>
 
 EnigmaMachine:: EnigmaMachine(int argc, char** argv)
-  :num_rotors(argc-MIN_ARGS){
-  
+  :num_rotors(argc-MIN_ENIGMA_ARGS){
+  if (num_rotors  !=0)
+    num_rotors--; //must include a rotor_pos_config
   // Instantiating components on the heap
   plugboard =  new Plugboard(*argv++);
   reflector = new Reflector(*argv++);
@@ -27,7 +28,7 @@ EnigmaMachine:: EnigmaMachine(int argc, char** argv)
 
 
 int EnigmaMachine:: check_args(int argc, char** argv){
-  if (argc -1 < 3)
+  if (argc < MIN_ENIGMA_ARGS)
     return INSUFFICIENT_NUMBER_OF_PARAMETERS;
 
   int error_code;
@@ -99,7 +100,7 @@ bool EnigmaMachine::testLab(bool debug){
     if (debug)
       std::cout << input << " maps to ";
     std::cout << convert_int(output);
-    std::cout << '\n';
+    //    std::cout << '\n';
   }
   return true;
 }

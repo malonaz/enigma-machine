@@ -37,7 +37,7 @@ Rotor::Rotor(char* mapping_config)
 
 int Rotor::check_arg(char* arg){
   std::ifstream input(arg);
-  std::cout << "starting Rotor check\n";
+  //std::cout << "starting Rotor check\n";
   if(!input.is_open())
     return ERROR_OPENING_CONFIGURATION_FILE;
   
@@ -147,7 +147,7 @@ Reflector::Reflector(char* mapping_config){
 
 int Reflector:: check_arg(char * arg){
   std::ifstream input(arg);
-  std::cout << "starting Reflector check\n";
+  //std::cout << "starting Reflector check\n";
   if(!input.is_open())
     return ERROR_OPENING_CONFIGURATION_FILE;
   
@@ -193,7 +193,7 @@ Instruction Plugboard:: step(Instruction inp, bool debug){
 
 int Plugboard::check_arg(char* arg){
   std::ifstream input(arg);
-  std::cout << "starting Plugboard check\n";
+  //std::cout << "starting Plugboard check\n";
   if(!input.is_open())
     return ERROR_OPENING_CONFIGURATION_FILE;
   
