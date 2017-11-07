@@ -19,6 +19,11 @@ int main(int argc, char **argv){
     input.close();
     cout << '\n';
   }
+  cout << "input: ";
+  while (cin >> c){
+    cout << c << " ";
+  }
+  cout << '\n';
   return 0;
   // cout << "DEBUG STARTS HERE" << endl;
   //for (int i =0; i<argc; i++)
