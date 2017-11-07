@@ -34,6 +34,9 @@ test2:
 	make
 	./enigma plugboards/I.pb reflectors/II.rf 
 
+test3:
+	make
+	./enigma plugboards/empty.pb reflectors/II.rf 
 
 
 

@@ -210,11 +210,13 @@ Instruction Plugboard:: step(Instruction inp, bool debug){
 
 int Plugboard::check_arg(char* arg){
   std::ifstream input(arg);
-  //std::cout << "starting Plugboard check\n";
-  if(!input.is_open()){
 
+  std::cout << "starting Plugboard check";
+
+  if(!input.is_open()){
     return ERROR_OPENING_CONFIGURATION_FILE;
   }
+  
   std::set<int> digits;
   int digit;
   while(input>>digit){
