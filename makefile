@@ -29,10 +29,13 @@ clean:
 
 
 
-test:	test.o rotors.o sm.o enigma.o errors.o
-	g++ -Wall -g -o test test.o rotors.o sm.o enigma.o errors.o
-	clear
-	./test
+tester:	test.o rotors.o sm.o enigma.o errors.o
+	g++ -Wall -g -o tester test.o rotors.o sm.o enigma.o errors.o
 
 test.o: test.cpp rotors.h enigma.h errors.h
 	g++ -Wall -g -c test.cpp
+
+test:
+	make tester
+	clear	
+	./tester

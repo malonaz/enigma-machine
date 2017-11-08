@@ -11,26 +11,28 @@ using namespace std;
 
 int main(int argc, char **argv){
 
-  int flag = EnigmaMachine::check_args(argc-1,argv + 1);
+  ErrorReport error_report = EnigmaMachine::check_args(argc-1,argv + 1);
 
-  if (flag){
-    print_error(flag);
-    return flag;
+  if (error_report.get_code()){
+    cerr << error_report;
+    return error_report.get_code();
   }
 
   EnigmaMachine enigma(argc-1, argv + 1);
   
   if (argc-1 >  MIN_ENIGMA_ARGS){
-    flag =enigma.change_rotor_pos(*(argv+argc-1)); 
-    if(flag){
-      print_error(flag);
-      return flag;
+    ErrorReport rotor_setting_report =enigma.change_rotor_pos(*(argv+argc-1)); 
+    if(rotor_setting_report.get_code()){
+      cerr << rotor_setting_report;
+      return rotor_setting_report.get_code();
     }
   }
   
-  if (!enigma.testLab())
-    return INVALID_INPUT_CHARACTER;
+  if (!enigma.testLab()){
+    ErrorReport invalid_character_report(INVALID_INPUT_CHARACTER);
+    return invalid_character_report.get_code();
+  }
   
-  return 0;
+  return NO_ERROR;
 }
 

@@ -18,7 +18,6 @@ void print_file(const char* root, const char * file){
   string str;
   getline(input,str);
   cout << str << endl;
-  //cout << "Model error stream: " << str;
 }
 
 
@@ -29,24 +28,22 @@ void run_test(int argc,char** argv, const char* test_num){
   string root = "tests/test";
   root += test_num;
   root.append("/");
-  int current_error_code;
 
-  current_error_code = EnigmaMachine::check_args(argc,argv);
-
-  if (current_error_code){
+  ErrorReport error_report = EnigmaMachine::check_args(argc,argv);
+  
+  if (error_report.get_code()){
     print_file(root.c_str(),"error_stream");
-    print_error(current_error_code);
-    cout << "your error code: " << current_error_code;
+    cerr << error_report;
     return;
   }
 
   EnigmaMachine enigma(argc, argv);
-
+  
   if ( argc >  MIN_ENIGMA_ARGS){
-    current_error_code =enigma.change_rotor_pos(*(argv + argc -1)); 
-    if(current_error_code){
+    ErrorReport error_report2 = enigma.change_rotor_pos(*(argv + argc -1)); 
+    if(error_report2.get_code()){
       print_file(root.c_str(),"error_stream");
-      print_error(current_error_code);
+      cerr << error_report2;
       return;
     }
   }
@@ -89,5 +86,33 @@ int main(){
   argc = 5;
   char *argv4[] = {"tests/test4/plugboard.pb", "tests/test4/reflector.rf", "tests/test4/rotor.rot", "tests/test4/rotor2.rot", "tests/test4/rotor.pos"};
   run_test(argc,argv4,"4");
+
+  argc = 0;
+  char *argv5[] = {};
+  run_test(argc,argv5,"5");
+
+  argc = 4;
+  char *argv6[] = {"tests/test6/plugboard.pb", "tests/test6/reflector.rf", "tests/test6/rotor.rot", "tests/test6/rotor.pos"};
+  run_test(argc,argv6,"6");
+
+  argc = 4;
+  char *argv7[] = {"tests/test7/plugboard.pb", "tests/test7/reflector.rf", "tests/test7/rotor.rot", "tests/test7/rotor.pos"};
+  run_test(argc,argv7,"7");
+
+  argc = 4;
+  char *argv8[] = {"tests/test8/plugboard.pb", "tests/test8/reflector.rf", "tests/test8/rotor.rot", "tests/test8/rotor.pos"};
+  run_test(argc,argv8,"8");
+
+  argc = 4;
+  char *argv9[] = {"tests/test9/plugboard.pb", "tests/test9/reflector.rf", "tests/test9/rotor.rot", "tests/test9/rotor.pos"};
+  run_test(argc,argv9,"9");
+
+    argc = 4;
+  char *argv10[] = {"tests/test10/plugboard.pb", "tests/test10/reflector.rf", "tests/test10/rotor.rot", "tests/test10/rotor.pos"};
+  run_test(argc,argv10,"10");
+
+  
+  cout<< "\n\n\n\n";
+
   return 0;
 }

@@ -95,7 +95,7 @@ public:
    * returns the appropriate error code. 
    * returns NO_ERROR otherwise.
    */
-  static int check_arg(const char* arg);
+  static ErrorReport check_arg( char* arg);
   
   //Debugging Methods, to be removed !
   void print_attributes();
@@ -175,7 +175,7 @@ public:
    * returns the appropriate error code. 
    * returns NO_ERROR otherwise.
    */
-  static int check_arg(char *arg);
+  static ErrorReport check_arg(char *arg);
 };
 
 
@@ -219,7 +219,7 @@ public:
    * returns the appropriate error code. 
    * returns NO_ERROR otherwise.
    */
-  static int check_arg(char* arg);
+  static ErrorReport check_arg(char* arg);
 };
 
 #endif

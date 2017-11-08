@@ -28,12 +28,12 @@ public:
    ~EnigmaMachine();
 
   // Methods
-  int change_rotor_pos(char* config);
+  ErrorReport change_rotor_pos(char* config);
   bool testLab(bool debug = false);
   bool transduce(const char* filename);
   
   // Static Methods
-  static int check_args(int argc, char** argv);
+  static ErrorReport check_args(int argc, char** argv);
 
   
 };

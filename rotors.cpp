@@ -34,12 +34,11 @@ Rotor::Rotor(char* mapping_config)
   rotor_input.close();
 }
 
-int Rotor::check_arg(const char* arg){
+ErrorReport Rotor::check_arg(char* arg){
   std::ifstream input(arg);
-  if(!input.is_open()){
-
-    return ERROR_OPENING_CONFIGURATION_FILE;
-  }
+  if(!input.is_open())
+    return ErrorReport(ERROR_OPENING_CONFIGURATION_FILE,arg);
+  
   std::set<int> digits;
   int digit;
   int count = 0;
@@ -47,25 +46,25 @@ int Rotor::check_arg(const char* arg){
   while(input>>digit){
     
     if (digit<0 || digit >25){
-      return INVALID_INDEX;
+      return ErrorReport(INVALID_INDEX,arg);
     }
     if (count < 26){
       if (digits.find(digit) != digits.end()){
-	return INVALID_ROTOR_MAPPING;
+	return ErrorReport(INVALID_ROTOR_MAPPING,arg);
       }
       digits.insert(digit);
       count++;
     }
   }
   if (!input.eof()){ // what if it's last char..
-    return NON_NUMERIC_CHARACTER; // or 'a'
+    return ErrorReport(NON_NUMERIC_CHARACTER,arg); // or 'a'
   }
 
   if (digits.size() != 26){
-    return  INVALID_ROTOR_MAPPING;
+    return  ErrorReport(INVALID_ROTOR_MAPPING,arg);
   }
     
-  return NO_ERROR;  
+  return ErrorReport(NO_ERROR,arg);
 }
 
 
@@ -152,37 +151,39 @@ Reflector::Reflector(char* mapping_config){
   reflector_input.close();    
 }
 
-int Reflector:: check_arg(char * arg){
+ErrorReport Reflector:: check_arg(char * arg){
+  ErrorReport error_report(arg);
   std::ifstream input(arg);
-  //std::cout << "starting Reflector check\n";
-  if(!input.is_open()){
 
-    return ERROR_OPENING_CONFIGURATION_FILE;
+  if(!input.is_open()){
+    error_report.set_error_code(ERROR_OPENING_CONFIGURATION_FILE);
+    return error_report;
   }
+  
   std::set<int> digits;
   int digit;
   while(input>>digit){
     if (digit<0 || digit >25){
-
-      return INVALID_INDEX;
+      error_report.set_error_code(INVALID_INDEX);
+      return error_report;
     }
     if (digits.find(digit) != digits.end()){
-
-      return INVALID_REFLECTOR_MAPPING;
+      error_report.set_error_code(INVALID_REFLECTOR_MAPPING);
+      return error_report;
     }
     digits.insert(digit);
   }
   if (!input.eof()){ // what if it's last char.. 
-
-    return NON_NUMERIC_CHARACTER; // or 'a'
+    error_report.set_error_code(NON_NUMERIC_CHARACTER);
+    return error_report;
   }
 
-  if (digits.size() != 26){
-
-    return  INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS;
+  if (digits.size()%2 != 0){
+    error_report.set_error_code(INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS);
+    return error_report;
   }
     
-  return NO_ERROR;  
+  return error_report;  
 }
 
 
@@ -206,35 +207,31 @@ Instruction Plugboard:: step(Instruction inp, bool debug){
   return Instruction(mapping[inp.value],NO_MSG);
 }
 
-int Plugboard::check_arg(char* arg){
+ErrorReport Plugboard::check_arg(char* arg){
   std::ifstream input(arg);
-  
   if(!input.is_open()){
-    return ERROR_OPENING_CONFIGURATION_FILE;
+    return ErrorReport(ERROR_OPENING_CONFIGURATION_FILE,arg);
   }
   
   std::set<int> digits;
   int digit;
   while(input>>digit){
-    if (digit<0 || digit >25){
-
-      return INVALID_INDEX;
+    if (invalid_index(digit)){
+      return ErrorReport(INVALID_INDEX, arg);
     }
-    if (digits.find(digit) != digits.end()){
-      return IMPOSSIBLE_PLUGBOARD_CONFIGURATION;
+    if (is_in_set(digits,digit)){
+      return ErrorReport(IMPOSSIBLE_PLUGBOARD_CONFIGURATION, arg);
     }
     digits.insert(digit);
   }
   
   if (!input.eof()){ // what if it's last char.. 
-
-    return NON_NUMERIC_CHARACTER;
+    return ErrorReport(NON_NUMERIC_CHARACTER, arg);
   }
   if (digits.size()%2 != 0){
-
-    return INCORRECT_NUMBER_OF_PLUGBOARD_PARAMETERS;
+    return ErrorReport(INCORRECT_NUMBER_OF_PLUGBOARD_PARAMETERS, arg);
   }
-  return NO_ERROR;
+  return ErrorReport(NO_ERROR);
 }
 
 

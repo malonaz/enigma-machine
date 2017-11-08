@@ -1,3 +1,4 @@
+// -*- C++ -*-
 #include <fstream>
 #include "enigma.h"
 #include "errors.h"
@@ -28,63 +29,63 @@ EnigmaMachine:: EnigmaMachine(int argc, char** argv)
 }
 
 
-int EnigmaMachine:: check_args(int argc, char** argv){
-
+ErrorReport EnigmaMachine:: check_args(int argc, char** argv){
+  
   if (argc < MIN_ENIGMA_ARGS){
-    return INSUFFICIENT_NUMBER_OF_PARAMETERS;
+    return ErrorReport(INSUFFICIENT_NUMBER_OF_PARAMETERS);
   }
   
-
   
-  int error_code;
-  error_code = Plugboard::check_arg(*argv++);
+  
+  ErrorReport plugboard_report = Plugboard::check_arg(*argv++);
 
-  if (error_code){
-    return error_code;
-  }
-  error_code = Reflector::check_arg(*argv++);
-  if (error_code){
+  if (plugboard_report.get_code())
+    return plugboard_report;
+  
+  
+  ErrorReport reflector_report = Reflector::check_arg(*argv++);
+  if (reflector_report.get_code())
+    return reflector_report;
 
-    return error_code;
-  }
+
+  ErrorReport* error_report_ptr;
   for (int i = MIN_ENIGMA_ARGS; i < argc-1; i++){
-    error_code = Rotor::check_arg(*argv++);
-    if (error_code){
-
-      return error_code;
+    error_report_ptr =new ErrorReport(Rotor::check_arg(*argv++));
+    if (error_report_ptr->get_code()){
+      ErrorReport error_report = *error_report_ptr;
+      delete error_report_ptr;
+      return error_report;
     }
+    delete error_report_ptr;
   }
+  
   
   // check file openings?
-  return NO_ERROR;
+  return ErrorReport(NO_ERROR);
 }
 
-int EnigmaMachine::change_rotor_pos(char *config){
-  std::ifstream input(config);
-  if (!input.is_open()){
-     
-    return ERROR_OPENING_CONFIGURATION_FILE;
-  }
 
+ErrorReport EnigmaMachine::change_rotor_pos(char *config){
+  std::ifstream input(config);
+  if (!input.is_open())
+    return ErrorReport(ERROR_OPENING_CONFIGURATION_FILE,config);
+  
   int digit, count = 0;
   while(input >> digit){
-    if (digit <0 || digit>25){
-
-      return INVALID_INDEX;
-    }
+    if (digit <0 || digit>25)
+      return ErrorReport(INVALID_INDEX,config);
+    
     if (count < num_rotors)
       rotors[count]->set_offset(digit);
     count++;
   }
-  if (!input.eof()){
-
-    return NON_NUMERIC_CHARACTER;
-  }
-  if (count != num_rotors){
+  if (!input.eof())
+    return ErrorReport(NON_NUMERIC_CHARACTER, config);
  
-    return NO_ROTOR_STARTING_POSITION;
-  }
-  return NO_ERROR;
+  if (count != num_rotors) 
+    return ErrorReport(NO_ROTOR_STARTING_POSITION,config);
+  
+  return ErrorReport(NO_ERROR, config);
 }
 
 EnigmaMachine:: ~EnigmaMachine(){
@@ -115,7 +116,6 @@ bool EnigmaMachine::testLab(bool debug){
     if (debug)
       std::cout << input << " maps to ";
     std::cout << convert_int(output);
-    //    std::cout << '\n';
   }
   return true;
 }
