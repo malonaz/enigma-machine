@@ -26,20 +26,13 @@ errors.o: errors.cpp errors.h
 clean:
 	rm -f enigma *.o
 
-test:
-	make
-	./enigma plugboards/I.pb reflectors/II.rf rotors/I.rot rotors/II.rot rotors/III.rot $(ROTOR_POS)
-
-test2:
-	make
-	./enigma plugboards/I.pb reflectors/II.rf 
-
-test3:
-	make
-	./enigma plugboards/empty.pb reflectors/II.rf 
 
 
 
-debug:
-	gdb --args enigma plugboards/I.pb reflectors/II.rf rotors/I.rot rotors/II.rot rotors/III.rot rotors/II.pos
+test:	test.o rotors.o sm.o enigma.o errors.o
+	g++ -Wall -g -o test test.o rotors.o sm.o enigma.o errors.o
+	clear
+	./test
 
+test.o: test.cpp rotors.h enigma.h errors.h
+	g++ -Wall -g -c test.cpp

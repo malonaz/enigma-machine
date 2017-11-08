@@ -13,7 +13,7 @@
 class EnigmaMachine: public Cascade{
 private:
   Plugboard *plugboard;
-  Disk *entry_disk;
+  EntryDisk *entry_disk;
   Reflector *reflector;
   Rotor **rotors;
   int num_rotors;
@@ -30,6 +30,7 @@ public:
   // Methods
   int change_rotor_pos(char* config);
   bool testLab(bool debug = false);
+  bool transduce(const char* filename);
   
   // Static Methods
   static int check_args(int argc, char** argv);

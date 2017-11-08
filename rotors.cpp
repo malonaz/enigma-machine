@@ -7,19 +7,18 @@
 #include "errors.h"
 #include "sm.h"
 
-Instruction Disk::step(Instruction inp, bool debug){
-  int output = inp.value;
-  Instruction instr(output,ROTATE_NOW);
+Instruction EntryDisk::step(Instruction instr, bool debug){
+  Instruction instr_output(instr.value,ROTATE_NOW);
+
   if (debug)
-    std::cout << convert_int(output) << "-d->" << convert_int(output) << "\n";
-  return instr;
+    std::cout << convert_int(instr.value) << "-d->" << convert_int(instr.value) << "\n";
+
+  return instr_output;
 }
 
-
 Rotor::Rotor(char* mapping_config)
-  :offset(0){
+  :offset(0),inverse(false){
   std::ifstream rotor_input(mapping_config);
-  inverse = true;
   int map_to;
   mapping.resize(26);
   inverse_mapping.resize(26);
@@ -35,9 +34,8 @@ Rotor::Rotor(char* mapping_config)
   rotor_input.close();
 }
 
-int Rotor::check_arg(char* arg){
+int Rotor::check_arg(const char* arg){
   std::ifstream input(arg);
-  //std::cout << "starting Rotor check\n";
   if(!input.is_open()){
 
     return ERROR_OPENING_CONFIGURATION_FILE;
@@ -45,14 +43,14 @@ int Rotor::check_arg(char* arg){
   std::set<int> digits;
   int digit;
   int count = 0;
+  
   while(input>>digit){
+    
     if (digit<0 || digit >25){
-
       return INVALID_INDEX;
     }
     if (count < 26){
       if (digits.find(digit) != digits.end()){
-
 	return INVALID_ROTOR_MAPPING;
       }
       digits.insert(digit);
@@ -60,12 +58,10 @@ int Rotor::check_arg(char* arg){
     }
   }
   if (!input.eof()){ // what if it's last char..
-
     return NON_NUMERIC_CHARACTER; // or 'a'
   }
 
   if (digits.size() != 26){
-
     return  INVALID_ROTOR_MAPPING;
   }
     
@@ -82,37 +78,34 @@ void Rotor:: rotate(){
   offset = (offset+1)%26;
 }
 
-Instruction Rotor:: step(Instruction inp, bool debug){
-  inverse = !inverse;
-  int offset_inp, msg = NO_MSG, output;
-  if (inp.message == ROTATE_NOW){
+Instruction Rotor:: step(Instruction instr, bool debug){
+  int offset_value, output_value, output_msg = NO_MSG;
+  if (instr.message == ROTATE_NOW){
     if (debug)
       std::cout << "rotating-->";
     rotate();
-    
   }
+  
   if (notch_engaged() && !inverse)
-    msg = ROTATE_NOW;
+    output_msg = ROTATE_NOW;
   
-  offset_inp =(inp.value + offset)%26;
+  offset_value =(instr.value + offset)%26;
+
+  if (!inverse)
+    output_value = mapping[offset_value];
+  else
+    output_value = inverse_mapping[offset_value];
   
-  if (!inverse){
-    output = mapping[offset_inp];
-    output = output - offset;
-    if (output<0)
-      output+= 26;
-    if (debug)
-      std:: cout << (char)(inp.value +97) << "-off->" << (char)(offset_inp + 97) << "-->" <<(char)( output+97) << "\n";
-    return (Instruction(output,msg));
-  }
-  
-  output = inverse_mapping[offset_inp];
-  output = output - offset;
-  if (output<0)
-    output+=26;
+  output_value -= offset;
+  if (output_value<0)
+    output_value += 26;
+
   if (debug)
-    std:: cout << (char)(inp.value +97) << "-off->" << (char)(offset_inp+97) << "-inv->" <<(char)(output+97) << "       " << msg <<"\n";
-  return (Instruction(output,msg));
+    std::cout << (char)(instr.value+65) << "-off->" << (char)(offset_value + 65) << "-rot->" << (char)(output_value + 65) << "\n";
+
+  inverse = !inverse;		  
+
+  return (Instruction(output_value,output_msg));
 }
 
 
@@ -124,7 +117,13 @@ bool Rotor:: notch_engaged(){
   return false;
 }
 
-Cascade:: Cascade(SM** sm_ptrs,int num_ptrs){
+
+
+
+
+
+
+Cascade:: Cascade(StateMachine** sm_ptrs,int num_ptrs){
   for (int i =0; i<num_ptrs; i++){
     this->sm_ptrs.push_back(sm_ptrs[i]);
   }
@@ -133,7 +132,7 @@ Cascade:: Cascade(SM** sm_ptrs,int num_ptrs){
 Instruction Cascade:: step(Instruction inp, bool debug){
   Instruction current_output = inp;
   
-  SM* current_sm_ptr;
+  StateMachine* current_sm_ptr;
   for (unsigned i = 0; i<sm_ptrs.size(); i++){
     current_sm_ptr = sm_ptrs[i];
     current_output = current_sm_ptr->step(current_output,debug);
@@ -193,8 +192,7 @@ Plugboard::Plugboard(char* mapping_config){
   for (int i = 0; i<26;i++)
     mapping[i] = i;
   int x,y;
-  while(!plugboard_input.eof()){
-    plugboard_input >> x >> y;
+  while(plugboard_input >> x >>y){
     mapping[x] = y;
     mapping[y] = x;
   }
@@ -210,9 +208,7 @@ Instruction Plugboard:: step(Instruction inp, bool debug){
 
 int Plugboard::check_arg(char* arg){
   std::ifstream input(arg);
-
-  std::cout << "starting Plugboard check";
-
+  
   if(!input.is_open()){
     return ERROR_OPENING_CONFIGURATION_FILE;
   }

@@ -4,16 +4,20 @@
 #include "sm.h"
 
 
+/* internal helper function which, given an ascii character in the range [A-Z],
+   returns the corresponding integer in the range [0-25].*/
 int convert_char(char c){
   return c-65;
 }
 
+/* internal helper function which, given an integer in the range [0,25],
+   returns the corresponding ascii character in the range [A-Z]. */
 char convert_int(int c){
   return c+65;
 }
 
 
-void SM::run(bool debug){
+void StateMachine::run(bool debug){
   std::string str;
   std::cout << "\nEnter a string:\n";
   std::getline(std::cin,str);
@@ -23,7 +27,7 @@ void SM::run(bool debug){
     if (str[i] == ' '){
       std::cout << ' ';
     }else{
-      val = convert_char(std::tolower(str[i]));
+      val = convert_char(str[i]);//std::tolower(str[i]));
       c = convert_int(step(Instruction(val,NO_MSG),debug).value);
       std:: cout << c;
     }
@@ -31,24 +35,7 @@ void SM::run(bool debug){
   std::cout << std::endl;
 }
 
-void SM::test(bool debug){
-  std::cout << "Enter a char, then press enter\n";
-  char input;
-  int output;
-  Instruction instr(0,NO_MSG);
-  while(std::cin >> input){
-    instr.value = convert_char(input);
-    output = step(instr,debug).value;
-    if (debug)
-      std::cout << input << " maps to ";
-    std::cout << convert_int(output);
-    std::cout << '\n';
-  }
-}
-
-
-
-Instruction SM:: step(Instruction inp, bool debug){
-  Instruction instruction(inp);
+Instruction StateMachine:: step(Instruction instr, bool debug){
+  Instruction instruction(instr);
   return instruction;
 }

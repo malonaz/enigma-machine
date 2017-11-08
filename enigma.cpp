@@ -9,7 +9,7 @@ EnigmaMachine:: EnigmaMachine(int argc, char** argv)
   // Instantiating components on the heap
   plugboard =  new Plugboard(*argv++);
   reflector = new Reflector(*argv++);
-  entry_disk =  new Disk();
+  entry_disk =  new EntryDisk();
   rotors = new Rotor*[num_rotors];
   for (int i =0; i< num_rotors; i++)
     rotors[i] = new Rotor(*argv++);
@@ -29,14 +29,17 @@ EnigmaMachine:: EnigmaMachine(int argc, char** argv)
 
 
 int EnigmaMachine:: check_args(int argc, char** argv){
+
   if (argc < MIN_ENIGMA_ARGS){
     return INSUFFICIENT_NUMBER_OF_PARAMETERS;
   }
+  
 
+  
   int error_code;
   error_code = Plugboard::check_arg(*argv++);
-  if (error_code){
 
+  if (error_code){
     return error_code;
   }
   error_code = Reflector::check_arg(*argv++);
@@ -116,3 +119,24 @@ bool EnigmaMachine::testLab(bool debug){
   }
   return true;
 }
+
+bool EnigmaMachine::transduce(const char *filename){
+  std::ifstream inputs(filename);
+  char input;
+  int output;
+  Instruction instr(0,NO_MSG);
+  while(inputs >> input){
+   
+    if (input <'A' || input > 'Z'){
+      return false;
+    }
+    
+    instr.value = convert_char(input);
+    output = step(instr).value;
+    
+    std::cout << convert_int(output);
+  }
+  return true;
+}
+
+

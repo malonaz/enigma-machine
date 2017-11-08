@@ -14,3 +14,13 @@
 
 4) check plugboard::check_arg.
    what if the last char of input is non_numeric?? will input.eof still work
+
+
+
+5) try to make StateMachine abstract & remove state
+
+6) remove inverse mapping...
+
+7) remove internal helper functions from header files
+
+8) remove debugging methods
