@@ -1,10 +1,11 @@
 // -*- C++ -*-
 #ifndef ERRORS_H
 #define ERRORS_H
-//
+
 
 #include <set>
 #include <cstring>
+#include <iostream>
 
 /* error codes  */
 #define INSUFFICIENT_NUMBER_OF_PARAMETERS		1

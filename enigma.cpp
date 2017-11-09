@@ -1,7 +1,10 @@
 // -*- C++ -*-
 #include <fstream>
-#include "enigma.h"
+
 #include "errors.h"
+#include "reflector.h"
+#include "enigma.h"
+
 
 EnigmaMachine:: EnigmaMachine(int argc, char** argv)
   :num_rotors(argc-MIN_ENIGMA_ARGS){

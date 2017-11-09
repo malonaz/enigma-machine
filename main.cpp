@@ -2,10 +2,10 @@
 #include <fstream>
 #include<vector>
 #include <string>
-#include "rotors.h"
+//#include "rotors.h"
 #include "enigma.h"
 #include "errors.h"
-
+//#include "reflector.h"
 
 using namespace std;
 

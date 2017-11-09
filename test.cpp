@@ -1,11 +1,15 @@
+
 #include <iostream>
 #include <fstream>
 #include<vector>
 #include <string>
-#include "rotors.h"
+#include <cstring>
+
+
+//#include "rotors.h"
 #include "enigma.h"
 #include "errors.h"
-
+//#include "reflector.h"
 
 using namespace std;
 
@@ -61,55 +65,73 @@ void run_test(int argc,char** argv, const char* test_num){
   
 }
 
+void increment_argv(char** argv, const char x, const char y){
+  for (int i =0; i< 6; i++){
+    argv[i][10] = x;
+    argv[i][11] = y;
+  }
+}
+
 int main(){
   cout << "TESTING..." << endl;
+
+  char plugboard[50], reflector[50], rotor[50], rotor2[50], rotor3[50], rotor_pos[50];
+  strcpy(plugboard,"tests/test00/plugboard.pb");
+  strcpy(reflector, "tests/test00/reflector.rf");
+  strcpy(rotor, "tests/test00/rotor.rot");
+  strcpy(rotor2,"tests/test00/rotor2.rot");
+  strcpy(rotor3,"tests/test00/rotor3.rot");
+  strcpy(rotor_pos, "tests/test00/rotor.pos");
+  char* argv[10] = {plugboard,reflector,rotor,rotor2,rotor3,rotor_pos};
+  
   //test 0
   int argc = 6;
-  char *argv0[] = {"tests/test0/plugboard.pb", "tests/test0/reflector.rf", "tests/test0/I.rot", "tests/test0/II.rot", "tests/test0/III.rot", "tests/test0/rotors.pos"};
-  run_test(argc,argv0,"0");
+  run_test(argc,argv,"00");
 
   // test1
   argc =2;
-  char *argv1[] = {"tests/test1/plugboard.pb", "tests/test1/reflector.rf"};
-  run_test(argc,argv1,"1");
+  increment_argv(argv,'0','1');
+  run_test(argc,argv,"01");
 
   argc = 2;
-  char *argv2[] = {"tests/test2/plugboard.pb", "tests/test2/reflector.rf"};
-  run_test(argc,argv2,"2");
-
+  increment_argv(argv,'0','2');
+  run_test(argc,argv,"02");
 
   argc = 2;
-  char *argv3[] = {"tests/test3/plugboard.pb", "tests/test3/reflector.rf"};
-  run_test(argc,argv3, "3");
+  increment_argv(argv,'0','3');
+  run_test(argc,argv, "03");
 
-
+  argv[4] = rotor_pos;
+  
   argc = 5;
-  char *argv4[] = {"tests/test4/plugboard.pb", "tests/test4/reflector.rf", "tests/test4/rotor.rot", "tests/test4/rotor2.rot", "tests/test4/rotor.pos"};
-  run_test(argc,argv4,"4");
+  increment_argv(argv,'0','4');
+  run_test(argc,argv,"04");
 
   argc = 0;
-  char *argv5[] = {};
-  run_test(argc,argv5,"5");
+  increment_argv(argv,'0','5');
+  run_test(argc,argv,"05");
+
+  
+  argv[3] = rotor_pos;
+  argc = 4;
+  increment_argv(argv,'0','6');
+  run_test(argc,argv,"06");
 
   argc = 4;
-  char *argv6[] = {"tests/test6/plugboard.pb", "tests/test6/reflector.rf", "tests/test6/rotor.rot", "tests/test6/rotor.pos"};
-  run_test(argc,argv6,"6");
+  increment_argv(argv,'0','7');
+  run_test(argc,argv,"07");
 
   argc = 4;
-  char *argv7[] = {"tests/test7/plugboard.pb", "tests/test7/reflector.rf", "tests/test7/rotor.rot", "tests/test7/rotor.pos"};
-  run_test(argc,argv7,"7");
+  increment_argv(argv,'0','8');
+  run_test(argc,argv,"08");
 
   argc = 4;
-  char *argv8[] = {"tests/test8/plugboard.pb", "tests/test8/reflector.rf", "tests/test8/rotor.rot", "tests/test8/rotor.pos"};
-  run_test(argc,argv8,"8");
+  increment_argv(argv,'0','9');
+  run_test(argc,argv,"09");
 
   argc = 4;
-  char *argv9[] = {"tests/test9/plugboard.pb", "tests/test9/reflector.rf", "tests/test9/rotor.rot", "tests/test9/rotor.pos"};
-  run_test(argc,argv9,"9");
-
-    argc = 4;
-  char *argv10[] = {"tests/test10/plugboard.pb", "tests/test10/reflector.rf", "tests/test10/rotor.rot", "tests/test10/rotor.pos"};
-  run_test(argc,argv10,"10");
+  increment_argv(argv,'1','0');
+  run_test(argc,argv,"10");
 
   
   cout<< "\n\n\n\n";

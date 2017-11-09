@@ -4,7 +4,7 @@
 
 #include <iostream>
 #include "rotors.h"
-
+#include "reflector.h"
 
 // min argc = 1 pb + 1 ref = 2
 #define MIN_ENIGMA_ARGS 2

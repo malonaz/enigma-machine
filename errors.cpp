@@ -12,7 +12,7 @@ std::ostream& operator << (std::ostream& stream, ErrorReport& error_report){
     break;
   case 3: stream << "Invalid index";
     break;
-  case 4: stream << "Non numeric character in file " << error_report.get_filename();
+  case 4: stream << "Non-numeric character in file " << error_report.get_filename();
     break;
   case 5: stream << "Impossible plugboard configuration";
     break;
