@@ -212,25 +212,31 @@ ErrorReport Plugboard::check_arg(char* arg){
   if(!input.is_open()){
     return ErrorReport(ERROR_OPENING_CONFIGURATION_FILE,arg);
   }
-  
+
   std::set<int> digits;
-  int digit;
-  while(input>>digit){
-    if (invalid_index(digit)){
+  int x,y;
+  while(input>>x){
+    if (!(input>>y)){
+      if (input.eof())
+	return ErrorReport(INCORRECT_NUMBER_OF_PLUGBOARD_PARAMETERS, arg);
+      else
+	return ErrorReport(NON_NUMERIC_CHARACTER, arg);
+    }	    
+	  
+    if (invalid_index(x) || invalid_index(y) ){
       return ErrorReport(INVALID_INDEX, arg);
     }
-    if (is_in_set(digits,digit)){
+    if (is_in_set(digits,x) ||is_in_set(digits,y) || x == y){
       return ErrorReport(IMPOSSIBLE_PLUGBOARD_CONFIGURATION, arg);
     }
-    digits.insert(digit);
+    digits.insert(x);
+    digits.insert(y);
   }
   
-  if (!input.eof()){ // what if it's last char.. 
+  if (!input.eof()){ 
     return ErrorReport(NON_NUMERIC_CHARACTER, arg);
   }
-  if (digits.size()%2 != 0){
-    return ErrorReport(INCORRECT_NUMBER_OF_PLUGBOARD_PARAMETERS, arg);
-  }
+ 
   return ErrorReport(NO_ERROR);
 }
 
