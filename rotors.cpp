@@ -45,11 +45,11 @@ ErrorReport Rotor::check_arg(char* arg){
   
   while(input>>digit){
     
-    if (digit<0 || digit >25){
+    if (invalid_index(digit)){
       return ErrorReport(INVALID_INDEX,arg);
     }
     if (count < 26){
-      if (digits.find(digit) != digits.end()){
+      if (is_in_set(digits,digit)){
 	return ErrorReport(INVALID_ROTOR_MAPPING,arg);
       }
       digits.insert(digit);
@@ -152,38 +152,38 @@ Reflector::Reflector(char* mapping_config){
 }
 
 ErrorReport Reflector:: check_arg(char * arg){
-  ErrorReport error_report(arg);
+
   std::ifstream input(arg);
 
-  if(!input.is_open()){
-    error_report.set_error_code(ERROR_OPENING_CONFIGURATION_FILE);
-    return error_report;
-  }
+  if(!input.is_open())
+      return ErrorReport(ERROR_OPENING_CONFIGURATION_FILE,arg);  
   
   std::set<int> digits;
-  int digit;
-  while(input>>digit){
-    if (digit<0 || digit >25){
-      error_report.set_error_code(INVALID_INDEX);
-      return error_report;
-    }
-    if (digits.find(digit) != digits.end()){
-      error_report.set_error_code(INVALID_REFLECTOR_MAPPING);
-      return error_report;
-    }
-    digits.insert(digit);
-  }
-  if (!input.eof()){ // what if it's last char.. 
-    error_report.set_error_code(NON_NUMERIC_CHARACTER);
-    return error_report;
-  }
-
-  if (digits.size()%2 != 0){
-    error_report.set_error_code(INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS);
-    return error_report;
-  }
+  int x,y;
+  
+  while(input>>x){
+    if (digits.size() >= 26)
+      return ErrorReport(INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS,arg);
     
-  return error_report;  
+    if (!(input>>y)){
+      if (input.eof())
+	return ErrorReport(INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS, arg);
+      return ErrorReport(NON_NUMERIC_CHARACTER, arg);
+    }
+    
+    if (invalid_index(x) || invalid_index(y) ){
+      return ErrorReport(INVALID_INDEX, arg);
+    }
+    if (is_in_set(digits,x) ||is_in_set(digits,y) || x == y){
+      return ErrorReport(IMPOSSIBLE_PLUGBOARD_CONFIGURATION, arg);
+    }
+    digits.insert(x);
+    digits.insert(y);
+  }
+  if (!input.eof())
+    return ErrorReport(NON_NUMERIC_CHARACTER, arg);
+    
+  return ErrorReport(NO_ERROR);
 }
 
 
@@ -209,9 +209,8 @@ Instruction Plugboard:: step(Instruction inp, bool debug){
 
 ErrorReport Plugboard::check_arg(char* arg){
   std::ifstream input(arg);
-  if(!input.is_open()){
+  if(!input.is_open())
     return ErrorReport(ERROR_OPENING_CONFIGURATION_FILE,arg);
-  }
 
   std::set<int> digits;
   int x,y;
