@@ -75,7 +75,6 @@ public:
    */
   static Error invalidArg(char* config);
   
-  
 };
 
 

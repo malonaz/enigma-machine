@@ -17,7 +17,7 @@ int main(int argc, char **argv){
   }
   
   EnigmaMachine enigma(num_configs, configs);
-
+	       		       
   Error runtime_error = enigma.run();
   if (runtime_error.getCode()){
     std::cerr << runtime_error;

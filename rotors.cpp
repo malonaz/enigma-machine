@@ -76,3 +76,6 @@ Error Rotor:: invalidArg(char* config){
   
   return error;
 }
+
+
+

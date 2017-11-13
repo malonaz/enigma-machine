@@ -18,6 +18,7 @@ EnigmaMachine::EnigmaMachine(int argc, char** argv)
     for (int i = 0; i < num_rotors; i++)
       rotor_ptrs[i] = new Rotor(*argv++);
 
+    //setRotorsPos(*argv++);
   }
 }
 
@@ -50,33 +51,6 @@ int EnigmaMachine::step(int input, bool debug){
   return current_output;					
 }
 
-Error EnigmaMachine::setRotorsPos(char* config){
-  Error error(config, ROTOR_POS);
-  std::ifstream config_stream(config);
-
-  if(!config_stream.is_open())
-    return error.setCode(ERROR_OPENING_CONFIGURATION_FILE);
-
-  int num, count = 0;
-
-  while (config_stream >> num){
-    if (invalid_index(num))
-      return error.setCode(INVALID_INDEX);
-
-    if (count < num_rotors)
-      rotor_ptrs[count]->setOffset(num);
-    count++;
-  }
-
-  if (!config_stream.eof())
-    return error.setCode(NON_NUMERIC_CHARACTER);
-
-  if (count != num_rotors)
-    return error.setCode(NO_ROTOR_STARTING_POSITION);
-
-  return error;    
-}
-
 
 void EnigmaMachine:: processRotorRotations(){
   if (num_rotors == 0)
@@ -85,12 +59,9 @@ void EnigmaMachine:: processRotorRotations(){
   int first_rotor_index = num_rotors -1, last_rotor_index = 0;
   rotor_ptrs[first_rotor_index]->rotate();
 
-  for (int i = first_rotor_index; i > last_rotor_index; i--){
-    if (rotor_ptrs[i]->notchEngaged()){
-      //std::cout << "-" << i-1<< "-\n";
+  for (int i = first_rotor_index; i > last_rotor_index; i--)
+    if (rotor_ptrs[i]->notchEngaged())
       rotor_ptrs[i-1]->rotate();
-    }
-  }
 }
   
 
@@ -106,15 +77,55 @@ Error EnigmaMachine:: checkArgs(int num_configs, char** configs){
   if (reflector_error.getCode())
     return reflector_error;
 
-  for (int i = MIN_ENIGMA_ARGS; i < num_configs -1; i++){
-    Error rotor_error = Rotor::invalidArg(*configs++);
+  int num_rotors = num_configs - MIN_ENIGMA_ARGS -1;
+  if (num_rotors > 0){
+    for (int i = 0; i < num_rotors; i++){
+      Error rotor_error = Rotor::invalidArg(*configs++);
       if (rotor_error.getCode())
 	return rotor_error;
-  }  
+    }
+
+    Error rotor_pos_error = EnigmaMachine::checkRotorPos(*configs++, num_rotors);
+    if (rotor_pos_error.getCode())
+      return rotor_pos_error;
+  }
   
   return Error(NO_ERROR);
 }
 
+void EnigmaMachine::setRotorPos(char*config){
+  std::ifstream config_stream(config);
+  int num;
+  for (int i = num_rotors-1; i >= 0; i--){
+    config_stream >> num;
+    rotor_ptrs[i]->setOffset(num);
+  }
+  config_stream.close();
+}
+
+Error EnigmaMachine::checkRotorPos(char* config, int num_rotors){
+  Error error(config, ROTOR_POS);
+  std::ifstream config_stream(config);
+
+  if(!config_stream.is_open())
+    return error.setCode(ERROR_OPENING_CONFIGURATION_FILE);
+
+  int num, count = 0;
+
+  while (config_stream >> num){
+    if (invalid_index(num))
+      return error.setCode(INVALID_INDEX);
+    count++;
+  }
+
+  if (!config_stream.eof())
+    return error.setCode(NON_NUMERIC_CHARACTER);
+
+  if (count != num_rotors)
+    return error.setCode(NO_ROTOR_STARTING_POSITION);
+
+  return error;    
+}
 
 Error EnigmaMachine::run(bool debug){
   char c;
