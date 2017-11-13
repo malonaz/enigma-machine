@@ -30,7 +30,7 @@ int Plugboard:: step(int input, bool debug){
   return mapping[input];
 }
 
-Error Plugboard::invalidArg(char* config){
+Error Plugboard::checkArg(char* config){
   Error error(config, PLUGBOARD);
   std::ifstream config_stream(config);
 

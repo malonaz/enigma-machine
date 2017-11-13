@@ -32,7 +32,7 @@ int Reflector::step(int input, bool debug){
 }
 
 
-Error Reflector::invalidArg(char* config){
+Error Reflector::checkArg(char* config){
   Error error(config, REFLECTOR);
   std::ifstream config_stream(config);
 

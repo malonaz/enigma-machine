@@ -66,18 +66,18 @@ Error EnigmaMachine:: checkArgs(int num_configs, char** configs){
   if (num_configs < MIN_ENIGMA_ARGS)
     return Error(INSUFFICIENT_NUMBER_OF_PARAMETERS);
 
-  Error plugboard_error = Plugboard::invalidArg(*configs++);
+  Error plugboard_error = Plugboard::checkArg(*configs++);
   if (plugboard_error.getCode())
     return plugboard_error;
   
-  Error reflector_error = Reflector::invalidArg(*configs++);
+  Error reflector_error = Reflector::checkArg(*configs++);
   if (reflector_error.getCode())
     return reflector_error;
 
   int num_rotors = num_configs - MIN_ENIGMA_ARGS -1;
   if (num_rotors > 0){
     for (int i = 0; i < num_rotors; i++){
-      Error rotor_error = Rotor::invalidArg(*configs++);
+      Error rotor_error = Rotor::checkArg(*configs++);
       if (rotor_error.getCode())
 	return rotor_error;
     }

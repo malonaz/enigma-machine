@@ -48,7 +48,7 @@ int Rotor:: step(int input, bool debug){
   return output;
 }
 
-Error Rotor:: invalidArg(char* config){
+Error Rotor:: checkArg(char* config){
   Error error(config, ROTOR);
   std::ifstream config_stream(config);
 

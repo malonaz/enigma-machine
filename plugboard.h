@@ -45,7 +45,7 @@ public:
    * the Plugboard constructor. 
    * returns the first error encountered.
    */
-  static Error invalidArg(char* config);
+  static Error checkArg(char* config);
 };
 
 
