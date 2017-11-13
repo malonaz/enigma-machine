@@ -68,10 +68,17 @@ public:
 
 
   /**
-   * Static method which opens a given filepath, 
-   * and checks whether it could be passed to
-   * the Rotor constructor. 
-   * returns the first error encountered.
+   * Static method which opens a given filepath,
+   * check whether it can safely be passed to the Rotor constructor
+   * and returns an Error with filename config
+   * filetype ROTOR and error code:
+   * - INVALID_ROTOR_MAPPING: if the file attempts to map more than one
+   *   input to the same output, or does not provide a mapping for some input
+   * - INVALID_INDEX: if the file contains a number outside the range [0, 25]
+   * - NON_NUMERIC_CHARACTER: if the file contains any characters other than 
+   *   numeric characters.
+   * - NO_ERROR: if none of the above occur
+   * ! error codes are activated as the configuration file is read.
    */
   static Error checkArg(char* config);
   

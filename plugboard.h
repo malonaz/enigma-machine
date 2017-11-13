@@ -39,11 +39,21 @@ public:
   virtual int step(int input, bool debug = false);
 
 
-  /**
-   * Static method which opens a given filepath, 
-   * and checks whether it could be passed to
-   * the Plugboard constructor. 
-   * returns the first error encountered.
+   /**
+   * Static method which opens a given filepath,
+   * check whether it can safely be passed to the Plugboard constructor
+   * and returns an Error with filename config
+   * filetype PLUGBOARD and error code:
+   * - IMPOSSIBLE_PLUGBOARD_CONFIGURATION: if the file 
+   *   attempts to connect a contact with itself, or with more than
+   *   one other contact.
+   * - INCORRECT_NUMBER_OF_PLUGBOARD_PARAMETERS: if the file 
+   *   contains an odd number of number.
+   * - INVALID_INDEX: if the file contains a number outside the range [0, 25]
+   * - NON_NUMERIC_CHARACTER: if the file contains any characters other than 
+   *   numeric characters.
+   * - NO_ERROR: if none of the above occur
+   * ! error codes are activated as the configuration file is read.
    */
   static Error checkArg(char* config);
 };

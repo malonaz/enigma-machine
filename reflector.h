@@ -37,12 +37,20 @@ public:
   virtual int step(int input, bool debug = false);
 
 
-
   /**
-   * Static method which opens a given filepath, 
-   * and checks whether it could be passed to
-   * the Reflector constructor. 
-   * returns the first error encountered.
+   * Static method which opens a given filepath,
+   * check whether it can safely be passed to the Reflector constructor
+   * and returns an Error with filename config
+   * filetype REFLECTOR and error code:
+   * - INVALID_REFLECTOR_MAPPING: if the file attempts to map
+   *   an input to itself or pair each idnex with more than one other
+   * - INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS: if the file does not 
+   *   contain exactly 13 pairs of numbers
+   * - INVALID_INDEX: if the file contains a number outside the range [0, 25]
+   * - NON_NUMERIC_CHARACTER: if the file contains any characters other than 
+   *   numeric characters.
+   * - NO_ERROR: if none of the above occur
+   * ! error codes are activated as the configuration file is read.
    */
   static Error checkArg(char* config);
 
