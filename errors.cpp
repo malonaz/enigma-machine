@@ -12,11 +12,11 @@ Error::Error(char* filename,int filetype)
 
 
 
-Error Error:: setCode(int error_code){
+Error Error:: setCode(int error_code, const char* info){
   code = error_code;
+  strcpy(this->info, info);
   return *this;
 }
-
 
 
 const char* Error::getFiletype(){
@@ -74,7 +74,7 @@ std::ostream& operator << (std::ostream& stream, Error &error){
     break;
 
   case INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS:
-    stream << "Incorrect number of reflector parameters in ";
+    stream << "Incorrect " << error.getInfo() << " number of reflector parameters in ";
     stream << error.getFiletype() << error.getFilename();
     break;
 
