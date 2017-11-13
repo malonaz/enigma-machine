@@ -64,7 +64,12 @@ public:
   Error run(bool debug = false);
 
 
-
+  /**
+   * Method which opens the given filepath
+   * and:
+   * -  sets the ith leftmost rotor's offset 
+   *    to the ith integer it reads from the file
+   */
   void setRotorPos(char* config);
 
   /**

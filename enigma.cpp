@@ -18,7 +18,7 @@ EnigmaMachine::EnigmaMachine(int argc, char** argv)
     for (int i = 0; i < num_rotors; i++)
       rotor_ptrs[i] = new Rotor(*argv++);
 
-    //setRotorsPos(*argv++);
+    setRotorPos(*argv++);
   }
 }
 
