@@ -59,11 +59,11 @@ Error Rotor:: checkArg(char* config){
   int num;
 
   while (config_stream >> num){
-    if (invalid_index(num))
+    if (invalidIndex(num))
       return error.setCode(INVALID_INDEX);
 
     if (nums.size() != 26){
-      if (is_in_set(nums, num))
+      if (inSet(nums, num))
 	return error.setCode(INVALID_ROTOR_MAPPING);
       nums.insert(num);
     }

@@ -110,7 +110,7 @@ Error EnigmaMachine::checkRotorPos(char* config, int num_rotors){
   int num, count = 0;
 
   while (config_stream >> num){
-    if (invalid_index(num))
+    if (invalidIndex(num))
       return error.setCode(INVALID_INDEX);
     count++;
   }
@@ -129,7 +129,7 @@ Error EnigmaMachine::run(bool debug){
   int input;
   while(std::cin >> c){
     input = toInt(c);
-    if (invalid_index(input))
+    if (invalidIndex(input))
       return Error(INVALID_INPUT_CHARACTER);
     std::cout << toChar(step(input, debug));
   }

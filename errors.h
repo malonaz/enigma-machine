@@ -105,7 +105,7 @@ std::ostream& operator << (std::ostream& stream, Error &error);
  * returns true if digit is not in range [0,25]
  * returns false otherwise
  */
-bool invalid_index(int digit);
+bool invalidIndex(int digit);
 
 
 /**
@@ -114,7 +114,7 @@ bool invalid_index(int digit);
  * returns true if the integer is in the set.
  * returns false otherwise
  */
-bool is_in_set(std::set<int> digits, int digit);
+bool inSet(std::set<int> digits, int digit);
 
 
 

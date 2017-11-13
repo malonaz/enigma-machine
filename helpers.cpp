@@ -21,13 +21,13 @@ int mod26(int n){
 
 
 
-bool invalid_index(int digit){
+bool invalidIndex(int digit){
   if (digit <0 || digit > 25)
     return true;
   return false;
 }
 
-bool is_in_set(std::set<int> digits, int digit){
+bool inSet(std::set<int> digits, int digit){
   if (digits.find(digit) != digits.end())
     return true;
   return false;

@@ -46,10 +46,10 @@ Error Plugboard::checkArg(char* config){
       return error.setCode(NON_NUMERIC_CHARACTER);
     }
 
-    if(invalid_index(num1) || invalid_index(num2))
+    if(invalidIndex(num1) || invalidIndex(num2))
       return error.setCode(INVALID_INDEX);
 
-    if (is_in_set(nums,num1) || is_in_set(nums,num2) || num1 == num2)
+    if (inSet(nums,num1) || inSet(nums,num2) || num1 == num2)
       return error.setCode(IMPOSSIBLE_PLUGBOARD_CONFIGURATION);
 
     nums.insert(num1);
