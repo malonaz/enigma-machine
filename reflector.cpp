@@ -68,7 +68,7 @@ Error Reflector::checkArg(char* config){
     return error.setCode(NON_NUMERIC_CHARACTER);
   
   if (nums.size() != 26)
-    return error.setCode(INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS);
+    return error.setCode(INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS, "insufficient");
   
   return error;
 }
