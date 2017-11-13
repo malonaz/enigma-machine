@@ -53,7 +53,7 @@ Error Reflector::checkArg(char* config){
     if (inSet(nums,num1) || inSet(nums, num2) || num1 == num2)
       return error.setCode(INVALID_REFLECTOR_MAPPING);
 
-    if (nums.size() = 26)
+    if (nums.size() == 26)
       return error.setCode(INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS);
     
     if (invalidIndex(num1) || invalidIndex(num2))
