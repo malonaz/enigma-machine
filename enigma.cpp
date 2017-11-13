@@ -26,10 +26,7 @@ EnigmaMachine::EnigmaMachine(int argc, char** argv)
 EnigmaMachine::~EnigmaMachine(){
   delete plugboard_ptr;
   delete reflector_ptr;
-  
-  for (int i = 0; i < num_rotors; i++)
-    delete rotor_ptrs[i];
-  delete[] rotor_ptrs;
+  delete [] rotor_ptrs;
 }
 
 int EnigmaMachine::step(int input, bool debug){
@@ -96,7 +93,7 @@ Error EnigmaMachine:: checkArgs(int num_configs, char** configs){
 void EnigmaMachine::setRotorPos(char*config){
   std::ifstream config_stream(config);
   int num;
-  for (int i = num_rotors-1; i >= 0; i--){
+  for (int i = 0; i < num_rotors; i++){
     config_stream >> num;
     rotor_ptrs[i]->setOffset(num);
   }
