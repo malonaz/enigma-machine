@@ -4,9 +4,9 @@
 #include "errors.h"
 #include <cstring>
 
-Error::Error(char* filename,int object_type)
+Error::Error(char* filename,int filetype)
   : code(NO_ERROR){
-  this->object_type = object_type;
+  this->filetype = filetype;
   strcpy(this->filename, filename);  
 }
 
@@ -19,15 +19,15 @@ Error Error:: setCode(int error_code){
 
 
 
-const char* Error::getObject(){
-  switch(object_type){
+const char* Error::getFiletype(){
+  switch(filetype){
   case PLUGBOARD:
     return "plugboard file ";
   case REFLECTOR:
     return "reflector file ";
   case ROTOR:
     return "rotor file ";
-  case ROTORPOSITIONS:
+  case ROTOR_POS:
     return "rotor positions file ";
   default:
     return "";
@@ -36,31 +36,57 @@ const char* Error::getObject(){
 
 std::ostream& operator << (std::ostream& stream, Error &error){
   switch(error.getCode()){
-  case 1: stream << "Insufficient number of parameters";
+
+  case INSUFFICIENT_NUMBER_OF_PARAMETERS:
+    stream << "Insufficient number of parameters";
     break;
-  case 2: stream << "Invalid input character";
+
+  case INVALID_INPUT_CHARACTER:
+    stream << "Invalid input character";
     break;
-  case 3: stream << "Invalid index in " << error.getObject() << error.getFilename();
+
+  case INVALID_INDEX:
+    stream << "Invalid index in " << error.getFiletype() << error.getFilename();
     break;
-  case 4: stream << "Non-numeric character in file " << error.getObject() << error.getFilename();
+
+  case NON_NUMERIC_CHARACTER:
+    stream << "Non-numeric character in " << error.getFiletype() << error.getFilename();
     break;
-  case 5: stream << "Impossible plugboard configuration in file " << error.getObject() << error.getFilename();
+
+  case IMPOSSIBLE_PLUGBOARD_CONFIGURATION:
+    stream << "Impossible plugboard configuration in " << error.getFiletype() << error.getFilename();
     break;
-  case 6: stream << "Incorrect number of parameters in file " << error.getObject() << error.getFilename();
+
+  case INCORRECT_NUMBER_OF_PLUGBOARD_PARAMETERS:
+    stream << "Incorrect number of parameters in " << error.getFiletype() << error.getFilename();
     break;
-  case 7: stream << "Invalid rotor mapping in file " << error.getObject() << error.getFilename();
+
+  case INVALID_ROTOR_MAPPING:
+    stream << "Invalid rotor mapping in " << error.getFiletype() << error.getFilename();
     break;
-  case 8: stream << "No rotor starting position in file " << error.getObject() << error.getFilename();
+
+  case NO_ROTOR_STARTING_POSITION:
+    stream << "No rotor starting position in " << error.getFiletype() << error.getFilename();
     break;
-  case 9: stream << "Invalid reflector mapping in file " << error.getObject() << error.getFilename();
+
+  case INVALID_REFLECTOR_MAPPING:
+    stream << "Invalid reflector mapping in " << error.getFiletype() << error.getFilename();
     break;
-  case 10: stream << "Incorrect number of reflector parameters in file " << error.getObject() << error.getFilename();
+
+  case INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS:
+    stream << "Incorrect number of reflector parameters in ";
+    stream << error.getFiletype() << error.getFilename();
     break;
-  case 11: stream << "Error opening configuration file " << error.getObject() << error.getFilename();
+
+  case ERROR_OPENING_CONFIGURATION_FILE:
+    stream << "Error opening configuration " << error.getFiletype() << error.getFilename();
     break;
-  case 0: std:: cerr << "No error";
+
+  case NO_ERROR: stream << "No error";
     break;
-  default: stream << "Wrong error code. Fix your code !";
+
+  default:
+    stream << "Wrong error code. Fix your code !";
     break;
   }
   return stream;

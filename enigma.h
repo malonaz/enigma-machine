@@ -20,7 +20,7 @@ class EnigmaMachine: public StateMachine{
 private:
   Plugboard* plugboard_ptr;
   Reflector* reflector_ptr;
-  Rotor** rotors_ptrs;
+  Rotor** rotor_ptrs;
   int num_rotors;
 
 public:
@@ -32,8 +32,22 @@ public:
    */
   ~EnigmaMachine();
 
-
-
+  /**
+   * Method which tries to open a given rotor config
+   * filepath and:
+   * - returns appropriate error if 
+   *   > encounters an error opening the file
+   *   > one of the integers in the file is not in
+   *     the range [0, 25]
+   *   > there is a non-numeric character in the file
+   *   > the number of integers in the file is not equal to
+   (     the number of rotors in this machine
+   * - else, for each integer n read in the file, 
+   *   sets this machine's nth rotor's offset to the nth integer.
+   * - returns a NO_ERROR error.
+   */
+  Error setRotorsPos(char* config);
+  
   /**
    * Method which takes an input and:
    * - feeds it to the enigma machine to make it 
@@ -64,7 +78,7 @@ public:
    */
   Error run(bool debug = false);
 
-  
+
   /**
    * Static method which given an array of arguments, 
    * checks whether they can be passed to

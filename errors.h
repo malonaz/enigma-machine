@@ -20,11 +20,11 @@
 #define NO_ERROR					0
  
 
-/* object types */
+/* file types */
 #define PLUGBOARD 101
 #define REFLECTOR 102
 #define ROTOR 103
-#define ROTORPOSITIONS 104
+#define ROTOR_POS 104
 #define NO_OBJECT 100
 
 
@@ -43,19 +43,18 @@ class Error{
 private:
   int code;
   char filename[MAX_FILENAME_LENGTH];
-  int object_type;
+  int filetype;
 
 public:
 
   /**
    * Constructor. Used for errors that occur
-   * while checking an argument for an object
-   * constructor.
+   * while reading a file.
    * - initializes the filename
-   *   and the object_type.
+   *   and the filetype.
    * - initializes code to NO_ERROR
    */
-  Error(char* filename, int object_type);
+  Error(char* filename, int filetype);
 
   /** 
    * Constructor. Used for errors that are 
@@ -64,7 +63,7 @@ public:
    * - initializes the object type to NO_OBJECT
    */
   Error(int error_code)
-    :code(error_code), object_type(NO_OBJECT){}
+    :code(error_code), filetype(NO_OBJECT){}
   
   /**
    * Method which given an error_code,
@@ -86,10 +85,10 @@ public:
 
 
   /**
-   * Method which returns the error's object type 
+   * Method which returns the error's file type 
    * as a char array.
    */
-  const char* getObject();
+  const char* getFiletype();
 
   friend std:: ostream& operator <<(std::ostream& stream, Error &error);
 

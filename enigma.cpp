@@ -3,7 +3,7 @@
 #include "helpers.h"
 #include "errors.h"
 #include <iostream>
-
+#include <fstream>
 
 EnigmaMachine::EnigmaMachine(int argc, char** argv)
   :  num_rotors(0) {
@@ -13,10 +13,11 @@ EnigmaMachine::EnigmaMachine(int argc, char** argv)
 
   if(argc > MIN_ENIGMA_ARGS){
     num_rotors = argc - MIN_ENIGMA_ARGS -1;
-    rotors_ptrs = new Rotor*[num_rotors];
+    rotor_ptrs = new Rotor*[num_rotors];
    
     for (int i = 0; i < num_rotors; i++)
-      rotors_ptrs[i] = new Rotor(*argv++);
+      rotor_ptrs[i] = new Rotor(*argv++);
+
   }
 }
 
@@ -26,8 +27,8 @@ EnigmaMachine::~EnigmaMachine(){
   delete reflector_ptr;
   
   for (int i = 0; i < num_rotors; i++)
-    delete rotors_ptrs[i];
-  delete[] rotors_ptrs;
+    delete rotor_ptrs[i];
+  delete[] rotor_ptrs;
 }
 
 int EnigmaMachine::step(int input, bool debug){
@@ -37,26 +38,53 @@ int EnigmaMachine::step(int input, bool debug){
 
   for (int i = num_rotors -1; i >= 0; i--){
     processRotorRotations(i);
-    current_output = rotors_ptrs[i]->step(current_output, debug);
+    current_output = rotor_ptrs[i]->step(current_output, debug);
   }
   current_output = reflector_ptr->step(current_output, debug);
 
   for (int i = 0; i < num_rotors; i++)
-    current_output = rotors_ptrs[i]->step(current_output, debug);
+    current_output = rotor_ptrs[i]->step(current_output, debug);
 
   current_output = plugboard_ptr->step(current_output, debug);
 
   return current_output;					
 }
 
+Error EnigmaMachine::setRotorsPos(char* config){
+  Error error(config, ROTOR_POS);
+  std::ifstream config_stream(config);
+
+  if(!config_stream.is_open())
+    return error.setCode(ERROR_OPENING_CONFIGURATION_FILE);
+
+  int num, count = 0;
+
+  while (config_stream >> num){
+    if (invalid_index(num))
+      return error.setCode(INVALID_INDEX);
+
+    if (count < num_rotors)
+      rotor_ptrs[count]->setOffset(num);
+    count++;
+  }
+
+  if (!config_stream.eof())
+    return error.setCode(NON_NUMERIC_CHARACTER);
+
+  if (count != num_rotors)
+    return error.setCode(NO_ROTOR_STARTING_POSITION);
+
+  return error;    
+}
+
 
 void EnigmaMachine:: processRotorRotations(int rotor_index){
   if (rotor_index == num_rotors-1) // last rotor
-    rotors_ptrs[rotor_index]->rotate();
+    rotor_ptrs[rotor_index]->rotate();
 
-  if (rotors_ptrs[rotor_index]->notchEngaged()
+  if (rotor_ptrs[rotor_index]->notchEngaged()
       && rotor_index != 0) // not the first rotor
-    rotors_ptrs[rotor_index-1]->rotate();
+    rotor_ptrs[rotor_index-1]->rotate();
 }
   
 
@@ -71,14 +99,13 @@ Error EnigmaMachine:: checkArgs(int num_configs, char** configs){
   Error reflector_error = Reflector::invalidArg(*configs++);
   if (reflector_error.getCode())
     return reflector_error;
-  
 
   for (int i = MIN_ENIGMA_ARGS; i < num_configs -1; i++){
     Error rotor_error = Rotor::invalidArg(*configs++);
-    if (rotor_error.getCode())
-      return rotor_error;
-  }
-
+      if (rotor_error.getCode())
+	return rotor_error;
+  }  
+  
   return Error(NO_ERROR);
 }
 
@@ -94,3 +121,6 @@ Error EnigmaMachine::run(bool debug){
   }
   return Error(NO_ERROR);
 }
+
+
+
