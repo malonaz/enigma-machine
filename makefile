@@ -30,7 +30,7 @@ errors.o: errors.cpp errors.h
 
 
 clean:
-	rm -f enigma *.o
+	rm -f enigma tester *.o
 
 tester:	test.o sm.o rotors.o reflector.o enigma.o errors.o
 	g++ -Wall -g -o tester test.o sm.o rotors.o reflector.o enigma.o errors.o

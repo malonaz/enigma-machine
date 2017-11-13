@@ -51,9 +51,13 @@ ErrorReport Reflector:: check_arg(char * arg){
     digits.insert(x);
     digits.insert(y);
   }
+
   if (!input.eof())
     return ErrorReport(NON_NUMERIC_CHARACTER, arg);
-    
+
+  if (digits.size() != 26)
+      return ErrorReport(INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS,arg);
+  
   return ErrorReport(NO_ERROR);
 }
 

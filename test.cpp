@@ -133,6 +133,13 @@ int main(){
   increment_argv(argv,'1','0');
   run_test(argc,argv,"10");
 
+  argc = 4;
+  increment_argv(argv,'1','1');
+  run_test(argc,argv,"11");
+
+  argc = 4;
+  increment_argv(argv,'1','2');
+  run_test(argc,argv,"12");
   
   cout<< "\n\n\n\n";
 

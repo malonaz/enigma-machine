@@ -31,7 +31,7 @@ public:
   int message; // used to pass messages between SMs.
   
   // Constructors
-  Instruction(int val,int msg):value(val), message(msg){}
+  Instruction(int val,int msg = NO_MSG):value(val), message(msg){}
 };
 
 /**
