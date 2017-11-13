@@ -43,17 +43,21 @@ Error Reflector::checkArg(char* config){
   int num1, num2;
   
   while (config_stream >> num1){
+    if (nums.size() >= 26)
+      return error.setCode(INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS);
     
     if (!(config_stream >> num2)){
       if (config_stream.eof())
-	return error.setCode(INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS, "(odd)");
+	return error.setCode(INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS);
       return error.setCode(NON_NUMERIC_CHARACTER);
     }
-     if (inSet(nums,num1) || inSet(nums, num2) || num1 == num2)
-      return error.setCode(INVALID_REFLECTOR_MAPPING);
-
+    
     if (invalidIndex(num1) || invalidIndex(num2))
-      return error.setCode(INVALID_INDEX);   
+      return error.setCode(INVALID_INDEX);
+    
+    
+    if (inSet(nums,num1) || inSet(nums, num2) || num1 == num2)
+      return error.setCode(INVALID_REFLECTOR_MAPPING);
     
     nums.insert(num1);
     nums.insert(num2);    
@@ -63,7 +67,7 @@ Error Reflector::checkArg(char* config){
     return error.setCode(NON_NUMERIC_CHARACTER);
   
   if (nums.size() != 26)
-    return error.setCode(INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS, "insufficient");
+    return error.setCode(INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS);
   
   return error;
 }

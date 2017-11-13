@@ -4,19 +4,19 @@
 #include "errors.h"
 #include <cstring>
 
-Error::Error(char* filename, int filetype)
+Error::Error(char* filename,int filetype)
   : code(NO_ERROR){
   this->filetype = filetype;
-  strcpy(this->filename, filename);
+  strcpy(this->filename, filename);  
 }
 
 
 
-Error Error:: setCode(int error_code, const char* info){
+Error Error:: setCode(int error_code){
   code = error_code;
-  strcpy(this->info, info);
   return *this;
 }
+
 
 
 const char* Error::getFiletype(){
@@ -42,7 +42,7 @@ std::ostream& operator << (std::ostream& stream, Error &error){
     break;
 
   case INVALID_INPUT_CHARACTER:
-    stream << "(input characters must be upper case letters A-Z)!";
+    stream << "Invalid input character";
     break;
 
   case INVALID_INDEX:
@@ -74,7 +74,7 @@ std::ostream& operator << (std::ostream& stream, Error &error){
     break;
 
   case INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS:
-    stream << "Incorrect " << error.getInfo() << " number of reflector parameters in ";
+    stream << "Incorrect number of reflector parameters in ";
     stream << error.getFiletype() << error.getFilename();
     break;
 

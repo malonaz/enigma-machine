@@ -129,10 +129,8 @@ Error EnigmaMachine::run(bool debug){
   int input;
   while(std::cin >> c){
     input = toInt(c);
-    if (invalidIndex(input)){
-      std::cerr << c << " is not a valid input character ";
+    if (invalidIndex(input))
       return Error(INVALID_INPUT_CHARACTER);
-    }
     std::cout << toChar(step(input, debug));
   }
   return Error(NO_ERROR);

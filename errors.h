@@ -1,5 +1,4 @@
 // -*- C++ -*-
-
 #ifndef ERRORS_H
 #define ERRORS_H
 
@@ -21,7 +20,7 @@
 #define NO_ERROR					0
  
 
-/* filetypes */
+/* file types */
 #define PLUGBOARD 101
 #define REFLECTOR 102
 #define ROTOR 103
@@ -29,8 +28,7 @@
 #define NO_OBJECT 100
 
 
-#define MAX_ARRAY_LENGTH 100
-
+#define MAX_FILENAME_LENGTH 100
 
 /**
  * Error. This class is used to represent an error.
@@ -44,10 +42,9 @@
 class Error{
 private:
   int code;
-  char filename[MAX_ARRAY_LENGTH];
+  char filename[MAX_FILENAME_LENGTH];
   int filetype;
-  char info[MAX_ARRAY_LENGTH];
-  
+
 public:
 
   /**
@@ -73,9 +70,9 @@ public:
    * sets the Error's code to error_code and
    * returns this object.
    */
-  Error setCode(int error_code, const char* info = "");
+  Error setCode(int error_code);
 
-  
+
   /**
    * Method which returns the error's code
    */
@@ -89,15 +86,9 @@ public:
 
   /**
    * Method which returns the error's file type 
-   * as a constant char array.
+   * as a char array.
    */
   const char* getFiletype();
-
-  /**
-   * Method which returns the error's info
-   * as a constant char array
-   */
-  const char* getInfo(){return info;}
 
   friend std:: ostream& operator <<(std::ostream& stream, Error &error);
 
