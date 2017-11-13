@@ -71,9 +71,8 @@ public:
    * sets the Error's code to error_code and
    * returns this object.
    */
-  Error setCode(int error_code);
-
-
+  Error setCode(int error_code , const char* info = "\0");
+  
   /**
    * Method which returns the error's code
    */

@@ -1,6 +1,4 @@
 // -*- C++ -*-
-
-
 #include "errors.h"
 #include <cstring>
 
@@ -12,8 +10,9 @@ Error::Error(char* filename,int filetype)
 
 
 
-Error Error:: setCode(int error_code){
+Error Error:: setCode(int error_code, const char* info){
   code = error_code;
+  strcpy(this->info, info);
   return *this;
 }
 
