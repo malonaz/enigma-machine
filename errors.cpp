@@ -42,7 +42,7 @@ std::ostream& operator << (std::ostream& stream, Error &error){
     break;
 
   case INVALID_INPUT_CHARACTER:
-    stream << "Invalid input character";
+    stream << "(input characters must be upper case letters A-Z)!";
     break;
 
   case INVALID_INDEX:
