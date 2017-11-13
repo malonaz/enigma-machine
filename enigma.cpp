@@ -35,11 +35,11 @@ int EnigmaMachine::step(int input, bool debug){
   int current_output = input;
 
   current_output = plugboard_ptr->step(current_output, debug);
-
-  for (int i = num_rotors -1; i >= 0; i--){
-    processRotorRotations(i);
+  processRotorRotations();
+   
+  for (int i = num_rotors -1; i >= 0; i--)
     current_output = rotor_ptrs[i]->step(current_output, debug);
-  }
+  
   current_output = reflector_ptr->step(current_output, debug);
 
   for (int i = 0; i < num_rotors; i++)
@@ -78,13 +78,19 @@ Error EnigmaMachine::setRotorsPos(char* config){
 }
 
 
-void EnigmaMachine:: processRotorRotations(int rotor_index){
-  if (rotor_index == num_rotors-1) // last rotor
-    rotor_ptrs[rotor_index]->rotate();
+void EnigmaMachine:: processRotorRotations(){
+  if (num_rotors == 0)
+    return;
+  
+  int first_rotor_index = num_rotors -1, last_rotor_index = 0;
+  rotor_ptrs[first_rotor_index]->rotate();
 
-  if (rotor_ptrs[rotor_index]->notchEngaged()
-      && rotor_index != 0) // not the first rotor
-    rotor_ptrs[rotor_index-1]->rotate();
+  for (int i = first_rotor_index; i > last_rotor_index; i--){
+    if (rotor_ptrs[i]->notchEngaged()){
+      //std::cout << "-" << i-1<< "-\n";
+      rotor_ptrs[i-1]->rotate();
+    }
+  }
 }
   
 

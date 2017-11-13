@@ -57,14 +57,14 @@ public:
 
   
   /**
-   * internal helper method which given the index of 
-   * a rotor ptr in rotor_ptrs:
-   * - rotates the rotor if it is the first rotor
-   *   to be traversed by the machine. 
-   * - rotates the next rotor to be traversed by the
-   *   machine if the given rotor's notch is engaged
+   * internal helper method which:
+   * - rotates the first rotor to be traversed by the machine. 
+   * - for each rotor in order of their traversal
+   *   from the plugboard to reflector:
+   *    > if a notch is engaged, rotates the next rotor
+   *      if there is one
    */
-  void processRotorRotations(int rotor_index);
+  void processRotorRotations();
 
   /**
    * Method which, in a loop, takes input from the standard input
