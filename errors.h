@@ -68,8 +68,9 @@ public:
   
   /**
    * Method which given an error_code,
-   * sets the Error's code to error_code and
-   * returns this object.
+   * - sets the Error's code to error_code,
+   * - copies param info into this->info
+   * - returns this object.
    */
   Error setCode(int error_code , const char* info = "\0");
   
@@ -79,16 +80,24 @@ public:
   int getCode(){return code;}
 
   /**
-   * Method which returns the errors' filename
+   * Method which returns the error' filename
+   * as a constant char array.
    */
   char* getFilename(){return filename;}
 
+  
 
   /**
    * Method which returns the error's file type 
    * as a char array.
    */
   const char* getFiletype();
+
+  /**
+   * Method which returns the error's info as 
+   * a constant array
+   */
+  const char* getInfo(){return info;}
 
   friend std:: ostream& operator <<(std::ostream& stream, Error &error);
 

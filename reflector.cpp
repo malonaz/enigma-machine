@@ -46,7 +46,7 @@ Error Reflector::checkArg(char* config){
     
     if (!(config_stream >> num2)){
       if (config_stream.eof())
-	return error.setCode(INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS);
+	return error.setCode(INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS, "(odd)");
       return error.setCode(NON_NUMERIC_CHARACTER);
     }
 
