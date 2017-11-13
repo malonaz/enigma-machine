@@ -28,7 +28,7 @@
 #define NO_OBJECT 100
 
 
-#define MAX_FILENAME_LENGTH 100
+#define MAX_ARRAY_LENGTH 50
 
 /**
  * Error. This class is used to represent an error.
@@ -42,8 +42,9 @@
 class Error{
 private:
   int code;
-  char filename[MAX_FILENAME_LENGTH];
+  char filename[MAX_ARRAY_LENGTH];
   int filetype;
+  char info[MAX_ARRAY_LENGTH];
 
 public:
 
