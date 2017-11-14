@@ -93,7 +93,7 @@ Error EnigmaMachine:: checkArgs(int num_configs, char** configs){
 void EnigmaMachine::setRotorPos(char*config){
   std::ifstream config_stream(config);
   int num;
-  for (int i = 0; i < num_rotors; i++){
+  for (int i = num_rotors -1; i >=0; i--){
     config_stream >> num;
     rotor_ptrs[i]->setOffset(num);
   }
