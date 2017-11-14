@@ -33,7 +33,7 @@ int EnigmaMachine::step(int input, bool debug){
   int current_output = input;
 
   current_output = plugboard_ptr->step(current_output, debug);
-  processRotorRotations();
+  rotateRotors();
    
   for (int i = 0; i < num_rotors; i++)
     current_output = rotor_ptrs[i]->step(current_output, debug);  
@@ -49,16 +49,18 @@ int EnigmaMachine::step(int input, bool debug){
 }
 
 
-void EnigmaMachine:: processRotorRotations(){
+void EnigmaMachine:: rotateRotors(){
   if (num_rotors == 0)
     return;
-  
-  int first_rotor_index = 0, last_rotor_index = num_rotors-1;
-  rotor_ptrs[first_rotor_index]->rotate();
 
-  for (int i = first_rotor_index; i < last_rotor_index; i++)
-    if (rotor_ptrs[i]->notchEngaged())
-      rotor_ptrs[i+1]->rotate();
+  int current_rotor_index = 0, last_rotor_index = num_rotors -1;
+  rotor_ptrs[current_rotor_index]->rotate(); //1st rotor always rotates
+
+  while (current_rotor_index < last_rotor_index &&
+	 rotor_ptrs[current_rotor_index]->notchEngaged()){
+    current_rotor_index++;
+    rotor_ptrs[current_rotor_index]->rotate();
+  }
 }
   
 
