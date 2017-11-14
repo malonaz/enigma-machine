@@ -15,7 +15,7 @@ EnigmaMachine::EnigmaMachine(int argc, char** argv)
     num_rotors = argc - MIN_ENIGMA_ARGS -1;
     rotor_ptrs = new Rotor*[num_rotors];
    
-    for (int i = 0; i < num_rotors; i++)
+    for (int i = num_rotors-1; i >= 0; i--)
       rotor_ptrs[i] = new Rotor(*argv++);
 
     setRotorPos(*argv++);
@@ -35,14 +35,14 @@ int EnigmaMachine::step(int input, bool debug){
   current_output = plugboard_ptr->step(current_output, debug);
   processRotorRotations();
    
-  for (int i = num_rotors -1; i >= 0; i--)
-    current_output = rotor_ptrs[i]->step(current_output, debug);
+  for (int i = 0; i < num_rotors; i++)
+    current_output = rotor_ptrs[i]->step(current_output, debug);  
   
   current_output = reflector_ptr->step(current_output, debug);
 
-  for (int i = 0; i < num_rotors; i++)
+  for (int i = num_rotors -1; i >= 0; i--)
     current_output = rotor_ptrs[i]->step(current_output, debug);
-
+  
   current_output = plugboard_ptr->step(current_output, debug);
 
   return current_output;					
@@ -53,12 +53,12 @@ void EnigmaMachine:: processRotorRotations(){
   if (num_rotors == 0)
     return;
   
-  int first_rotor_index = num_rotors -1, last_rotor_index = 0;
+  int first_rotor_index = 0, last_rotor_index = num_rotors-1;
   rotor_ptrs[first_rotor_index]->rotate();
 
-  for (int i = first_rotor_index; i > last_rotor_index; i--)
+  for (int i = first_rotor_index; i < last_rotor_index; i++)
     if (rotor_ptrs[i]->notchEngaged())
-      rotor_ptrs[i-1]->rotate();
+      rotor_ptrs[i+1]->rotate();
 }
   
 
