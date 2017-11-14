@@ -24,6 +24,11 @@ private:
   int num_rotors;
 
 public:
+  /**
+   * Constructor which given argument number and 
+   * an argument array, with at least 2 arguments, 
+   * constructs an enigma machine.
+   */
   EnigmaMachine(int argc, char** argv);
 
   /**
@@ -75,7 +80,8 @@ public:
   /**
    * Static method which given an array of arguments, 
    * checks whether they can be passed to
-   * the Enigma constructor. 
+   * the Enigma constructor, by checking each argument
+   * against its respective class's checkArg function.
    * returns the first error encountered.
    */
   static Error checkArgs(int num_configs, char** configs);
