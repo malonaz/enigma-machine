@@ -8,6 +8,9 @@
 #include "rotors.h"
 #include "errors.h"
 
+#include <ostream>
+
+
 #define MIN_ENIGMA_ARGS 2
 
 
@@ -56,26 +59,7 @@ public:
    */
   void processRotorRotations();
 
-  /**
-   * Method which, in a loop, takes input from the standard input
-   * stream and:
-   * - if an input is not an uppercase letter in the range [A-Z],
-   *   it returns an Error with code INVALID_INDEX.
-   * - else, gets the EnigmaMachine to take a step,
-   *   printing the value of each step's output to the standard output stream.
-   * - when standard input stream is closed, returns an Error with code NO_ERROR
-   * OPT - set param debug to true if you wish to see how each step was taken.
-   */
-  Error run(bool debug = false);
 
-
-  /**
-   * Method which opens the given filepath
-   * and:
-   * -  sets the ith leftmost rotor's offset 
-   *    to the ith integer it reads from the file
-   */
-  void setRotorPos(char* config);
 
   /**
    * Static method which given an array of arguments, 
@@ -100,7 +84,32 @@ public:
    * - else returns a NO_ERROR error.
    */
   static Error checkRotorPos(char* config, int num_rotors);
+
+
+  /**
+   * Method which opens the given filepath
+   * and:
+   * -  sets the ith leftmost rotor's offset 
+   *    to the ith integer it reads from the file
+   */
+  void setRotorPos(char* config);
   
+
+    /**
+   * Method which, in a loop, takes input from the standard input
+   * stream and:
+   * - if an input is not an uppercase letter in the range [A-Z],
+   *   it returns an Error with code INVALID_INDEX.
+   * - else, gets the EnigmaMachine to take a step,
+   *   printing the value of each step's output to the standard output stream.
+   * - when standard input stream is closed, returns an Error with code NO_ERROR
+   * OPT - set param debug to true if you wish to see how each step was taken.
+   */
+  Error run(std::istream &input_stream = std::cin,
+	    std::ostream &output_stream = std::cout,
+	    std::ostream &error_stream = std::cerr,
+	    bool debug = false);
+
 };
 
 #endif

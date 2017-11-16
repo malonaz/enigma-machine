@@ -8,6 +8,8 @@
 #include <vector>
 
 
+
+
 /**
  * Plugboard. This class simulates the plugboard of 
  * an Enigma Machine. 

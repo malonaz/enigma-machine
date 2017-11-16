@@ -1,5 +1,3 @@
-
-
 #include "enigma.h"
 #include "errors.h"
 #include <iostream>

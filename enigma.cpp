@@ -2,7 +2,7 @@
 #include "enigma.h"
 #include "helpers.h"
 #include "errors.h"
-#include <iostream>
+
 #include <fstream>
 
 EnigmaMachine::EnigmaMachine(int argc, char** argv)
@@ -124,16 +124,21 @@ Error EnigmaMachine::checkRotorPos(char* config, int num_rotors){
   return error;    
 }
 
-Error EnigmaMachine::run(bool debug){
+
+
+Error EnigmaMachine::run(std::istream &input_stream,
+			 std::ostream &output_stream,
+			 std::ostream &error_stream,
+			 bool debug){
   char c;
   int input;
-  while(std::cin >> c){
+  while(input_stream >> c){
     input = toInt(c);
     if (invalidIndex(input)){
-      std::cerr << c << " is not a valid input character ";
+      error_stream << c << " is not a valid input character ";
       return Error(INVALID_INPUT_CHARACTER);
     }
-    std::cout << toChar(step(input, debug));
+    output_stream << toChar(step(input, debug));
   }
   return Error(NO_ERROR);
 }
