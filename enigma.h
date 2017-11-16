@@ -52,12 +52,10 @@ public:
   /**
    * internal helper method which:
    * - rotates the first rotor to be traversed by the machine. 
-   * - for each rotor in order of their traversal
-   *   from the plugboard to reflector:
-   *    > if a notch is engaged, rotates the next rotor
-   *      if there is one
+   * - for each other rotor, if previous rotor's notch is engaged and 
+   *   has just rotated, rotates the rotor.
    */
-  void processRotorRotations();
+  void rotateRotors();
 
 
 
