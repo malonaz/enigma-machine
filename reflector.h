@@ -8,6 +8,7 @@
 #include <vector>
 
 
+
 /**
  * Reflector. This class simulates the reflector of 
  * an Enigma Machine. 

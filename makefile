@@ -1,9 +1,9 @@
 
 
-enigma: main.o stateMachine.o plugboard.o reflector.o rotors.o enigma.o errors.o helpers.o
+enigma: main.o stateMachine.o plugboard.o reflector.o rotors.o enigma.o errors.o helpers.o test.o
 	g++ -Wall -g -o enigma $^
 
-main.o: main.cpp enigma.h errors.h
+main.o: main.cpp enigma.h errors.h test.h
 	g++ -Wall -g -c main.cpp
 
 stateMachine.o: stateMachine.cpp stateMachine.h helpers.h errors.h
@@ -27,10 +27,16 @@ helpers.o: helpers.cpp helpers.h
 errors.o: errors.cpp errors.h
 	g++ -Wall -g -c errors.cpp
 
+
+test.o: test.cpp test.h plugboard.h reflector.h rotors.h enigma.h
+	g++ -Wall -g -c test.cpp
+
 clean:
 	rm *.o enigma
 
 
 test:
-	#./enigma tests/test00/plugboard.pb tests/test00/reflector.rf tests/test00/rotor.rot tests/test00/rotor2.rot tests/test00/rotor3.rot tests/test00/rotor.pos
-	./enigma tests/test04/plugboard.pb tests/test04/reflector.rf tests/test04/rotor.rot tests/test04/rotor2.rot tests/test04/rotor.pos
+	./enigma
+#./enigma tests/test00/plugboard.pb tests/test00/reflector.rf tests/test00/rotor.rot tests/test00/rotor2.rot tests/test00/rotor3.rot tests/test00/rotor.pos
+
+#./enigma tests/test04/plugboard.pb tests/test04/reflector.rf tests/test04/rotor.rot tests/test04/rotor2.rot tests/test04/rotor.pos

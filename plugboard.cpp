@@ -23,6 +23,7 @@ Plugboard::Plugboard(char* config){
   config_stream.close();
 }
 
+
 int Plugboard:: step(int input, bool debug){
   if (debug)
     std::cout << toChar(input) << "-plug->";

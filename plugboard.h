@@ -7,9 +7,6 @@
 #include "errors.h"
 #include <vector>
 
-
-
-
 /**
  * Plugboard. This class simulates the plugboard of 
  * an Enigma Machine. 
@@ -58,6 +55,8 @@ public:
    * ! error codes are activated as the configuration file is read.
    */
   static Error checkArg(char* config);
+
+  
 };
 
 
