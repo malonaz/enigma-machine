@@ -1,5 +1,4 @@
 // -*- C++ -*-
-
 #include "plugboard.h"
 #include "helpers.h"
 #include <iostream>
@@ -31,6 +30,8 @@ int Plugboard:: step(int input, bool debug){
   return mapping[input];
 }
 
+
+
 Error Plugboard::checkArg(char* config){
   Error error(config, PLUGBOARD);
   std::ifstream config_stream(config);
@@ -40,13 +41,14 @@ Error Plugboard::checkArg(char* config){
 
   std::set<int> nums;
   int num1, num2;
+  
   while (config_stream >> num1){
     if (!(config_stream >> num2)){
       if (config_stream.eof())
 	return error.setCode(INCORRECT_NUMBER_OF_PLUGBOARD_PARAMETERS);
       return error.setCode(NON_NUMERIC_CHARACTER);
     }
-
+    
     if(invalidIndex(num1) || invalidIndex(num2))
       return error.setCode(INVALID_INDEX);
 
@@ -57,10 +59,12 @@ Error Plugboard::checkArg(char* config){
     nums.insert(num2);
 
   }
-  
+
   if (!config_stream.eof())
     return error.setCode(NON_NUMERIC_CHARACTER);  
   
   return error;
 }
+
+
 

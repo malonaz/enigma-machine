@@ -45,11 +45,12 @@ void test();
  *   > file begins with a character 
  *   > ends with char
  *   > char in the middle
- *   > int+char in the middle 
+ *   > int+char in the middle
+ *   > 13 pairs, ends with int+char 
  * - ERROR HIERARCHY:
  *   > (1) then 
  *     o (2): 29 integers -> (1)
- *     o (3): 26 integers where 26th is invalid index -> (1)
+ *     o (3): 13th pair maps already mapped contact to invalid index -> (1) ??
  *     o (4): 10th pair connects a contact already connected, followed by non_numeric -> (1)
  *   > (2) then
        o (1) not possible!
@@ -77,6 +78,6 @@ void testPlugboard();
  */
 void testPlugboardCheckArg(const char* arg);
 
-void processError(Error result, int expected);
+void processError(Error error, Error exp_error);
 
 #endif

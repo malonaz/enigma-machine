@@ -1,4 +1,6 @@
 #include "helpers.h"
+#include "errors.h"
+
 
 int toInt(char c){
   return c-65;
@@ -31,4 +33,12 @@ bool inSet(std::set<int> digits, int digit){
   if (digits.find(digit) != digits.end())
     return true;
   return false;
+}
+
+int getNextPair(int &num1, int &num2, std::ifstream &config_stream){
+  if (!(config_stream >> num1))
+    return 0;
+  if (!(config_stream >> num2))
+    return 1;
+  return 2;
 }
