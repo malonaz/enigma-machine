@@ -5,6 +5,10 @@
 #include "errors.h"
 #include <set>
 #include <fstream>
+
+extern int subtest_count;
+extern int test_passed;
+
 /**
  * helper function which, given an ascii character in the range [A-Z],
  * returns the corresponding integer in the range [0-25].
@@ -58,12 +62,6 @@ bool getNextPair(int &num1, int &num2, Error &error,
 		 std::ifstream &config_stream);
 
 
-/**
- * helper function which sets error's code to 
- * NON_NUMERIC_CHARACTER if config contains 
- * a non-numeric character
- */
-void checkForNumericChar(char* config, Error &error);
 
 
 #endif

@@ -1,4 +1,4 @@
 1) Plugboard checkArg
-   - what if 13 pairs where 10th pair maps 14 to 30.
-   - is that considered attempting to connecta contact (14) with more than one other contact?
-   - I say no for now. ask Fidelis ... 
+   pair (x,y) where x>25 and y is non-numeric. what should I call ?
+
+2) replace magic number 26

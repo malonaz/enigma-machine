@@ -4,8 +4,8 @@
 #include <iostream>
 
 int main(int argc, char **argv){
-  //  test();
-  // return 0;
+  test();
+  return 0;
 	     
   int num_configs = argc -1;
   char** configs = ++argv;
@@ -28,4 +28,3 @@ int main(int argc, char **argv){
   
   return NO_ERROR;
 }
-

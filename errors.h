@@ -29,6 +29,8 @@
 
 
 #define MAX_ARRAY_LENGTH 50
+#define ALPHABET_SIZE 26
+
 
 /**
  * Error. This class is used to represent an error.

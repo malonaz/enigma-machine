@@ -43,14 +43,13 @@ Error Plugboard::checkArg(char* config){
   int num1, num2;
 
   while (getNextPair(num1, num2, error, config_stream)){
-
     if (inSet(nums,num1) || inSet(nums,num2) || num1 == num2)
       error.setCode(IMPOSSIBLE_PLUGBOARD_CONFIGURATION);
     
     if(invalidIndex(num1) || invalidIndex(num2)) // I put this after the IMP_PB_CONFIG
-      error.setCode(INVALID_INDEX);              // for case where num1 = num2 > 25
-                                                 // we want error to be invalidIndex !
-    nums.insert(num1);
+      error.setCode(INVALID_INDEX);              // for case where num1 or  num2 > 25
+                                                 // we want error to be invalidIndex because
+    nums.insert(num1);                           // they are not contacts!
     nums.insert(num2);
   }
   
