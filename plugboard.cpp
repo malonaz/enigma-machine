@@ -37,34 +37,27 @@ Error Plugboard::checkArg(char* config){
   std::ifstream config_stream(config);
 
   if (!config_stream.is_open())
-    return error.setCode(ERROR_OPENING_CONFIGURATION_FILE);
+    error.setCode(ERROR_OPENING_CONFIGURATION_FILE);
 
   std::set<int> nums;
   int num1, num2;
-  
-  while (config_stream >> num1){
-    if (!(config_stream >> num2)){
-      if (config_stream.eof())
-	return error.setCode(INCORRECT_NUMBER_OF_PLUGBOARD_PARAMETERS);
-      return error.setCode(NON_NUMERIC_CHARACTER);
-    }
-    
-    if(invalidIndex(num1) || invalidIndex(num2))
-      return error.setCode(INVALID_INDEX);
+
+  while (getNextPair(num1, num2, error, config_stream)){
 
     if (inSet(nums,num1) || inSet(nums,num2) || num1 == num2)
-      return error.setCode(IMPOSSIBLE_PLUGBOARD_CONFIGURATION);
-
+      error.setCode(IMPOSSIBLE_PLUGBOARD_CONFIGURATION);
+    
+    if(invalidIndex(num1) || invalidIndex(num2)) // I put this after the IMP_PB_CONFIG
+      error.setCode(INVALID_INDEX);              // for case where num1 = num2 > 25
+                                                 // we want error to be invalidIndex !
     nums.insert(num1);
     nums.insert(num2);
-
   }
-
-  if (!config_stream.eof())
-    return error.setCode(NON_NUMERIC_CHARACTER);  
   
+  if (!error.getCode() && !config_stream.eof())
+    error.setCode(NON_NUMERIC_CHARACTER);
+
+  config_stream.close();
   return error;
 }
-
-
 

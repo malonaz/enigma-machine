@@ -39,8 +39,8 @@
 #define PB22 "plugboards/pb22.pb" // maps already mapped contact then later has a char
 #define PB23 "plugboards/pb23.pb" // maps to contact already mapped, followed by char
 // HIERARCHY (2)
-#define PB24 "plugboards/pb24.pb" // maps already mapped contact then later has a char "-"
-#define PB25 "plugboards/pb25.pb" // maps to contact already mapped, followed by a "/"
+#define PB24 "plugboards/pb24.pb" // 5 integers, 5th is >25
+#define PB25 "plugboards/pb25.pb" // 5 integers, followed by "@"
 
 
 int test_count = 0;
@@ -109,9 +109,8 @@ void testPlugboard(){
   testPlugboardCheckArg(PB23); // 21) maps to contact already mapped, followed by a "/"
   
   exp_error_code = INCORRECT_NUMBER_OF_PLUGBOARD_PARAMETERS;
-  testPlugboardCheckArg(PB24); // 22) maps already mapped contact then later has a char "-"
-  testPlugboardCheckArg(PB25); // 23) maps to contact already mapped, followed by a "/"
-    
+  testPlugboardCheckArg(PB24); // 22) 5 integers, 5th is >25
+  testPlugboardCheckArg(PB25); // 23) 5 integers, followed by "@"    
   std::cout << " Finished testing Plugboard\n\n";
 }
 
