@@ -5,6 +5,7 @@
 #include <iostream>
 #include <cstring>
 #include <set>
+
 // declarations needed
 extern int test_count, test_passed, subtest_count, exp_error_code;
 
@@ -21,7 +22,7 @@ void testPlugboard(){
   subtest_count = 0;
 
   // checkArg tests
-  std::cout << "  testing Plugboard::checkArg() \n";
+  std::cout << "  Testing Plugboard::checkArg() \n";
 
   // ERROR_OPENING_CONFIGURATION_FILE 
   exp_error_code = ERROR_OPENING_CONFIGURATION_FILE;
@@ -79,7 +80,10 @@ void testPlugboard(){
   testPlugboardCheckArg("plugboards/pb29.pb"); // 27) contains a float
 
   // Check Plugboard class is working properly
-  testPlugboardStep(PB1);
+  subtest_count = 0;
+  std::cout << "\n  Testing Plugboard::step() \n"; 
+  testPlugboardStep(PB1); // 1) 1 pair
+  testPlugboardStep(PB5); // 2) 13 pairs
   
   
   std::cout << " Finished testing Plugboard\n\n";
@@ -115,13 +119,17 @@ void testPlugboardStep(const char* arg){
   char filepath[MAX_ARRAY_LENGTH];
   test_count++;
   subtest_count++;
-
   strcpy(filepath,arg);
   Plugboard plugboard(filepath);
-  
-  std::set<int> nums;
+
+  std::cout <<"   test " << subtest_count<< "...";
+  std::set<int> outputs;
   int output;
   for (int i =0; i < ALPHABET_SIZE; i++){
-    output = plugboard.step()
+    output = plugboard.step(i);
+    if (inSet(outputs,output))
+      std::cout << "test failed!\n";
   }
+  test_passed++;
+  std::cout << "test passed!\n";
 }

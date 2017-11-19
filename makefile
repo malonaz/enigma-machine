@@ -39,8 +39,6 @@ clean:
 
 
 test:
-
-	./enigma
-#	./enigma tests/test00/plugboard.pb tests/test00/reflector.rf tests/test00/rotor.rot tests/test00/rotor2.rot tests/test00/rotor3.rot tests/test00/rotor.pos
+	./enigma tests/test00/plugboard.pb tests/test00/reflector.rf tests/test00/rotor.rot tests/test00/rotor2.rot tests/test00/rotor3.rot tests/test00/rotor.pos
 
 #./enigma tests/test04/plugboard.pb tests/test04/reflector.rf tests/test04/rotor.rot tests/test04/rotor2.rot tests/test04/rotor.pos

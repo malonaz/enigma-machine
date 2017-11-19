@@ -11,4 +11,10 @@
 void test();
 
 
+/**
+ * This internal function compares two errors:
+ * - if errors' codes are equal, increments test_passed.
+ * - outputs test results
+ */
+void processError(Error error, Error exp_error);
 #endif

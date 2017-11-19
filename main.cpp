@@ -4,15 +4,14 @@
 #include <iostream>
 
 int main(int argc, char **argv){
-  test();
-  return 0;
+  //test();
+  //return 0;
 	     
   int num_configs = argc -1;
   char** configs = ++argv;
  
   
   Error enigma_error = EnigmaMachine::checkArgs(num_configs,configs);
-  
   if (enigma_error.getCode()){
     std::cerr << enigma_error;
     return enigma_error.getCode();
