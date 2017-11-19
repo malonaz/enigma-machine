@@ -47,7 +47,7 @@ private:
   char filename[MAX_ARRAY_LENGTH];
   int filetype;
   char info[MAX_ARRAY_LENGTH];
-
+  bool code_set;
 public:
 
   /**
@@ -56,6 +56,7 @@ public:
    * - initializes the filename
    *   and the filetype.
    * - initializes code to NO_ERROR
+   * - initializes code_set to false
    */
   Error(char* filename, int filetype);
 
@@ -64,14 +65,16 @@ public:
    * not directly affiliated with a config file.
    * - initializes the code to error_code
    * - initializes the object type to NO_OBJECT
+   * - initializes code_set to true
    */
   Error(int error_code)
-    :code(error_code), filetype(NO_OBJECT){}
+    :code(error_code), filetype(NO_OBJECT), code_set(true){}
   
   /**
    * Method which given an error_code,
-   * - sets the Error's code to error_code,
-   * - copies param info into this->info
+   * - if code has not been set:
+   *   > sets the Error's code to error_code,
+   *   >copies param info into this->info
    * - returns this object.
    */
   Error setCode(int error_code , const char* info = "\0");
@@ -90,11 +93,18 @@ public:
   
 
   /**
-   * Method which returns the error's file type 
+   * Method which returns the error's filetype 
    * as a char array.
    */
-  const char* getFiletype();
+  const char* getFiletypeString();
 
+
+  /**
+   * Method which returns the error's filetype
+   * as a string;
+   */
+  int getFiletype(){return filetype;}
+  
   /**
    * Method which returns the error's info as 
    * a constant array

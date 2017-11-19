@@ -3,7 +3,7 @@
 #include <cstring>
 
 Error::Error(char* filename,int filetype)
-  : code(NO_ERROR){
+  : code(NO_ERROR), code_set(false){
   this->filetype = filetype;
   strcpy(this->filename, filename);  
 }
@@ -11,14 +11,17 @@ Error::Error(char* filename,int filetype)
 
 
 Error Error:: setCode(int error_code, const char* info){
+  if (!code_set){
   code = error_code;
   strcpy(this->info, info);
+  code_set = true;
+  }
   return *this;
 }
 
 
 
-const char* Error::getFiletype(){
+const char* Error::getFiletypeString(){
   switch(filetype){
   case PLUGBOARD:
     return "plugboard file ";
@@ -45,41 +48,41 @@ std::ostream& operator << (std::ostream& stream, Error &error){
     break;
 
   case INVALID_INDEX:
-    stream << "Invalid index in " << error.getFiletype() << error.getFilename();
+    stream << "Invalid index in " << error.getFiletypeString() << error.getFilename();
     break;
 
   case NON_NUMERIC_CHARACTER:
-    stream << "Non-numeric character in " << error.getFiletype() << error.getFilename();
+    stream << "Non-numeric character in " << error.getFiletypeString() << error.getFilename();
     break;
 
   case IMPOSSIBLE_PLUGBOARD_CONFIGURATION:
-    stream << "Impossible plugboard configuration in " << error.getFiletype() << error.getFilename();
+    stream << "Impossible plugboard configuration in " << error.getFiletypeString() << error.getFilename();
     break;
 
   case INCORRECT_NUMBER_OF_PLUGBOARD_PARAMETERS:
-    stream << "Incorrect number of parameters in " << error.getFiletype() << error.getFilename();
+    stream << "Incorrect number of parameters in " << error.getFiletypeString() << error.getFilename();
     break;
 
   case INVALID_ROTOR_MAPPING:
-    stream << "Invalid rotor mapping in " << error.getFiletype() << error.getFilename();
+    stream << "Invalid rotor mapping in " << error.getFiletypeString() << error.getFilename();
     break;
 
   case NO_ROTOR_STARTING_POSITION:
-    stream << "No rotor starting position in " << error.getFiletype() << error.getFilename();
+    stream << "No rotor starting position in " << error.getFiletypeString() << error.getFilename();
     break;
 
   case INVALID_REFLECTOR_MAPPING:
-    stream << "Invalid reflector mapping in " << error.getFiletype() << error.getFilename();
+    stream << "Invalid reflector mapping in " << error.getFiletypeString() << error.getFilename();
     break;
 
   case INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS:
     stream << "Incorrect "<< error.getInfo();
     stream << " number of parameters in ";
-    stream << error.getFiletype() << error.getFilename();
+    stream << error.getFiletypeString() << error.getFilename();
     break;
 
   case ERROR_OPENING_CONFIGURATION_FILE:
-    stream << "Error opening configuration " << error.getFiletype() << error.getFilename();
+    stream << "Error opening configuration " << error.getFiletypeString() << error.getFilename();
     break;
 
   case NO_ERROR: stream << "No error";

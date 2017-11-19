@@ -1,6 +1,6 @@
 
 
-enigma: main.o stateMachine.o plugboard.o reflector.o rotors.o enigma.o errors.o helpers.o test.o plugboard_test.o
+enigma: main.o stateMachine.o plugboard.o reflector.o rotors.o enigma.o errors.o helpers.o test.o plugboard_test.o reflector_test.o
 	g++ -Wall -g -o enigma $^
 
 main.o: main.cpp enigma.h errors.h test.h
@@ -31,9 +31,10 @@ errors.o: errors.cpp errors.h
 test.o: test.cpp test.h plugboard.h reflector.h rotors.h enigma.h
 	g++ -Wall -g -c test.cpp
 
-plugboard_test.o: plugboard_test.cpp plugboard_test.h errors.h helpers.h
+plugboard_test.o: plugboard_test.cpp plugboard_test.h plugboard.h errors.h helpers.h
 	g++ -Wall -g -c plugboard_test.cpp
 
+reflector_test.o: reflector_test.cpp reflector_test.h reflector.h errors.h helpers.h
 clean:
 	rm *.o enigma
 

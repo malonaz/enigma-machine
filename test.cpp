@@ -1,5 +1,6 @@
 #include "test.h"
 #include "plugboard_test.h"
+#include "reflector_test.h"
 #include <iostream>
 
 /* global test variables */
@@ -13,6 +14,8 @@ void test(){
     
   testPlugboard();
 
+  testReflector();
+  
   std::cout << "passed " << test_passed << "/" << test_count << "\n\n";
 
 }

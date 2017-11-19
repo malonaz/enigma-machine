@@ -127,7 +127,7 @@ void testPlugboardStep(const char* arg){
   int output;
   for (int i =0; i < ALPHABET_SIZE; i++){
     output = plugboard.step(i);
-    if (inSet(outputs,output))
+    if (inSet(outputs,output) || invalidIndex(output))
       std::cout << "test failed!\n";
   }
   test_passed++;

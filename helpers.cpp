@@ -36,13 +36,17 @@ bool inSet(std::set<int> digits, int digit){
 }
 
 bool getNextPair(int &num1, int &num2, Error &error,
-		std::ifstream &config_stream){
+		 std::ifstream &config_stream){
   if (error.getCode() || !(config_stream >> num1))
     return false;
 		   
   if (!(config_stream >> num2)){
-    if (config_stream.eof())
-      error.setCode(INCORRECT_NUMBER_OF_PLUGBOARD_PARAMETERS);
+    if (config_stream.eof()){
+      if (error.getFiletype() == PLUGBOARD)
+	error.setCode(INCORRECT_NUMBER_OF_PLUGBOARD_PARAMETERS);
+      else
+	error.setCode(INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS, "(odd)");
+    }
     return false;
   }
   return true;

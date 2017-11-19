@@ -30,7 +30,7 @@ public:
 
 
   /**
-   * Method which takes an input and:
+   * Method which takes an input in the range [0,25]
    * - maps the input using mapping
    * - returns the mapped value
    * OPT - set debug to true to see how the step was taken

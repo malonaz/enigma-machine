@@ -61,7 +61,4 @@ bool inSet(std::set<int> digits, int digit);
 bool getNextPair(int &num1, int &num2, Error &error,
 		 std::ifstream &config_stream);
 
-
-
-
 #endif

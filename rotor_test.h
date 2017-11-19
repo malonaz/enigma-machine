@@ -1,62 +1,44 @@
 // -*- C++ -*-
-#ifndef PLUGBOARD_TEST_H
-#define PLUGBOARD_TEST_H
+#ifndef ROTOR_TEST_H
+#define ROTOR_TEST_H
 
 /**
- * Function which will test the Plugboard class methods.
+ * Function which will test the Reflector class methods.
  * Testing strategy:
  *
  * for checkArg:
  * - ERROR_OPENING_CONFIGURATION_FILE
  * - NO_ERROR
- *   > 0 pair
- *   > 1 pair
  *   > 13 pairs 
- * - IMPOSSIBLE_PLUGBOARD_CONFIGURATION (1)
+ * - INVALID_REFLECTOR_MAPPING (1)
  *   > connects a contact with itself
  *   > connect a contact already connected
  *   > connect a contact to a contact already connected
- * - INCORRECT_NUMBER_OF_PLUGBOARD_PARAMETERS (2)
+ * - INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS (2)
+ *   > 0 pair
+ *   > 14 pairs
  *   > 1 integer
- *   > 25 integers
+ *   > 27 integers
  * - INVALID_INDEX (3)
- *   > negative integer??
+ *   > negative integer
  *   > starts with a >25 integer
  *   > ends with a >25 integer
  * - NON_NUMERIC_CHARACTER (4)
  *   > file begins with a character 
  *   > ends with char
- *   > char in the middle
+ *   > word in the middle
  *   > int+char in the middle
- *   > 13 pairs, ends with int+char 
- * - ERROR HIERARCHY:
- *   > (1) then 
- *     o (2): 29 integers -> (1)
- *     o (3): 13 pairs where 12th pair maps to itself, and 25th int > 25 -> (1) ??
- *     o (4): 10th pair connects a contact already connected, followed by non_numeric -> (1)
- *   > (2) then
-       o (1) not possible!
- *     o (3): 5 integers where 5th is >25 -> (2)
- *     o (4): not possible!
- *   > (3) then
- *     o (1): 13 pairs, where 12th pair contains int >25 & 13th pair maps to itself -> (3)
- *     o (2): 15 ints, where 3rd integer >25 -> (3)
- *     o (4): invalid index before non_numeric char -> (3)
- *   > (4) then 
- *     o (1): 4 pairs of entry. 1st pair has letters, 2nd pair maps to itself -> (4)
- *     o (2): 5 entries, 3rd int contains non num chars -> (4)
- *     o (3): 10 entries, 3rd contains non num chars, 4th contains invalid index -> (4)
-
+ *   > ends with int+char 
  * - HIERARCHY TRICKY MULTIPLE ERROR SITUATIONS:
- *   > IMPOSSIBLE_PLUGBOARD_CONFIGURATION
+ *   > INVALID_REFLECTOR_MAPPING
  *     o no ambiguous situation where this error takes priority because
- *       1) NON_NUMERIC_CHARACTER  & INCORRECT_NUMBER_OF_PLUGBOARD_PARAMETERS
+ *       1) NON_NUMERIC_CHARACTER  & INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS
  *       occur outside pair analysis
  *       2) INVALID_INDEX takes priority as a number with an invalid index
- *          is not considered a contact and therefore, given a pair (x,y)
+ *          is not considered an index to the alphabet. Therefore, given a pair (x,y)
  *          where x already mapped and y>25, I do not consider this an attempt to
- *          map x to more than one other contact
- *   > INCORRECT_NUMBER_OF_PLUGBOARD_PARAMETERS
+ *          map x to more than one other index.
+ *   > INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS
  *     o 5 integers where the 5th >25
  *   > INVALID_INDEX
  *     o pair (x,y) where x>25 & y already mapped 
@@ -73,17 +55,16 @@
  *     o file contains a '-', a space, then a number
  *
  * For Step: 
- *  Note: As described in my Plugboard.h documentation, step expects input 
- *        in range [0,25]. I do not expect or test outside this range because
+ *  Note: As described in my reflector.h documentation, step expects input 
+ *        in range [0,25]. I do not expect or test input outside this range because
  *        this class is only used by the EnigmaMachine class which will never it
  *        incorrect input.
  *  - entire input domain must return a value in range [0,25] & no 2 inputs 
  *    map to the same output
- *    > 1 pair plugboard
- *    > 13 pair plugboard
- * 
+ *    > reflector
+ *    > reflector V
  */
-void testPlugboard();
+void testReflector();
 
 /**
  * Function which, given a plugboard filepath will 
@@ -93,13 +74,11 @@ void testPlugboard();
  * - if test is passed -> increments test_passed.
  * - outputs test results
  */
-void testPlugboardCheckArg(const char* arg);
-
-
+void testReflectorCheckArg(const char* arg);
 
 /**
- * Function which, given a plugboard filepath with
- * correct configuration, constructs a Plugboard and 
+ * Function which, given a reflector filepath with
+ * correct configuration, constructs a Reflector and 
  * makes it step through rangre [0,25]
  * - increments test_count, subtest_count
  * - if all inputs map to a value in range [0,25] and 
@@ -107,6 +86,6 @@ void testPlugboardCheckArg(const char* arg);
  *   test_passed.
  * - outputs test results
  */
-void testPlugboardStep(const char* arg);
+void testReflectorStep(const char* arg);
 
 #endif

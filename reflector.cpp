@@ -37,39 +37,33 @@ Error Reflector::checkArg(char* config){
   std::ifstream config_stream(config);
 
   if (!config_stream.is_open())
-    return error.setCode(ERROR_OPENING_CONFIGURATION_FILE);
+    error.setCode(ERROR_OPENING_CONFIGURATION_FILE);
 
   std::set<int> nums;
   int num1, num2;
-  
-  while (config_stream >> num1){
-    
-    if (!(config_stream >> num2)){
-      if (config_stream.eof())
-	return error.setCode(INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS, "(odd)");
-      return error.setCode(NON_NUMERIC_CHARACTER);
-    }
 
-    if (inSet(nums,num1) || inSet(nums, num2) || num1 == num2)
-      return error.setCode(INVALID_REFLECTOR_MAPPING);
 
-    if (nums.size() == 26)
-      return error.setCode(INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS);
-    
+  while (getNextPair(num1,num2,error,config_stream)){
+    if (inSet(nums,num1) || inSet(nums,num2) || num1 == num2)
+      error.setCode(INVALID_REFLECTOR_MAPPING);
+
     if (invalidIndex(num1) || invalidIndex(num2))
-      return error.setCode(INVALID_INDEX);
+      error.setCode(INVALID_INDEX);
     
-    
-    nums.insert(num1);
-    nums.insert(num2);    
+    if (!error.getCode()){      
+      nums.insert(num1);            
+      nums.insert(num2);
+    }
   }
   
-  if(!config_stream.eof())
-    return error.setCode(NON_NUMERIC_CHARACTER);
+  if(!error.getCode()){
+    if (!config_stream.eof())
+      error.setCode(NON_NUMERIC_CHARACTER);
+    else if (nums.size() != 26)
+      error.setCode(INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS, "insufficient");
+  }
   
-  if (nums.size() != 26)
-    return error.setCode(INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS, "insufficient");
-  
-  return error;
+  config_stream.close();
+  return error;  
 }
 
