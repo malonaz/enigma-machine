@@ -123,7 +123,6 @@ Error EnigmaMachine::checkRotorPos(char* config, int num_rotors){
     return error.setCode(NON_NUMERIC_CHARACTER);
 
   if (count != num_rotors){
- 
     return error.setCode(NO_ROTOR_STARTING_POSITION);
   }
   return error;    
