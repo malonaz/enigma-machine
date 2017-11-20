@@ -4,6 +4,7 @@
 #include <iostream>
 
 int main(int argc, char **argv){
+  
   int num_configs = argc -1;
   char** configs = ++argv;
  
