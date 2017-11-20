@@ -78,7 +78,7 @@ Error Rotor:: checkArg(char* config){
     if (invalidIndex(num))
       error.setCode(INVALID_INDEX);
 
-    if (nums.size() < ALPHABET_SIZE){
+    if (!error.getCode() && nums.size() < ALPHABET_SIZE){
       if (inSet(nums, num)){
 	std::cerr << "Invalid mapping of input " << nums.size();
 	std::cerr << " to output " << num << " (output " << num;

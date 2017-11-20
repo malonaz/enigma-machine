@@ -125,8 +125,7 @@ Error EnigmaMachine::checkRotorPos(char* config, int num_rotors){
     error.setCode(NON_NUMERIC_CHARACTER);
 
   if (!error.getCode() && count != num_rotors){
-    std::cerr << count << " starting rotor positions supplied for ";
-    std::cerr << num_rotors << " rotors in ";
+    std::cerr << "No starting position for rotor " << count << " in ";
     return error.setCode(NO_ROTOR_STARTING_POSITION);
   }
   config_stream.close();
