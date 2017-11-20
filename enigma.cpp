@@ -65,7 +65,8 @@ void EnigmaMachine:: rotateRotors(){
   
 
 Error EnigmaMachine:: checkArgs(int num_configs, char** configs){
-  if (num_configs < MIN_ENIGMA_ARGS)
+  if (num_configs < MIN_ENIGMA_ARGS
+      || num_configs == PLUBGOARD_REFLECTOR_ROTOR_ONLY_ARGS)
     return Error(INSUFFICIENT_NUMBER_OF_PARAMETERS);
 
   Error plugboard_error = Plugboard::checkArg(*configs++);

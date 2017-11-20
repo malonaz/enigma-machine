@@ -12,7 +12,7 @@
 
 
 #define MIN_ENIGMA_ARGS 2
-
+#define PLUBGOARD_REFLECTOR_ROTOR_ONLY_ARGS 3
 
 /**
  * EnigmaMachine. This class represents an enigma machine.
