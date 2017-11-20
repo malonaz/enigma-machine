@@ -68,8 +68,12 @@ Error Rotor:: checkArg(char* config){
       nums.insert(num);
     }
   }
-  if (!config_stream.eof())
-    error.setCode(NON_NUMERIC_CHARACTER);
+  if (!config_stream.eof()){
+    if (nums.size() > ALPHABET_SIZE)
+      error.setCode(NON_NUMERIC_CHARACTER, " for notches ");
+    else
+      error.setCode(NON_NUMERIC_CHARACTER, " for mapping ");
+  }
 
   if (nums.size() != ALPHABET_SIZE)
     error.setCode(INVALID_ROTOR_MAPPING);
