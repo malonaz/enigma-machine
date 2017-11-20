@@ -59,6 +59,7 @@ std::string getInvalidRotorMappingInfo(int previous_input,
   str += current_input +  " to output " + output;
   str += " (output " + output;
   str += " is already mapped to from input " + previous_input;
+  std:: cout <<str;
   return str;
 }
 
@@ -79,8 +80,11 @@ Error Rotor:: checkArg(char* config){
 
     if (nums.size() < ALPHABET_SIZE){
       if (inSet(nums, num)){
-	std::string str = getInvalidRotorMappingInfo(mappings[num], num, nums.size());
-	error.setCode(INVALID_ROTOR_MAPPING, str.c_str());
+	std::cerr << "Invalid mapping of input " << nums.size();
+	std::cerr << " to output " << num << " (output " << num;
+	std::cerr << " is already mapped to from input " << mappings[num];
+	std:: cerr << " in ";
+	error.setCode(INVALID_ROTOR_MAPPING);
       }
       mappings[nums.size()] = num;
       nums.insert(num);
