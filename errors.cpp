@@ -68,7 +68,7 @@ std::ostream& operator << (std::ostream& stream, Error &error){
     break;
 
   case INVALID_ROTOR_MAPPING:
-    stream << "Invalid rotor mapping in " << error.getFiletypeString() << error.getFilename();
+    stream << error.getInfo() << error.getFiletypeString() << error.getFilename();
     break;
 
   case NO_ROTOR_STARTING_POSITION:

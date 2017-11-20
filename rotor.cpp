@@ -95,7 +95,7 @@ Error Rotor:: checkArg(char* config){
   }
 
   if (nums.size() != ALPHABET_SIZE)
-    error.setCode(INVALID_ROTOR_MAPPING);
+    error.setCode(INVALID_ROTOR_MAPPING, "not all inputs mapped in ");
 
   config_stream.close();
   return error;
