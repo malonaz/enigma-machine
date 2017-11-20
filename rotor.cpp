@@ -86,7 +86,7 @@ Error Rotor:: checkArg(char* config){
 	std:: cerr << ") in ";
 	error.setCode(INVALID_ROTOR_MAPPING);
       }
-      mappings[nums.size()] = num;
+      mappings[num] = nums.size();
       nums.insert(num);
     }
   }
