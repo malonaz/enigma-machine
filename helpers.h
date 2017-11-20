@@ -61,4 +61,13 @@ bool inSet(std::set<int> digits, int digit);
 bool getNextPair(int &num1, int &num2, Error &error,
 		 std::ifstream &config_stream);
 
+/**
+ * helper function which:
+ * - if error's code is not NO_ERROR, returns false
+ * -  attempts to extract one integer from config_stream and:
+ *    > if extracts the integer successfully, returns true
+ *    > if it fails to extract the integer, returns false
+ */ 
+bool getNextInt(int &num, Error &error, std::ifstream &config_stream);
+
 #endif

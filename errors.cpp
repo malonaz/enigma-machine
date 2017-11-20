@@ -41,7 +41,7 @@ std::ostream& operator << (std::ostream& stream, Error &error){
 
   case INSUFFICIENT_NUMBER_OF_PARAMETERS:
     stream << "usage: enigma plugboard-file reflector-file (<rotor-file>* ";
-    stream<< "rotor-positions)?"
+    stream<< "rotor-positions)?";
     break;
 
   case INVALID_INPUT_CHARACTER:
@@ -53,7 +53,8 @@ std::ostream& operator << (std::ostream& stream, Error &error){
     break;
 
   case NON_NUMERIC_CHARACTER:
-    stream << "Non-numeric character in " << error.getFiletypeString() << error.getFilename();
+    stream << "Non-numeric character in ";
+    stream << error.getFiletypeString() << error.getFilename();
     break;
 
   case IMPOSSIBLE_PLUGBOARD_CONFIGURATION:

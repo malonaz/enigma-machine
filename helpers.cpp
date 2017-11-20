@@ -55,3 +55,10 @@ bool getNextPair(int &num1, int &num2, Error &error,
   return true;
 }
 
+
+bool getNextInt(int &num, Error &error, std::ifstream &config_stream){
+  if (config_stream >> num)
+    return true;
+  return false;
+}
+

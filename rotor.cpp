@@ -5,13 +5,13 @@
 #include <set>
 
 Rotor::Rotor(char* config)
-  : mapping(26,0), inverse_mapping(26,0),
-    notches(26,0), offset(0), inverse(false){
+  : mapping(ALPHABET_SIZE,0), inverse_mapping(ALPHABET_SIZE,0),
+    notches(ALPHABET_SIZE,0), offset(0), inverse(false){
   
   std::ifstream config_stream(config);
   int map_to, notch;
 
-  for (int i = 0; i < 26; i++){
+  for (int i = 0; i < ALPHABET_SIZE; i++){
     config_stream >> map_to;
     mapping[i] = map_to;
     inverse_mapping[map_to] = i;
@@ -53,27 +53,28 @@ Error Rotor:: checkArg(char* config){
   std::ifstream config_stream(config);
 
   if(!config_stream.is_open())
-    return error.setCode(ERROR_OPENING_CONFIGURATION_FILE);
+    error.setCode(ERROR_OPENING_CONFIGURATION_FILE);
 
   std::set<int> nums;
   int num;
 
-  while (config_stream >> num){
+  while (getNextInt(num, error, config_stream)){
     if (invalidIndex(num))
-      return error.setCode(INVALID_INDEX);
+      error.setCode(INVALID_INDEX);
 
-    if (nums.size() != 26){
+    if (nums.size() != ALPHABET_SIZE){
       if (inSet(nums, num))
-	return error.setCode(INVALID_ROTOR_MAPPING);
+	error.setCode(INVALID_ROTOR_MAPPING);
       nums.insert(num);
     }
   }
   if (!config_stream.eof())
-    return error.setCode(NON_NUMERIC_CHARACTER);
+    error.setCode(NON_NUMERIC_CHARACTER);
 
-  if (nums.size() != 26)
-    return error.setCode(INVALID_ROTOR_MAPPING);
-  
+  if (nums.size() != ALPHABET_SIZE)
+    error.setCode(INVALID_ROTOR_MAPPING);
+
+  config_stream.close();
   return error;
 }
 
