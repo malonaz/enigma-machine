@@ -92,5 +92,6 @@ std::ostream& operator << (std::ostream& stream, Error &error){
     stream << "Wrong error code. Fix your code !";
     break;
   }
+  stream << std::cout;
   return stream;
 }
