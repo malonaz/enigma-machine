@@ -45,13 +45,13 @@ void testReflector(){
   testReflectorCheckArg("reflectors/rf12.rf"); // 9) 1 integer
   testReflectorCheckArg("reflectors/rf13.rf"); // 10) 12 pairs
   
-  // INVALID_INDEX (2)
+  // INVALID_INDEX (3)
   exp_error_code = INVALID_INDEX;
   testReflectorCheckArg("reflectors/rf14.rf"); // 11) negative integer
   testReflectorCheckArg("reflectors/rf15.rf"); // 12) starts with a >25 integer
   testReflectorCheckArg("reflectors/rf16.rf"); // 13) ends with a>25 integer
 
-  // NON_NUMERIC_CHARACTER (3)
+  // NON_NUMERIC_CHARACTER (4)
   exp_error_code = NON_NUMERIC_CHARACTER;
   testReflectorCheckArg("reflectors/rf17.rf"); // 14) begins with non-num char
   testReflectorCheckArg("reflectors/rf18.rf"); // 15) ends with non-num char

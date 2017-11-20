@@ -42,6 +42,11 @@ public:
   void setOffset(int offset){this->offset = offset;}
 
   /**
+   * Internal helper method which returns the current offset.
+   */
+  int getOffset(){return offset;}
+
+  /**
    * Method which simulates a rotor rotation by
    * incrementing offset by 1, modulo 26, to reflect
    * circular nature of a rotor.
@@ -56,7 +61,7 @@ public:
   bool notchEngaged(){return notches[offset];}
   
   /**
-   * Method which takes an input and:
+   * Method which takes an input in the range [0,25]:
    * - applies offset to input.
    * - if inverse is false -> maps offset value with mapping
    * - if inverse if true -< maps offset value with inverse_mapping

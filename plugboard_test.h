@@ -75,8 +75,8 @@
  * For Step: 
  *  Note: As described in my Plugboard.h documentation, step expects input 
  *        in range [0,25]. I do not expect or test outside this range because
- *        this class is only used by the EnigmaMachine class which will never it
- *        incorrect input.
+ *        this class is only used by the EnigmaMachine class which will never 
+ *        feed it incorrect input.
  *  - entire input domain must return a value in range [0,25] & no 2 inputs 
  *    map to the same output
  *    > 1 pair plugboard

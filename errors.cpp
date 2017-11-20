@@ -40,7 +40,8 @@ std::ostream& operator << (std::ostream& stream, Error &error){
   switch(error.getCode()){
 
   case INSUFFICIENT_NUMBER_OF_PARAMETERS:
-    stream << "Insufficient number of parameters";
+    stream << "usage: enigma plugboard-file reflector-file (<rotor-file>* ";
+    stream<< "rotor-positions)?"
     break;
 
   case INVALID_INPUT_CHARACTER:
@@ -56,11 +57,13 @@ std::ostream& operator << (std::ostream& stream, Error &error){
     break;
 
   case IMPOSSIBLE_PLUGBOARD_CONFIGURATION:
-    stream << "Impossible plugboard configuration in " << error.getFiletypeString() << error.getFilename();
+    stream << "Impossible plugboard configuration in ";
+    stream << error.getFiletypeString() << error.getFilename();
     break;
 
   case INCORRECT_NUMBER_OF_PLUGBOARD_PARAMETERS:
-    stream << "Incorrect number of parameters in " << error.getFiletypeString() << error.getFilename();
+    stream << "Incorrect number of parameters in ";
+    stream << error.getFiletypeString() << error.getFilename();
     break;
 
   case INVALID_ROTOR_MAPPING:
@@ -68,11 +71,13 @@ std::ostream& operator << (std::ostream& stream, Error &error){
     break;
 
   case NO_ROTOR_STARTING_POSITION:
-    stream << "No rotor starting position in " << error.getFiletypeString() << error.getFilename();
+    stream << "No rotor starting position in ";
+    stream << error.getFiletypeString() << error.getFilename();
     break;
 
   case INVALID_REFLECTOR_MAPPING:
-    stream << "Invalid reflector mapping in " << error.getFiletypeString() << error.getFilename();
+    stream << "Invalid reflector mapping in ";
+    stream << error.getFiletypeString() << error.getFilename();
     break;
 
   case INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS:

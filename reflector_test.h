@@ -57,8 +57,8 @@
  * For Step: 
  *  Note: As described in my reflector.h documentation, step expects input 
  *        in range [0,25]. I do not expect or test input outside this range because
- *        this class is only used by the EnigmaMachine class which will never it
- *        incorrect input.
+ *        this class is only used by the EnigmaMachine class which will never
+ *        feed it incorrect input.
  *  - entire input domain must return a value in range [0,25] & no 2 inputs 
  *    map to the same output
  *    > reflector
@@ -67,8 +67,8 @@
 void testReflector();
 
 /**
- * Function which, given a plugboard filepath will 
- * check whether the error given by Plugboard::checkArg 
+ * Function which, given a reflector filepath will 
+ * check whether the error given by Reflector::checkArg 
  * method has code equal to exp_error_code
  * - increments subtest_count, test_count.
  * - if test is passed -> increments test_passed.

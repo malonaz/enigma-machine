@@ -44,13 +44,13 @@ void testPlugboard(){
   testPlugboardCheckArg("plugboards/pb10.pb"); // 8) 1 integer
   testPlugboardCheckArg("plugboards/pb11.pb"); // 9) 25 integers
   
-  // INVALID_INDEX (2)
+  // INVALID_INDEX (3)
   exp_error_code = INVALID_INDEX;
   testPlugboardCheckArg("plugboards/pb12.pb"); // 10) contains negative integer
   testPlugboardCheckArg("plugboards/pb13.pb"); // 11) starts with an int >25
   testPlugboardCheckArg("plugboards/pb14.pb"); // 12) ends with an int >25
 
-  // NON_NUMERIC_CHARACTER (3)
+  // NON_NUMERIC_CHARACTER (4)
   exp_error_code = NON_NUMERIC_CHARACTER;
   testPlugboardCheckArg("plugboards/pb15.pb"); // 13) starts with a character
   testPlugboardCheckArg("plugboards/pb16.pb"); // 14) 13 pairs + 1 char
