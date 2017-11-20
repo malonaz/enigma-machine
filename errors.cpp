@@ -53,7 +53,7 @@ std::ostream& operator << (std::ostream& stream, Error &error){
     break;
 
   case NON_NUMERIC_CHARACTER:
-    stream << "Non-numeric character " << error.getInfo() << " in ";
+    stream << "Non-numeric character " << error.getInfo() << "in ";
     stream << error.getFiletypeString() << error.getFilename();
     break;
 
