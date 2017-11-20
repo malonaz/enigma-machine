@@ -3,50 +3,48 @@
 #define ROTOR_TEST_H
 
 /**
- * Function which will test the Reflector class methods.
+ * Function which will test the Rotor class methods.
  * Testing strategy:
  *
  * for checkArg:
  * - ERROR_OPENING_CONFIGURATION_FILE
  * - NO_ERROR
- *   > 13 pairs 
- * - INVALID_REFLECTOR_MAPPING (1)
- *   > connects a contact with itself
+ *   > correct mapping, 0 notches
+ *   > correct mapping with one input mapping to itself, 0 notches
+ *   > correct mapping, and 3 notches
+ *   > specs allow for repeated notches value so we must accept it
+ * - INVALID_ROTOR_MAPPING (1)
+ *   > maps 0 input
+ *   > maps 1 input
+ *   > maps 25 inputs
  *   > connect a contact already connected
  *   > connect a contact to a contact already connected
- * - INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS (2)
- *   > 0 pair
- *   > 14 pairs
- *   > 1 integer
- *   > 27 integers
- * - INVALID_INDEX (3)
+ * - INVALID_INDEX (2)
  *   > negative integer
  *   > starts with a >25 integer
  *   > ends with a >25 integer
- * - NON_NUMERIC_CHARACTER (4)
+ * - NON_NUMERIC_CHARACTER (3)- 
  *   > file begins with a character 
- *   > ends with char
+ *   > non-numeric char as first notch
+ *   > ends with non-numeric char
  *   > word in the middle
  *   > int+char in the middle
- *   > ends with int+char 
+ *   > ends with int+char as 26th entry 
  * - HIERARCHY TRICKY MULTIPLE ERROR SITUATIONS:
- *   > INVALID_REFLECTOR_MAPPING
- *     o no ambiguous situation where this error takes priority because
- *       1) NON_NUMERIC_CHARACTER  & INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS
- *       occur outside pair analysis
- *       2) INVALID_INDEX takes priority as a number with an invalid index
- *          is not considered an index to the alphabet. Therefore, given a pair (x,y)
- *          where x already mapped and y>25, I do not consider this an attempt to
- *          map x to more than one other index.
- *   > INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS
- *     o 5 integers where the 5th >25
+ *   > INVALID_ROTOR_MAPPING
+ *     o no ambiguous situations with:
+ *       > INVALID_INDEX because if I have less than 26 integers
+ *         and the last one is an invalid index, the INVALID_INDEX
+ *         error will interrupt my reading operation and thus takes
+ *         priority.
  *   > INVALID_INDEX
  *     o pair (x,y) where x>25 & y already mapped 
  *     o pair (x,y) where x already mapped & y>25 
  *     o pair (x,y) where x or y is negative. I consider "-14" to be numerical
  *       although the character '-' on its own is non-numeric
- *     o pair (x,y) where x>25 and y is non-numeric.
  *   > NON_NUMERIC_CHARACTER
+ *     o pair (x,y) where x>25 and y is non-numeric. we are reading in pairs so
+ *       although invalid index occurs before non-numeric character, 
  *     o (1 2 3 4 5 @): file contains an odd number and specs indicate to return that
  *       error first, but I believe NON_NUMERIC_CHARACTER is encounted first here, 
  *       rather than simultaneously with the odd number error. 
@@ -64,7 +62,7 @@
  *    > reflector
  *    > reflector V
  */
-void testReflector();
+void testRotor();
 
 /**
  * Function which, given a plugboard filepath will 
@@ -74,7 +72,7 @@ void testReflector();
  * - if test is passed -> increments test_passed.
  * - outputs test results
  */
-void testReflectorCheckArg(const char* arg);
+void testRotorCheckArg(const char* arg);
 
 /**
  * Function which, given a reflector filepath with
@@ -86,6 +84,6 @@ void testReflectorCheckArg(const char* arg);
  *   test_passed.
  * - outputs test results
  */
-void testReflectorStep(const char* arg);
+void testRotorStep(const char* arg);
 
 #endif

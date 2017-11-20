@@ -44,11 +44,11 @@ Error Reflector::checkArg(char* config){
 
 
   while (getNextPair(num1,num2,error,config_stream)){
-    if (inSet(nums,num1) || inSet(nums,num2) || num1 == num2)
-      error.setCode(INVALID_REFLECTOR_MAPPING);
-
     if (invalidIndex(num1) || invalidIndex(num2))
       error.setCode(INVALID_INDEX);
+
+    if (inSet(nums,num1) || inSet(nums,num2) || num1 == num2)
+      error.setCode(INVALID_REFLECTOR_MAPPING);
     
     if (!error.getCode()){      
       nums.insert(num1);            

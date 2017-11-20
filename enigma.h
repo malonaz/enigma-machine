@@ -5,7 +5,7 @@
 #include "stateMachine.h"
 #include "plugboard.h"
 #include "reflector.h"
-#include "rotors.h"
+#include "rotor.h"
 #include "errors.h"
 
 #include <ostream>

@@ -21,11 +21,11 @@
  
 
 /* file types */
-#define PLUGBOARD 101
-#define REFLECTOR 102
-#define ROTOR 103
-#define ROTOR_POS 104
-#define NO_OBJECT 100
+#define PLUGBOARD 1
+#define REFLECTOR 2
+#define ROTOR 3
+#define ROTOR_POS 4
+#define NO_OBJECT 0
 
 
 #define MAX_ARRAY_LENGTH 50

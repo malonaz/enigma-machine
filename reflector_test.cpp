@@ -42,44 +42,43 @@ void testReflector(){
   // INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS (2)
   exp_error_code = INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS;
   testReflectorCheckArg("reflectors/rf10.rf"); // 8) 0 pair
-  testReflectorCheckArg("reflectors/rf11.rf"); // 9) 14 pairs
-  testReflectorCheckArg("reflectors/rf12.rf"); // 10) 1 integer
-  testReflectorCheckArg("reflectors/rf13.rf"); // 11) 12 pairs
+  testReflectorCheckArg("reflectors/rf12.rf"); // 9) 1 integer
+  testReflectorCheckArg("reflectors/rf13.rf"); // 10) 12 pairs
   
   // INVALID_INDEX (2)
   exp_error_code = INVALID_INDEX;
-  testReflectorCheckArg("reflectors/rf14.rf"); // 12) negative integer
-  testReflectorCheckArg("reflectors/rf15.rf"); // 13) starts with a >25 integer
-  testReflectorCheckArg("reflectors/rf16.rf"); // 14) ends with a>25 integer
+  testReflectorCheckArg("reflectors/rf14.rf"); // 11) negative integer
+  testReflectorCheckArg("reflectors/rf15.rf"); // 12) starts with a >25 integer
+  testReflectorCheckArg("reflectors/rf16.rf"); // 13) ends with a>25 integer
 
   // NON_NUMERIC_CHARACTER (3)
   exp_error_code = NON_NUMERIC_CHARACTER;
-  testReflectorCheckArg("reflectors/rf17.rf"); // 15) begins with non-num char
-  testReflectorCheckArg("reflectors/rf18.rf"); // 16) ends with non-num char
-  testReflectorCheckArg("reflectors/rf19.rf"); // 17) word in middle
-  testReflectorCheckArg("reflectors/rf20.rf"); // 18) int+char in middle
-  testReflectorCheckArg("reflectors/rf21.rf"); // 19) int+char at the end
+  testReflectorCheckArg("reflectors/rf17.rf"); // 14) begins with non-num char
+  testReflectorCheckArg("reflectors/rf18.rf"); // 15) ends with non-num char
+  testReflectorCheckArg("reflectors/rf19.rf"); // 16) word in middle
+  testReflectorCheckArg("reflectors/rf20.rf"); // 17) int+char in middle
+  testReflectorCheckArg("reflectors/rf21.rf"); // 18) int+char at the end
 
   // HIERARCHY TRICKY MULTIPLE ERROR SITUATIONS //////
   
   //// INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS
   exp_error_code = INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS;
-  testReflectorCheckArg("reflectors/rf22.rf"); // 20) 5 ints where 5th > 25
-  
+  testReflectorCheckArg("reflectors/rf22.rf"); // 19) 5 ints where 5th > 25
+
   //// INVALID_INDEX
   exp_error_code = INVALID_INDEX;
-  testReflectorCheckArg("reflectors/rf23.rf"); // 21) pair (x,y) where x>25 & y already mapped
-  testReflectorCheckArg("reflectors/rf24.rf"); // 22) pair (x,y) where x already mapped & y>25
-  testReflectorCheckArg("reflectors/rf25.rf"); // 23) pair (x,y)  where x<0
-  testReflectorCheckArg("reflectors/rf26.rf"); // 24) pair (x,y) where x>25 and y is non-numeric
+  testReflectorCheckArg("reflectors/rf23.rf"); // 20) pair (x,y) where x>25 & y already mapped
+  testReflectorCheckArg("reflectors/rf24.rf"); // 21) pair (x,y) where x already mapped & y>25
+  testReflectorCheckArg("reflectors/rf25.rf"); // 22) pair (x,y)  where x<0
+  testReflectorCheckArg("reflectors/rf26.rf"); // 23) pair (x,y) where x>25 and y is non-numeric
   
   //// NON_NUMERIC_CHARACTER
-  exp_error_code = NON_NUMERIC_CHARACTER;
-  testReflectorCheckArg("reflectors/rf27.rf"); // 25) odd number + non-numeric char
-  testReflectorCheckArg("reflectors/rf28.rf"); // 26) even number followed non-numeric char
-  testReflectorCheckArg("reflectors/rf29.rf"); // 27) pair (x,y) where x non-numeric and y>25
-  testReflectorCheckArg("reflectors/rf30.rf"); // 28) even number with ' - ' in middle
-  testReflectorCheckArg("reflectors/rf31.rf"); // 29) contains a float
+  exp_error_code = NON_NUMERIC_CHARACTER; 
+  testReflectorCheckArg("reflectors/rf27.rf"); // 24) odd number + non-numeric char
+  testReflectorCheckArg("reflectors/rf28.rf"); // 25) even number followed non-numeric char
+  testReflectorCheckArg("reflectors/rf29.rf"); // 26) pair (x,y) where x non-numeric and y>25
+  testReflectorCheckArg("reflectors/rf30.rf"); // 27) even number with ' - ' in middle
+  testReflectorCheckArg("reflectors/rf31.rf"); // 28) contains a float
   
   
   // Check Reflector class is working properly
@@ -92,7 +91,6 @@ void testReflector(){
   std::cout << " Finished testing Reflector\n\n";
 }
 
-
 void testReflectorCheckArg(const char* arg){
   char filepath[MAX_ARRAY_LENGTH];
   test_count++;
@@ -101,7 +99,8 @@ void testReflectorCheckArg(const char* arg){
   strcpy(filepath,arg);
   
   Error error = Reflector::checkArg(filepath);
-  Error exp_error = error;
+  
+  Error exp_error(filepath, REFLECTOR);
   exp_error.setCode(exp_error_code);
 
   std::cout << "   test " << subtest_count << "... ";

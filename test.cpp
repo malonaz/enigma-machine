@@ -1,6 +1,7 @@
 #include "test.h"
 #include "plugboard_test.h"
 #include "reflector_test.h"
+#include "rotor_test.h"
 #include <iostream>
 
 /* global test variables */
@@ -15,23 +16,10 @@ void test(){
   testPlugboard();
 
   testReflector();
+
+  testRotor();
   
   std::cout << "passed " << test_passed << "/" << test_count << "\n\n";
-
-}
-
-void processError(Error error, Error exp_error){
-  std::cout << "   test " << subtest_count << "... ";
-
-  if (exp_error.getCode() == error.getCode()){
-    test_passed++;
-    std::cout << "test passed!";
-  }else{
-    std::cout << "test failed!\n";
-    std::cout << "    got: " << error;
-    std::cout << "\n    exp: " << exp_error;
-  }
-  std::cout << "\n";
 
 }
 

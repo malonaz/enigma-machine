@@ -44,8 +44,8 @@
  *     o pair (x,y) where x>25 & y already mapped 
  *     o pair (x,y) where x already mapped & y>25 
  *     o pair (x,y) where x or y is negative. I consider "-14" to be numerical
- *       although the character '-' on its own is non-numeric
- *     o pair (x,y) where x>25 and y is non-numeric.
+ *       although the character '-' on its own is non-numeric     
+ *     o pair (x,y) where x>25 and y is non-numeric. 
  *   > NON_NUMERIC_CHARACTER
  *     o (1 2 3 4 5 @): file contains an odd number and specs indicate to return that
  *       error first, but I believe NON_NUMERIC_CHARACTER is encounted first here, 

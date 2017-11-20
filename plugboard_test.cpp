@@ -70,7 +70,6 @@ void testPlugboard(){
   testPlugboardCheckArg("plugboards/pb22.pb"); // 20) pair (x,y) where x already mapped & y>25
   testPlugboardCheckArg("plugboards/pb23.pb"); // 21) pair (x,y)  where x<0
   testPlugboardCheckArg("plugboards/pb24.pb"); // 22) pair (x,y) where x>25 and y is non-numeric
-  
   //// NON_NUMERIC_CHARACTER
   exp_error_code = NON_NUMERIC_CHARACTER;
   testPlugboardCheckArg("plugboards/pb25.pb"); // 23) odd number + non-numeric char
@@ -96,11 +95,10 @@ void testPlugboardCheckArg(const char* arg){
   subtest_count++;
 
   strcpy(filepath,arg);
-  
   Error error = Plugboard::checkArg(filepath);
-  Error exp_error = error;
+  Error exp_error(filepath, PLUGBOARD);
   exp_error.setCode(exp_error_code);
-
+  
   std::cout << "   test " << subtest_count << "... ";
 
   if (exp_error.getCode() == error.getCode()){
