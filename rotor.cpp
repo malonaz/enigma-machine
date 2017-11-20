@@ -70,9 +70,9 @@ Error Rotor:: checkArg(char* config){
   }
   if (!config_stream.eof()){
     if (nums.size() > ALPHABET_SIZE)
-      error.setCode(NON_NUMERIC_CHARACTER, " for notches ");
+      error.setCode(NON_NUMERIC_CHARACTER, "for notches");
     else
-      error.setCode(NON_NUMERIC_CHARACTER, " for mapping ");
+      error.setCode(NON_NUMERIC_CHARACTER, "for mapping");
   }
 
   if (nums.size() != ALPHABET_SIZE)

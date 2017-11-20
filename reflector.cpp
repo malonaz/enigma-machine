@@ -42,7 +42,6 @@ Error Reflector::checkArg(char* config){
   std::set<int> nums;
   int num1, num2;
 
-
   while (getNextPair(num1,num2,error,config_stream)){
     if (invalidIndex(num1) || invalidIndex(num2))
       error.setCode(INVALID_INDEX);
