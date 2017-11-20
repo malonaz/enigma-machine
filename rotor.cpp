@@ -83,7 +83,7 @@ Error Rotor:: checkArg(char* config){
 	std::cerr << "Invalid mapping of input " << nums.size();
 	std::cerr << " to output " << num << " (output " << num;
 	std::cerr << " is already mapped to from input " << mappings[num];
-	std:: cerr << " in ";
+	std:: cerr << ") in ";
 	error.setCode(INVALID_ROTOR_MAPPING);
       }
       mappings[nums.size()] = num;
