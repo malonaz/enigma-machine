@@ -45,7 +45,7 @@ bool getNextPair(int &num1, int &num2, Error &error,
       if (error.getFiletype() == PLUGBOARD)
 	error.setCode(INCORRECT_NUMBER_OF_PLUGBOARD_PARAMETERS);
       else
-	error.setCode(INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS, "Incorrect (odd)");
+	error.setCode(INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS, "Incorrect (odd) number of parameters in ");
     }else{
       if (invalidIndex(num1)) // for cases where pair (x,y), x>25 & y non-num
 	error.setCode(INVALID_INDEX);
