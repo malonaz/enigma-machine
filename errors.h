@@ -28,7 +28,7 @@
 #define NO_OBJECT 0
 
 
-#define MAX_ARRAY_LENGTH 50
+#define MAX_ARRAY_LENGTH 100
 #define ALPHABET_SIZE 26
 
 

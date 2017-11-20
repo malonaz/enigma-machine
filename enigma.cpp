@@ -4,6 +4,7 @@
 #include "errors.h"
 
 #include <fstream>
+#include <cstring>
 
 EnigmaMachine::EnigmaMachine(int argc, char** argv)
   :  num_rotors(0) {
@@ -121,9 +122,10 @@ Error EnigmaMachine::checkRotorPos(char* config, int num_rotors){
   if (!config_stream.eof())
     return error.setCode(NON_NUMERIC_CHARACTER);
 
-  if (count != num_rotors)
+  if (count != num_rotors){
+ 
     return error.setCode(NO_ROTOR_STARTING_POSITION);
-
+  }
   return error;    
 }
 
