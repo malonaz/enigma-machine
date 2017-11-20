@@ -72,7 +72,6 @@ std::ostream& operator << (std::ostream& stream, Error &error){
     break;
 
   case NO_ROTOR_STARTING_POSITION:
-    stream << "No rotor starting position in ";
     stream << error.getFiletypeString() << error.getFilename();
     break;
 

@@ -114,17 +114,22 @@ Error EnigmaMachine::checkRotorPos(char* config, int num_rotors){
   int num, count = 0;
 
   while (config_stream >> num){
-    if (invalidIndex(num))
-      return error.setCode(INVALID_INDEX);
+    if (invalidIndex(num)){
+      error.setCode(INVALID_INDEX);
+      break;
+    }
     count++;
   }
 
-  if (!config_stream.eof())
-    return error.setCode(NON_NUMERIC_CHARACTER);
+  if (!error.getCode() && !config_stream.eof())
+    error.setCode(NON_NUMERIC_CHARACTER);
 
-  if (count != num_rotors){
+  if (!error.getCode() && count != num_rotors){
+    std::cerr << count << " starting rotor positions supplied for ";
+    std::cerr << num_rotors << " rotors in ";
     return error.setCode(NO_ROTOR_STARTING_POSITION);
   }
+  config_stream.close();
   return error;    
 }
 
