@@ -59,7 +59,8 @@ Error Reflector::checkArg(char* config){
     if (!config_stream.eof())
       error.setCode(NON_NUMERIC_CHARACTER);
     else if (nums.size() != 26)
-      error.setCode(INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS, "insufficient number of mappings in ");
+      error.setCode(INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS,
+		    "insufficient number of mappings in ");
   }
   
   config_stream.close();

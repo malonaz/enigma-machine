@@ -3,6 +3,7 @@
 #include <iostream>
 #include <fstream>
 #include <set>
+#include <cstring>
 
 Rotor::Rotor(char* config)
   : mapping(ALPHABET_SIZE,0), inverse_mapping(ALPHABET_SIZE,0),
@@ -48,6 +49,19 @@ int Rotor:: step(int input, bool debug){
   return output;
 }
 
+/**
+ * internal helper function which returns an array containing
+ * error information for INVALID_ROTOR_MAPPING errors
+ */
+const char* getInvalidRotorMappingInfo(int previous_input,
+				       int output, size_t current_input){
+  std::string str("Invalid mapping of input ");
+  str += current_input +  " to output " + output;
+  str += " (output " + output;
+  str += " is already mapped to from input " + previous_input;
+  return str.c_str();
+}
+
 Error Rotor:: checkArg(char* config){
   Error error(config, ROTOR);
   std::ifstream config_stream(config);
@@ -56,20 +70,25 @@ Error Rotor:: checkArg(char* config){
     error.setCode(ERROR_OPENING_CONFIGURATION_FILE);
 
   std::set<int> nums;
+  std::vector<int> mappings(ALPHABET_SIZE, -1);
   int num;
 
   while (getNextInt(num, error, config_stream)){
     if (invalidIndex(num))
       error.setCode(INVALID_INDEX);
 
-    if (nums.size() != ALPHABET_SIZE){
-      if (inSet(nums, num))
-	error.setCode(INVALID_ROTOR_MAPPING);
+    if (nums.size() < ALPHABET_SIZE){
+      if (inSet(nums, num)){
+	error.setCode(INVALID_ROTOR_MAPPING,
+		      getInvalidRotorMappingInfo(mappings[num], num, nums.size()));
+      }
+      mappings[nums.size()] = num;
       nums.insert(num);
     }
   }
+  
   if (!config_stream.eof()){
-    if (nums.size() > ALPHABET_SIZE)
+    if (nums.size() == ALPHABET_SIZE)
       error.setCode(NON_NUMERIC_CHARACTER, "for notches ");
     else
       error.setCode(NON_NUMERIC_CHARACTER, "for mapping ");
