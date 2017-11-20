@@ -82,7 +82,7 @@ std::ostream& operator << (std::ostream& stream, Error &error){
     break;
 
   case INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS:
-    stream << "Incorrect "<< error.getInfo();
+    stream << error.getInfo();
     stream << " number of parameters in ";
     stream << error.getFiletypeString() << error.getFilename();
     break;
