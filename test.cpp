@@ -10,7 +10,7 @@ int test_count =0;
 int test_passed = 0;
 int subtest_count;
 
-void test(){
+int main(){
   std::cout << "\n\nStarting tests... \n\n";
     
   testPlugboard();
@@ -21,5 +21,6 @@ void test(){
   
   std::cout << "passed " << test_passed << "/" << test_count << "\n\n";
 
+  return 0;
 }
 

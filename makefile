@@ -1,6 +1,6 @@
+##### MAIN #######
 
-
-enigma: main.o stateMachine.o plugboard.o reflector.o rotor.o enigma.o errors.o helpers.o test.o plugboard_test.o reflector_test.o rotor_test.o
+enigma: main.o stateMachine.o plugboard.o reflector.o rotor.o enigma.o errors.o helpers.o
 	g++ -Wall -g -o enigma $^
 
 main.o: main.cpp enigma.h errors.h test.h
@@ -27,6 +27,10 @@ helpers.o: helpers.cpp helpers.h
 errors.o: errors.cpp errors.h
 	g++ -Wall -g -c errors.cpp
 
+######## TESTER #########################
+tester: test.o stateMachine.o plugboard.o reflector.o rotor.o enigma.o errors.o helpers.o test.o plugboard_test.o reflector_test.o rotor_test.o
+	g++ -Wall -g -o tester $^
+
 test.o: test.cpp test.h plugboard_test.o reflector_test.o rotor_test.o
 	g++ -Wall -g -c test.cpp
 
@@ -34,12 +38,16 @@ plugboard_test.o: plugboard_test.cpp plugboard_test.h plugboard.h errors.h helpe
 	g++ -Wall -g -c plugboard_test.cpp
 
 reflector_test.o: reflector_test.cpp reflector_test.h reflector.h errors.h helpers.h
-clean:
-	rm *.o enigma
+
 
 rotor_test.o: rotor_test.cpp rotor_test.h rotor.h errors.h helpers.h
 	g++ -Wall -g -c rotor_test.cpp
-test:
-	./enigma tests/test00/plugboard.pb tests/test00/reflector.rf tests/test00/rotor.rot tests/test00/rotor2.rot tests/test00/rotor3.rot tests/test00/rotor.pos
 
-#./enigma tests/test04/plugboard.pb tests/test04/reflector.rf tests/test04/rotor.rot tests/test04/rotor2.rot tests/test04/rotor.pos
+test:
+	make tester
+	clear
+	./tester
+
+####### CLEAN #############
+clean:
+	rm *.o enigma tester
