@@ -124,9 +124,13 @@ Error EnigmaMachine::checkRotorPos(char* config, int num_rotors){
   if (!error.getCode() && !config_stream.eof())
     error.setCode(NON_NUMERIC_CHARACTER);
 
-  if (!error.getCode() && count != num_rotors){
+  // specs don't indicate we should return an error if
+  // if we are supplied more rotor starting positions than
+  // we are supplied rotors. So I don't check for it. However,
+  // my setRotorPos will not use any extra starting positions.
+  if (!error.getCode() && count < num_rotors){ 
     std::cerr << "No starting position for rotor " << count << " in ";
-    return error.setCode(NO_ROTOR_STARTING_POSITION);
+    error.setCode(NO_ROTOR_STARTING_POSITION);
   }
   config_stream.close();
   return error;    
