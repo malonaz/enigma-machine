@@ -1,53 +1,40 @@
-##### MAIN #######
+CXX = g++
+CXXFLAGS = -g -Wall -MMD
 
-enigma: main.o stateMachine.o plugboard.o reflector.o rotor.o enigma.o errors.o helpers.o
-	g++ -Wall -g -o enigma $^
+################################### MAIN ###################################mv 
+EXE = enigma
+OBJS = main.o stateMachine.o plugboard.o reflector.o rotor.o enigma.o helpers.o errors.o
 
-main.o: main.cpp enigma.h errors.h test.h
-	g++ -Wall -g -c main.cpp
+$(EXE): $(OBJS)
+	$(CXX) $(CXXFLAGS) $^ -o $@
 
-stateMachine.o: stateMachine.cpp stateMachine.h helpers.h errors.h
-	g++ -Wall -g -c stateMachine.cpp
-
-plugboard.o: plugboard.cpp plugboard.h stateMachine.h helpers.h errors.h
-	g++ -Wall -g -c plugboard.cpp
-
-reflector.o: reflector.cpp reflector.h stateMachine.h helpers.h errors.h
-	g++ -Wall -g -c reflector.cpp
-
-rotor.o: rotor.cpp rotor.h stateMachine.h helpers.h errors.h
-	g++ -Wall -g -c rotor.cpp
-
-enigma.o: enigma.cpp enigma.h stateMachine.h plugboard.h reflector.h rotor.h errors.h
-	g++ -Wall -g -c enigma.cpp
-
-helpers.o: helpers.cpp helpers.h
-	g++ -Wall -g -c helpers.cpp
-
-errors.o: errors.cpp errors.h
-	g++ -Wall -g -c errors.cpp
-
-######## TESTER #########################
-tester: test.o stateMachine.o plugboard.o reflector.o rotor.o enigma.o errors.o helpers.o test.o plugboard_test.o reflector_test.o rotor_test.o
-	g++ -Wall -g -o tester $^
-
-test.o: test.cpp test.h plugboard_test.o reflector_test.o rotor_test.o
-	g++ -Wall -g -c test.cpp
-
-plugboard_test.o: plugboard_test.cpp plugboard_test.h plugboard.h errors.h helpers.h
-	g++ -Wall -g -c plugboard_test.cpp
-
-reflector_test.o: reflector_test.cpp reflector_test.h reflector.h errors.h helpers.h
+$(OBJS): %.o : %.cpp
+	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 
-rotor_test.o: rotor_test.cpp rotor_test.h rotor.h errors.h helpers.h
-	g++ -Wall -g -c rotor_test.cpp
+-include $(OBJS:.o=.d)
 
-test:
-	make tester
-	clear
-	./tester
 
-####### CLEAN #############
+
+################################### TESTER ################################
+TEST = tester
+TEST_OBJS = test.o plugboard_test.o reflector_test.o rotor_test.o
+
+$(TEST): $(TEST_OBJS) $(filter-out main.o, $(OBJS))
+	$(CXX) $(CXXFLAGS) $^ -o $@
+
+$(TEST_OBJS): %.o : %.cpp
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+
+-include $(TEST_OBJS:.o=.d)
+
+
+################################### PHONY #################################
+.PHONY: clean clean_dep
+
 clean:
-	rm *.o enigma tester
+	rm -rf $(OBJS) $(EXE)
+
+clean_dep:
+	rm -rf $(OBJS:.o=.d)
