@@ -1,7 +1,7 @@
 #include "rotor_test.h"
-#include "rotor.h"
-#include "errors.h"
-#include "helpers.h"
+#include "../src/rotor.h"
+#include "../src/errors.h"
+#include "../src/helpers.h"
 #include <iostream>
 #include <cstring>
 

@@ -2,7 +2,7 @@
 #ifndef TEST_H
 #define TEST_H
 
-#include "errors.h"
+#include "../src/errors.h"
 
 /**
  * This function runs a battery of tests:

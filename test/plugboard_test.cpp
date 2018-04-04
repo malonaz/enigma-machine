@@ -1,7 +1,7 @@
 #include "plugboard_test.h"
-#include "plugboard.h"
-#include "errors.h"
-#include "helpers.h"
+#include "../src/plugboard.h"
+#include "../src/errors.h"
+#include "../src/helpers.h"
 #include <iostream>
 #include <cstring>
 #include <set>

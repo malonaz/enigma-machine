@@ -2,10 +2,12 @@ CXX = g++
 CXXFLAGS = -g -Wall -MMD
 
 ################################### MAIN ###################################mv 
-EXE = enigma
-OBJS = main.o stateMachine.o plugboard.o reflector.o rotor.o enigma.o helpers.o errors.o
+EXE = bin/enigma
+SRC_DIR = src/
+OBJS = $(addprefix $(SRC_DIR), main.o stateMachine.o plugboard.o reflector.o rotor.o enigma.o helpers.o errors.o)
 
 $(EXE): $(OBJS)
+	@mkdir -p bin
 	$(CXX) $(CXXFLAGS) $^ -o $@
 
 $(OBJS): %.o : %.cpp
@@ -17,10 +19,14 @@ $(OBJS): %.o : %.cpp
 
 
 ################################### TESTER ################################
-TEST = tester
-TEST_OBJS = test.o plugboard_test.o reflector_test.o rotor_test.o
+TEST = bin/tester
+TEST_DIR = test/
+TEST_OBJS = $(addprefix $(TEST_DIR), test.o plugboard_test.o reflector_test.o rotor_test.o)
 
-$(TEST): $(TEST_OBJS) $(filter-out main.o, $(OBJS))
+test: $(TEST)
+
+$(TEST): $(TEST_OBJS) $(filter-out $(SRC_DIR)main.o, $(OBJS))
+	@mkdir -p bin
 	$(CXX) $(CXXFLAGS) $^ -o $@
 
 $(TEST_OBJS): %.o : %.cpp

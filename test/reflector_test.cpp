@@ -1,7 +1,7 @@
 #include "reflector_test.h"
-#include "reflector.h"
-#include "errors.h"
-#include "helpers.h"
+#include "../src/reflector.h"
+#include "../src/errors.h"
+#include "../src/helpers.h"
 #include <iostream>
 #include <cstring>
 #include <set>

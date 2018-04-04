@@ -1,6 +1,5 @@
 #include "enigma.h"
 #include "errors.h"
-#include "test.h"
 #include <iostream>
 
 int main(int argc, char **argv){
