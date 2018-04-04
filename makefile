@@ -34,7 +34,4 @@ $(TEST_OBJS): %.o : %.cpp
 .PHONY: clean clean_dep
 
 clean:
-	rm -rf $(OBJS) $(EXE)
-
-clean_dep:
-	rm -rf $(OBJS:.o=.d)
+	rm -rf $(OBJS) $(EXE) $(TEST) $(OBJS:.o=.d) $(TEST_OBJS:.o=.d)
