@@ -19,7 +19,7 @@ $(OBJS): %.o : %.cpp
 
 
 ################################### TESTER ################################
-TEST = bin/tester
+TEST = bin/test
 TEST_DIR = test/
 TEST_OBJS = $(addprefix $(TEST_DIR), test.o plugboard_test.o reflector_test.o rotor_test.o)
 
