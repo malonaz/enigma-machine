@@ -1,4 +1,10 @@
-1) Plugboard checkArg
-   pair (x,y) where x>25 and y is non-numeric. what should I call ?
+Enigma
+Written in C++ for a programming assignment @ Imperial College London
 
-2) replace magic number 26
+Sample Configuration Files and A Small Testsuite
+To run the testsuite, in this directory run:
+
+make test && bin/test
+./tests.hs
+
+There are sample rotor configuration files in rotors/,  plugboard configuration files in plugboards/ & reflector configuration files in reflectors/
